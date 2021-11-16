@@ -23,7 +23,7 @@ typedef struct{
     runwayType type;
     unsigned int maxTakeofQueue;
     list *takeofQueue;
-    plane *takeoff;
+    plane *planeLT;
 }runway;
 
 typedef struct{
@@ -34,8 +34,7 @@ typedef struct{
 }airport;
 
 plane* newPlane(char matriculation[7], planeType type, unsigned int passengers, planeStatus status);
-
 runway* newRunway(char id, float length, float width, runwayType type, unsigned int maxTakeofQueue);
-
+void addPlaneToRunway(runway *runway, plane *plane);
 airport* newAirport(unsigned int parkingSize);
 void buildAirport(airport* airport, int numberOfSmallRunway, int numberOfMediumRunway, int numberOfLargeRunway);
