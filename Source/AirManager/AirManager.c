@@ -47,6 +47,8 @@ bool isRunwayFree(runway* newRunway){
 
 //Runway Slot Manager
 void addPlaneToRunway(runway *runway, plane *plane){
+    if(!isRunwayFree(runway))
+        printf("ERROR : Acces given to used runway (%s on %d)\n", plane->matriculation, runway->id);
     runway->planeLT = plane;
     if(plane->status == WAITING_LANDING)
         plane->status = LANDING;
@@ -71,21 +73,86 @@ void grantTakeoffForRunway(runway *runway){
 }
 
 void addPlaneToRunwayQueue(runway *runway, plane *plane){
+    if(!isRunwayQueueFull(runway))
+        printf("ERROR : Acces given to full runway queue (%s on %d)\n", plane->matriculation, runway->id);
     plane->targetRunway = runway;
     plane->status = WAITING_TAKEOFF;
     appendInList(runway->takeoffQueue, plane);
 }
 
+bool isRunwayQueueFull(runway *runway){
+    return runway->maxTakeoffQueue <= runway->takeoffQueue->length;
+}
 
-airport* newAirport(unsigned int parkingSize);
-void buildAirport(airport* airport, int numberOfSmallRunway, int numberOfMediumRunway, int numberOfLargeRunway);
+airport* newAirport(unsigned int parkingSize){
+    airport *airport_new = malloc(sizeof(airport));
+    airport_new->planesInRange = newList(comparePointer);
+    airport_new->landingQueue = newList(comparePointer);
+    airport_new->parkingPlanes = newList(comparePointer);
+    airport_new->waitForRunwayQueue = newList(comparePointer);
+    airport_new->runways = newList(comparePointer);
+    airport_new->parkingSize = parkingSize;
+    return airport_new;
+}
 
-void addPlaneToParking(airport* airport, plane *plane);
+void buildAirport(airport* airport, int numberOfSmallRunway, int numberOfMediumRunway, int numberOfLargeRunway){
+    for(int NOLR = 0; NOLR<numberOfLargeRunway; NOLR++){
+        runway *newLargeRunway = newRunway(2900+NOLR*100,100, LARGE, 4);
+        appendInList(airport->runways, newLargeRunway);
+    }
+    for(int NOMR = 0; NOMR<numberOfMediumRunway; NOMR++){
+        runway *newMediumRunway = newRunway(1900+NOMR*100,100, MEDIUM, 6);
+        appendInList(airport->runways, newMediumRunway);
+    }
+    for(int NOSR = 0; NOSR<numberOfSmallRunway; NOSR++){
+        runway *newSmallRunway = newRunway(1200+NOSR*100,100, SMALL, 8);
+        appendInList(airport->runways, newSmallRunway);
+    }
+}
+
+void addPlaneToParking(airport* airport, plane *plane){
+    if(!isParkingFull(airport))
+        printf("ERROR : Acces given to full parking (%s)\n", plane->matriculation);
+    plane->status = PARKING;
+    appendInList(airport->parkingPlanes, plane);
+}
+
+bool isParkingFull(airport* airport){
+    return airport->parkingSize <= airport->parkingPlanes->length;
+}
+
+bool isParkingQueueFull(airport* airport){
+    int howManyPlanesAreLandingOnRunways;
+    for(int NR = 0; NR < airport->runways->length; NR++){
+        runway *runwayN = getDataAtIndex(airport->runways, NR);
+        if(runwayN->planeLT != NULL)
+            howManyPlanesAreLandingOnRunways += runwayN->planeLT->status == LANDING;
+    }
+    return airport->parkingSize <= airport->parkingPlanes->length + howManyPlanesAreLandingOnRunways;
+}
 
 //LandingQueue List Requests
-void addPlaneToLandingQueue(airport* airport, plane *plane);
-void grantPlaneInLQAccessToRunway(airport* airport, runway *runway, plane *plane);
+void addPlaneToLandingQueue(airport* airport, plane *plane){
+    plane->status = WAITING_LANDING;
+    appendInList(airport->landingQueue, plane);
+}
+
+void grantPlaneInLQAccessToRunway(airport* airport, runway *runway, plane *plane){
+    if(!isRunwayFree(runway)) printf("ERROR : Landing clearance to used runway (%s on %d)\n", plane->matriculation, runway->id);
+    if(!isParkingFull(runway)) printf("ERROR : Landing clearance when Parking Queue full (%s on %d)\n", plane->matriculation, runway->id);
+    deleteInList(airport->landingQueue, plane);
+    plane->status = LANDING;
+    plane->targetRunway = runway;
+    runway->planeLT = plane;
+}
 
 //AskForRunwayQueue List Requests
-void addPlaneToAFRQ(airport* airport, plane *plane);
-void grantPlaneInAFRQAccessToRunway(airport* airport, runway *runway, plane *plane);
+void addPlaneToAFRQ(airport* airport, plane *plane){
+    appendInList(airport->waitForRunwayQueue, plane);
+}
+
+void grantPlaneInAFRQAccessToRunway(airport* airport, runway *runway, plane *plane){
+    deleteInList(airport->waitForRunwayQueue, plane);
+    deleteInList(airport->parkingPlanes, plane);
+    addPlaneToRunwayQueue(runway, plane);
+}

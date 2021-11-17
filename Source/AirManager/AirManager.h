@@ -29,7 +29,7 @@ typedef struct{
 
 typedef struct{
     unsigned int parkingSize;
-    list *runway;
+    list *runways;
     list *planesInRange;
     list *parkingPlanes;
     list *landingQueue;
@@ -39,21 +39,27 @@ typedef struct{
 plane* newPlane(char matriculation[7], planeType type, unsigned int passengers, unsigned int passengersMax, planeStatus status);
 void loadPlainInAirport(airport* airport, plane *plane);
 
+
 runway* newRunway(float length, float width, runwayType type, unsigned int maxTakeoffQueue);
-bool isRunwayFree(runway* newRunway);
 
 //Runway Slot Manager
 void addPlaneToRunway(runway *runway, plane *plane);
 void planeExitRunway(runway *runway, plane *plane);
+bool isRunwayFree(runway* newRunway);
 
 //Runway Queue Manager
 void grantTakeoffForRunway(runway *runway);
 void addPlaneToRunwayQueue(runway *runway, plane *plane);
+bool isRunwayQueueFull(runway *runway);
+
 
 airport* newAirport(unsigned int parkingSize);
 void buildAirport(airport* airport, int numberOfSmallRunway, int numberOfMediumRunway, int numberOfLargeRunway);
 
+//Parking Management
 void addPlaneToParking(airport* airport, plane *plane);
+bool isParkingFull(airport* airport);
+bool isParkingQueueFull(airport* airport);
 
 //LandingQueue List Requests
 void addPlaneToLandingQueue(airport* airport, plane *plane);
