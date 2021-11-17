@@ -1,9 +1,17 @@
-#include "SmartList.h"
 #include <stdbool.h>
-typedef struct runway runway;
+#include "SmartList.h"
 
 typedef enum{FLYING, WAITING_LANDING, LANDING, PARKING, WAITING_TAKEOFF, TAKEOFF} planeStatus;
 typedef enum{AIRLINER, BUSINESS, LIGHT} planeType;
+
+typedef struct{
+    unsigned int parkingSize;
+    list *runways;
+    list *planesInRange;
+    list *parkingPlanes;
+    list *landingQueue;
+    list *waitForRunwayQueue;
+}airport;
 
 typedef struct{
     char matriculation[7];
@@ -11,7 +19,7 @@ typedef struct{
     unsigned int passengers;
     unsigned int passengersMax;
     planeStatus status;
-    runway *targetRunway;
+    void *targetRunway; //runway
 }plane;
 
 typedef enum{SMALL, MEDIUM, LARGE} runwayType;
@@ -26,14 +34,7 @@ typedef struct{
     plane *planeLT;
 }runway;
 
-typedef struct{
-    unsigned int parkingSize;
-    list *runways;
-    list *planesInRange;
-    list *parkingPlanes;
-    list *landingQueue;
-    list *waitForRunwayQueue;
-}airport;
+
 
 plane* newPlane(char matriculation[7], planeType type, unsigned int passengers, unsigned int passengersMax, planeStatus status);
 void loadPlainInAirport(airport* airport, plane *plane);

@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <bool.h>
-
+#include <stdbool.h>
 #include "AirManager.h"
 
 int comparePointer(void *data1, void *data2){
@@ -67,7 +66,7 @@ void planeExitRunway(runway *runway, plane *plane){
 //Runway Queue Manager
 void grantTakeoffForRunway(runway *runway){
     if(runway->takeoffQueue->length == 0) return;
-    plane *planeToTakeoff = runway->takeoffQueue->first;
+    plane *planeToTakeoff = runway->takeoffQueue->first->data;
     deleteInList(runway->takeoffQueue, planeToTakeoff);
     addPlaneToRunway(runway, planeToTakeoff);
 }
@@ -124,7 +123,7 @@ bool isParkingFull(airport* airport){
 bool isParkingQueueFull(airport* airport){
     int howManyPlanesAreLandingOnRunways;
     for(int NR = 0; NR < airport->runways->length; NR++){
-        runway *runwayN = getDataAtIndex(airport->runways, NR);
+        runway *runwayN = getDataAtIndex(*airport->runways, NR);
         if(runwayN->planeLT != NULL)
             howManyPlanesAreLandingOnRunways += runwayN->planeLT->status == LANDING;
     }
@@ -139,7 +138,7 @@ void addPlaneToLandingQueue(airport* airport, plane *plane){
 
 void grantPlaneInLQAccessToRunway(airport* airport, runway *runway, plane *plane){
     if(!isRunwayFree(runway)) printf("ERROR : Landing clearance to used runway (%s on %d)\n", plane->matriculation, runway->id);
-    if(!isParkingFull(runway)) printf("ERROR : Landing clearance when Parking Queue full (%s on %d)\n", plane->matriculation, runway->id);
+    if(!isParkingFull(airport)) printf("ERROR : Landing clearance when Parking Queue full (%s on %d)\n", plane->matriculation, runway->id);
     deleteInList(airport->landingQueue, plane);
     plane->status = LANDING;
     plane->targetRunway = runway;
