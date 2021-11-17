@@ -1,1 +1,0 @@
-clear && make deepclean && make && ./blobEngineApp

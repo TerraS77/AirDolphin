@@ -1,14 +1,24 @@
-# SmartList
-moduleList = AirManager bddManager Control Renderer SmarLit
+# Module List & Files
+moduleList = AirManager bddManager Control Renderer SmartList
 moduleListC = $(moduleList:=/*.c)
-moduleListPathC = $(addprefix ../Sources/,$(moduleListC))
+moduleListPathC = $(addprefix ../Source/,$(moduleListC))
 moduleListH = $(moduleList:=/*.h)
-moduleListPathH = $(addprefix ../Sources/,$(moduleListH))
+moduleListPathH = $(addprefix ../Source/,$(moduleListH))
 
-subModuleList = AirManager cmdprint bddManager Control Renderer SmarLit
+# files to compile
+subModuleList = AirManager cmdprint bddManager Control Renderer SmartList
+subListC = $(subModuleList:=.c)
+
+# config
+flags = -lm $(shell pkg-config --cflags --libs sdl2)
 
 # EXECUTABLE
 AirDoplhinApp:
-	echo ../Sources/$(moduleListPathC)
-	echo ../Sources/$(moduleListPathH)
-	# gcc -Wall $(B_SG)/SmartGrid.o -o blobEngineApp $(B_GFX)/libisentlib.a $(B_GFX)/OutilsLib.o $(B_GFX)/BmpLib.o $(B_SUI)/SmartUI.o $(B_BE)/BlobEngine.o $(B_GEN)/maze.o $(B_GEN)/rock.o $(B_MENU)/menu.o -lm -lglut -lGL -lX11
+	cp $(moduleListPathC) $(moduleListPathH) ./
+	gcc -Wall $(subListC) -o $a $(flags)
+	rm *.c
+	rm *.h
+
+clear:
+	rm *.c
+	rm *.h
