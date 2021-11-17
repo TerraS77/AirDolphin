@@ -1,5 +1,5 @@
-#include "../SmartList/SmartList.h"
-#include <bool.h>
+#include "SmartList.h"
+#include <stdbool.h>
 typedef struct runway runway;
 
 typedef enum{FLYING, WAITING_LANDING, LANDING, PARKING, WAITING_TAKEOFF, TAKEOFF} planeStatus;
@@ -14,7 +14,6 @@ typedef struct{
     runway *targetRunway;
 }plane;
 
-typedef enum{STANDBY, LANDING, TAKEOFF} runwayStatus;
 typedef enum{SMALL, MEDIUM, LARGE} runwayType;
 
 typedef struct{
