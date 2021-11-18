@@ -6,7 +6,7 @@ moduleListH = $(moduleList:=/*.h)
 moduleListPathH = $(addprefix ../Source/,$(moduleListH))
 
 # files to compile
-subModuleList = AirManager cmdPrint bddManager Control Renderer SmartList
+subModuleList = AirSim AirManager cmdPrint bddManager Control Renderer SmartList
 subListC = $(subModuleList:=.c)
 
 # config
