@@ -37,7 +37,11 @@ typedef struct{
 
 
 plane* newPlane(char matriculation[7], planeType type, unsigned int passengers, unsigned int passengersMax, planeStatus status);
+
 void loadPlainInAirport(airport* airport, plane *plane);
+void removePlane(airport *airport, plane *plane);
+bool canItLandHere(plane *plane, runway *runway);
+bool canAPlaneInLQLandHere(airport *airport, runway *runway);
 
 
 runway* newRunway(float length, float width, runwayType type, unsigned int maxTakeoffQueue);
@@ -64,6 +68,7 @@ bool isParkingQueueFull(airport* airport);
 //LandingQueue List Requests
 void addPlaneToLandingQueue(airport* airport, plane *plane);
 void grantPlaneInLQAccessToRunway(airport* airport, runway *runway, plane *plane);
+void grantNextInLQAccessToRunway(airport* airport, runway *runway);
 
 //AskForRunwayQueue List Requests
 void addPlaneToAFRQ(airport* airport, plane *plane);

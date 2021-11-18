@@ -9,7 +9,6 @@ int comparePointer(void *data1, void *data2){
     else return 1;
 }
 
-
 plane* newPlane(char matriculation[7], planeType type, unsigned int passengers, unsigned int passengersMax, planeStatus status){
     plane *plane_new = malloc(sizeof(plane));
     strcpy(plane_new->matriculation, matriculation);
@@ -21,9 +20,31 @@ plane* newPlane(char matriculation[7], planeType type, unsigned int passengers, 
     return plane_new;
 }
 
+void removePlane(airport *airport, plane *plane){
+    deleteInList(airport->planesInRange, plane);
+    free(plane);
+}
+
 void loadPlainInAirport(airport* airport, plane *plane){
     appendInList(airport->planesInRange, plane);
     if(plane->status == PARKING) appendInList(airport->parkingPlanes, plane);
+}
+
+bool canItLandHere(plane *plane, runway *runway){
+    if(plane->type == AIRLINER)
+        return runway->type == LARGE;
+    if(plane->type == LIGHT)
+        return runway->type == SMALL;
+    return true;
+}
+
+bool canAPlaneInLQLandHere(airport *airport, runway *runway){
+    bool result = false;
+    for(int p = 0; p<airport->landingQueue->length; p++){
+        plane *plane = getDataAtIndex(*airport->landingQueue, p);
+        result = result || canItLandHere(plane, runway);
+    }
+    return result;
 }
 
 runway* newRunway(float length, float width, runwayType type, unsigned int maxTakeoffQueue){
@@ -143,6 +164,17 @@ void grantPlaneInLQAccessToRunway(airport* airport, runway *runway, plane *plane
     plane->status = LANDING;
     plane->targetRunway = runway;
     runway->planeLT = plane;
+}
+
+void grantNextInLQAccessToRunway(airport* airport, runway *runway){
+    for(int p; p<planerunway->takeoffQueue->length; p++){
+        plane *plane = getDataAtIndex(planerunway->takeoffQueue, p);
+        if(canItLandHere(runway, airport)){
+            grantPlaneInLQAccessToRunway(airport, runway, plane)
+            return;
+        }
+    }
+    printf("ERROR : Landing clearance to uncompatible runway, or no plane in LQ (%d)\n", runway->id);
 }
 
 //AskForRunwayQueue List Requests
