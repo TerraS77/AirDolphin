@@ -111,6 +111,8 @@ int searchIndexInList(list list, void *data){
 }
 
 void *searchDataInList(list list, void *data){
+    chainItem *result = searchItemInList(list, data);
+    if(result == NULL) return NULL;
     return searchItemInList(list, data)->data;
 }
 
