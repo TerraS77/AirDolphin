@@ -1,5 +1,7 @@
 #include <stdbool.h>
 #include "SmartList.h"
+#if !defined( AIRMANAGER_H )
+#define AIRMANAGER_H
 
 typedef enum{FLYING, WAITING_LANDING, LANDING, PARKING, WAITING_TAKEOFF, TAKEOFF} planeStatus;
 typedef enum{AIRLINER, BUSINESS, LIGHT} planeType;
@@ -72,3 +74,5 @@ void grantNextInLQAccessToRunway(airport* airport, runway *runway);
 //AskForRunwayQueue List Requests
 void addPlaneToAFRQ(airport* airport, plane *plane);
 void grantNextInAFRQAccessToRunway(airport* airport, runway *runway);
+
+#endif
