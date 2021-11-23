@@ -39,12 +39,13 @@ bool canItLandHere(plane *plane, runway *runway){
 }
 
 bool canAPlaneInLQLandHere(airport *airport, runway *runway){
-    bool result = false;
+    if(isParkingQueueFull(airport)) return false;
+    int nWhoCanLand = 0;
     for(int p = 0; p<airport->landingQueue->length; p++){
         plane *plane = getDataAtIndex(*airport->landingQueue, p);
-        result = result || canItLandHere(plane, runway);
+        nWhoCanLand += canItLandHere(plane, runway);
     }
-    return result;
+    return nWhoCanLand > 0;
 }
 
 runway* newRunway(float length, float width, runwayType type, unsigned int maxTakeoffQueue){
@@ -68,19 +69,24 @@ bool isRunwayFree(runway* newRunway){
 //Runway Slot Manager
 void addPlaneToRunway(runway *runway, plane *plane){
     if(!isRunwayFree(runway))
-        printf("ERROR : Acces given to used runway (%s on %d)\n", plane->matriculation, runway->id);
+        printf("\033[1;31mERROR : Acces given to used runway (%s on %d, used by %s)\033[0m\n", plane->matriculation, runway->id, runway->planeLT->matriculation);
     runway->planeLT = plane;
-    if(plane->status == WAITING_LANDING)
-        plane->status = LANDING;
+    if(plane->status == WAITING_LANDING) plane->status = LANDING;
     else plane->status = TAKEOFF;
+    printf("\033[0;34mCONTROL : %s, you are clear for %s on runway %d.\033[0m\n", plane->matriculation, plane->status == LANDING ? "landing" : "takeoff", runway->id);
     plane->targetRunway = runway;
 }
 
 void planeExitRunway(runway *runway, plane *plane){
     runway->planeLT = NULL;
-    if(plane->status == TAKEOFF)
+    if(plane->status == TAKEOFF){
         plane->status = FLYING;
-    else plane->status = PARKING;
+        printf("\033[0;34m%s : Airborn.\033[0m\n", plane->matriculation);
+    
+    }else{
+        plane->status = PARKING;
+        printf("\033[0;34m%s : Landing succesful, going to parking.\033[0m\n", plane->matriculation);
+    }
     plane->targetRunway = NULL;
 }
 
@@ -93,10 +99,11 @@ void grantTakeoffForRunway(runway *runway){
 }
 
 void addPlaneToRunwayQueue(runway *runway, plane *plane){
-    if(!isRunwayQueueFull(runway))
-        printf("ERROR : Acces given to full runway queue (%s on %d)\n", plane->matriculation, runway->id);
+    if(isRunwayQueueFull(runway))
+        printf("\033[1;31mERROR : Acces given to full runway queue (%s on %d)\033[0m\n", plane->matriculation, runway->id);
     plane->targetRunway = runway;
     plane->status = WAITING_TAKEOFF;
+    printf("\033[0;34mCONTROL : %s, take place on queue for takeoff on runway %d.\033[0m\n", plane->matriculation, runway->id);
     appendInList(runway->takeoffQueue, plane);
 }
 
@@ -131,8 +138,8 @@ void buildAirport(airport* airport, int numberOfSmallRunway, int numberOfMediumR
 }
 
 void addPlaneToParking(airport* airport, plane *plane){
-    if(!isParkingFull(airport))
-        printf("ERROR : Acces given to full parking (%s)\n", plane->matriculation);
+    if(isParkingFull(airport))
+        printf("\033[1;31mERROR : Acces given to full parking (%s)\033[0m\n", plane->matriculation);
     plane->status = PARKING;
     appendInList(airport->parkingPlanes, plane);
 }
@@ -142,7 +149,7 @@ bool isParkingFull(airport* airport){
 }
 
 bool isParkingQueueFull(airport* airport){
-    int howManyPlanesAreLandingOnRunways;
+    int howManyPlanesAreLandingOnRunways = 0;
     for(int NR = 0; NR < airport->runways->length; NR++){
         runway *runwayN = getDataAtIndex(*airport->runways, NR);
         if(runwayN->planeLT != NULL)
@@ -155,35 +162,47 @@ bool isParkingQueueFull(airport* airport){
 void addPlaneToLandingQueue(airport* airport, plane *plane){
     plane->status = WAITING_LANDING;
     appendInList(airport->landingQueue, plane);
+    printf("\033[0;34m%s : Request for landing.\033[0m\n", plane->matriculation);
 }
 
 void grantPlaneInLQAccessToRunway(airport* airport, runway *runway, plane *plane){
-    if(!isRunwayFree(runway)) printf("ERROR : Landing clearance to used runway (%s on %d)\n", plane->matriculation, runway->id);
-    if(!isParkingFull(airport)) printf("ERROR : Landing clearance when Parking Queue full (%s on %d)\n", plane->matriculation, runway->id);
+    if(!isRunwayFree(runway)) printf("\033[1;31mERROR : Landing clearance to used runway (%s on %d)\033[0m\n", plane->matriculation, runway->id);
+    if(isParkingFull(airport)) printf("\033[1;31mERROR : Landing clearance when Parking Queue full (%s on %d)\033[0m\n", plane->matriculation, runway->id);
     deleteInList(airport->landingQueue, plane);
-    plane->status = LANDING;
-    plane->targetRunway = runway;
-    runway->planeLT = plane;
+    addPlaneToRunway(runway, plane);
 }
 
 void grantNextInLQAccessToRunway(airport* airport, runway *runway){
-    for(int p; p<planerunway->takeoffQueue->length; p++){
-        plane *plane = getDataAtIndex(planerunway->takeoffQueue, p);
-        if(canItLandHere(runway, airport)){
-            grantPlaneInLQAccessToRunway(airport, runway, plane)
+    for(int p = 0; p<airport->landingQueue->length; p++){
+        plane *plane = getDataAtIndex(*airport->landingQueue, p);
+        if(canItLandHere(plane, runway)){
+            grantPlaneInLQAccessToRunway(airport, runway, plane);
             return;
         }
     }
-    printf("ERROR : Landing clearance to uncompatible runway, or no plane in LQ (%d)\n", runway->id);
+    printf("\033[1;31mERROR : Landing clearance to uncompatible runway, or no plane in LQ (%d)\033[0m\n", runway->id);
 }
 
 //AskForRunwayQueue List Requests
 void addPlaneToAFRQ(airport* airport, plane *plane){
+    if(searchDataInList(*airport->waitForRunwayQueue, plane))
+        return;
     appendInList(airport->waitForRunwayQueue, plane);
+    printf("\033[0;34m%s : Request for a takeoff runway.\033[0m\n", plane->matriculation);
 }
 
 void grantPlaneInAFRQAccessToRunway(airport* airport, runway *runway, plane *plane){
     deleteInList(airport->waitForRunwayQueue, plane);
     deleteInList(airport->parkingPlanes, plane);
     addPlaneToRunwayQueue(runway, plane);
+}
+
+void grantNextInAFRQAccessToRunway(airport* airport, runway *runway){
+    for(int p = 0; p<airport->waitForRunwayQueue->length; p++){
+        plane *plane = getDataAtIndex(*airport->waitForRunwayQueue, p);
+        if(canItLandHere(plane, runway)){
+            grantPlaneInAFRQAccessToRunway(airport, runway, plane);
+            return;
+        }
+    }
 }
