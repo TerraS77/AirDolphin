@@ -67,9 +67,8 @@ bool isParkingQueueFull(airport* airport);
 
 //LandingQueue List Requests
 void addPlaneToLandingQueue(airport* airport, plane *plane);
-void grantPlaneInLQAccessToRunway(airport* airport, runway *runway, plane *plane);
 void grantNextInLQAccessToRunway(airport* airport, runway *runway);
 
 //AskForRunwayQueue List Requests
 void addPlaneToAFRQ(airport* airport, plane *plane);
-void grantPlaneInAFRQAccessToRunway(airport* airport, runway *runway, plane *plane);
+void grantNextInAFRQAccessToRunway(airport* airport, runway *runway);
