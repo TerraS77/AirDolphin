@@ -142,7 +142,6 @@ int main(){
                 grantNextInAFRQAccessToRunway(airport, runway);
         }
         // Planes get stateRemainTimeInMs decremented
-        runway *run0 = getDataAtIndex(*airport->runways, 0);
         for(int p = 0; p < simulation.planeActors->length; p++){
             sim_planeActor *planeActor = getDataAtIndex(*simulation.planeActors, p);
             planeActor->stateRemainTimeInMs -= simulation.simulationSpeedInMs;
