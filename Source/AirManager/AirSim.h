@@ -1,4 +1,5 @@
 #include "AirManager.h"
+#include "cmdPrint.h"
 
 typedef struct{
     unsigned int simulationSpeedInMs;

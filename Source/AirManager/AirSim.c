@@ -85,30 +85,6 @@ void testCycle(){
     unitaryTestCycle(airport, newPlane("T_AIRL", AIRLINER, 50, 50, FLYING));
 }
 
-void debugPlaneStatus(plane plane)
-{
-    switch (plane.status)
-    {
-    case FLYING:
-        printf("FLYING");
-        break;
-    case WAITING_LANDING:
-        printf("WAITING_LANDING");
-        break;
-    case LANDING:
-        printf("LANDING");
-        break;
-    case PARKING:
-        printf("PARKING");
-        break;
-    case WAITING_TAKEOFF:
-        printf("WAITING_TAKEOFF");
-        break;
-    case TAKEOFF:
-        printf("TAKEOFF");
-        break;
-    }
-}
 
 int main(){
     simulation simulation = initSimulation(10,2,3,2,5);
@@ -117,7 +93,15 @@ int main(){
     airport *airport = simulation.airport;
     //Main Cycle
     while (1) {
-        printf("================= NewTurn ================\n");
+        printf("\n\t  ╔════════════════════════════════════════════════╗");
+        printf("\n\t  ║  ╔══════════════════════════════════════════╗  ║");
+        printf("\n\t  ║  ║  ╔════════════════════════════════════╗  ║  ║");
+        printf("\n\t  ║  ║  ║\033[7m                                    \033[0m║  ║  ║");
+        printf("\n\t  ║  ║  ║\033[7m              \033[1;4mNEW TURN\033[0m\033[7m              \033[0m║  ║  ║");
+        printf("\n\t  ║  ║  ║\033[7m                                    \033[0m║  ║  ║");
+        printf("\n\t  ║  ║  ╚════════════════════════════════════╝  ║  ║");
+        printf("\n\t  ║  ╚══════════════════════════════════════════╝  ║");
+        printf("\n\t  ╚════════════════════════════════════════════════╝\n\n");
         // Every runway resolve xor request resolve
         for(int rw = 0; rw < airport->runways->length; rw++){
             runway *runway = getDataAtIndex(*airport->runways, rw);
@@ -145,8 +129,6 @@ int main(){
         for(int p = 0; p < simulation.planeActors->length; p++){
             sim_planeActor *planeActor = getDataAtIndex(*simulation.planeActors, p);
             planeActor->stateRemainTimeInMs -= simulation.simulationSpeedInMs;
-            debugPlaneStatus(*planeActor->plane);
-            printf(" | %s : %d\n", planeActor->plane->matriculation, planeActor->stateRemainTimeInMs);
         }
         // stateRemainTimeInMs <= 0 state is updated 
         for(int p = 0; p < simulation.planeActors->length; p++) {
@@ -154,6 +136,7 @@ int main(){
             if(planeActor->stateRemainTimeInMs <= 0)
                 planeNextAction(airport, planeActor);
         }
+        debugPrintAirport(*simulation.airport);
         msleep(simulation.simulationSpeedInMs);
     }
 }
