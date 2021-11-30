@@ -22,12 +22,14 @@ typedef struct{
     int y;
 }Anchor;
 
+typedef enum{LEFT,CENTER, RIGHT} textAlign;
 void drawSquare(int x, int y, int width);
 void DrawCircle(int32_t centreX, int32_t centreY, int32_t radius);
 void closeWindow();
 void SetDrawColor(SDL_Color Color);
 void PrintRectangle(Anchor CSG, Anchor CID,SDL_Color couleur,int border);
 void printProgress(Anchor CSG, Anchor CID,SDL_Color couleur,int border,float pourcentage);
+void printText (char *text, int fontSize, SDL_Color color);
 
 void initWindow(int width, int height)
 {
@@ -54,16 +56,20 @@ void updateAirportRenderer(simulation simulation){
 
     PrintRectangle((Anchor){1000,400},(Anchor){1300,600},CYAN,4);
     printProgress((Anchor){200,400},(Anchor){400,405},CYAN,1,0.5);
-    SDL_RenderPresent(renderer);
+    printText("HEY", 40, CYAN);
 
+    SDL_RenderPresent(renderer);
+}
+
+void printText (char *text, int fontSize, SDL_Color color, Anchor origin, textAlign align) {
     TTF_Init();    
-    TTF_Font *police = TTF_OpenFont("scv.ttf",125);
-    // On indique la couleur du texte
-    SDL_Color rouge={255,0,0,255}; // R,G,B,A
+    TTF_Font *font = TTF_OpenFont("scv.ttf",fontSize);
+    int w,h;
+    TTF_SizeText(font,text,&w,&h);
     // On indique la position du texte
-    SDL_Rect position_texte={500,500,300,50}; // position x , position y, longueur, largeur
+    SDL_Rect position_texte={500,500,w,h}; // position x , position y, longueur, largeur
     // On colle le texte dans une surface
-    SDL_Surface *surface=TTF_RenderUTF8_Blended(police, "Runways", rouge);
+    SDL_Surface *surface = TTF_RenderUTF8_Blended(font, text, color);
     // On colle la surface sur une texture
     SDL_Texture *texture=SDL_CreateTextureFromSurface(renderer,surface);
     // On colle la texture sur l'écran avec la position renseignée
@@ -74,7 +80,6 @@ void updateAirportRenderer(simulation simulation){
     SDL_DestroyTexture(texture);
     SDL_FreeSurface(surface);
     TTF_Quit();
-
 
 }
 
