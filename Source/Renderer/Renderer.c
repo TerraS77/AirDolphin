@@ -6,13 +6,27 @@
 #include <time.h>
 #include "renderer.h"
 
+SDL_Color YELLOW = {255,255,0,255};
+SDL_Color CYAN = {0,255,255,255};
+SDL_Color WHITE = {255,255,255,255};
+SDL_Color BLACK = {0,0,0,255};
+SDL_Color GREY = {155,155,155,255};
+
 int wWidth, wHeight;
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
 
+typedef struct{
+    int x;
+    int y;
+}Anchor;
+
 void drawSquare(int x, int y, int width);
 void DrawCircle(int32_t centreX, int32_t centreY, int32_t radius);
 void closeWindow();
+void SetDrawColor(SDL_Color Color);
+void PrintRectangle(Anchor CSG, Anchor CID,SDL_Color couleur,int border);
+void printProgress(Anchor CSG, Anchor CID,SDL_Color couleur,int border,float pourcentage);
 
 void initWindow(int width, int height)
 {
@@ -23,20 +37,82 @@ void initWindow(int width, int height)
         window = NULL;
         renderer = NULL;
         SDL_CreateWindowAndRenderer(width, height, 0, &window, &renderer);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SetDrawColor(BLACK);
         SDL_RenderClear(renderer);
     }
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 }
 
 void updateAirportRenderer(simulation simulation){
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SetDrawColor(BLACK);
     SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 255,127,80,255);
+    SetDrawColor(YELLOW);
     drawSquare(500, 500, 100);
     DrawCircle(200, 200, 20);
+  
+
+    PrintRectangle((Anchor){1000,400},(Anchor){1300,600},CYAN,4);
+    printProgress((Anchor){200,400},(Anchor){400,405},CYAN,1,0.5);
     SDL_RenderPresent(renderer);
 }
+
+void SetDrawColor(SDL_Color Color){
+    SDL_SetRenderDrawColor(renderer, Color.r,Color.g,Color.b,Color.a);    
+}
+
+void PrintRectangle(Anchor CSG, Anchor CID,SDL_Color couleur,int border){
+    
+    SetDrawColor(couleur);
+
+    SDL_Rect rect1 = {(CSG.x),CSG.y,abs(CID.x-CSG.x),border};
+    SDL_RenderFillRect(renderer, &rect1);
+
+    SDL_Rect rect2 = {(CSG.x),CID.y-border,abs(CID.x-CSG.x),border};
+    SDL_RenderFillRect(renderer, &rect2);
+
+
+
+    SDL_Rect rect3 = {(CSG.x),CSG.y,border,abs(CID.y-CSG.y)};
+    SDL_RenderFillRect(renderer, &rect3);
+
+    SDL_Rect rect4 = {(CID.x)-border,CSG.y,border,abs(CID.y-CSG.y)};
+    SDL_RenderFillRect(renderer, &rect4);
+     }
+    
+
+    void printProgress(Anchor CSG, Anchor CID,SDL_Color couleur,int border,float pourcentage){
+
+    SetDrawColor(couleur);
+
+    SDL_Rect rect1 = {(CSG.x),CSG.y,abs(CID.x-CSG.x),border};
+    SDL_RenderFillRect(renderer, &rect1);
+
+    SDL_Rect rect2 = {(CSG.x),CID.y-border,abs(CID.x-CSG.x),border};
+    SDL_RenderFillRect(renderer, &rect2);
+
+
+
+    SDL_Rect rect3 = {(CSG.x),CSG.y,border+pourcentage*((CID.x-border)-(CSG.x+border)),abs(CID.y-CSG.y)};
+    SDL_RenderFillRect(renderer, &rect3);
+
+    SDL_Rect rect4 = {(CID.x)-border,CSG.y,border,abs(CID.y-CSG.y)};
+    SDL_RenderFillRect(renderer, &rect4);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void drawSquare(int x, int y, int width)
 {
