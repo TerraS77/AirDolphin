@@ -5,6 +5,7 @@
 #include <math.h>
 #include <time.h>
 #include "renderer.h"
+#include <SDL2/SDL_ttf.h>
 
 SDL_Color YELLOW = {255,255,0,255};
 SDL_Color CYAN = {0,255,255,255};
@@ -54,6 +55,27 @@ void updateAirportRenderer(simulation simulation){
     PrintRectangle((Anchor){1000,400},(Anchor){1300,600},CYAN,4);
     printProgress((Anchor){200,400},(Anchor){400,405},CYAN,1,0.5);
     SDL_RenderPresent(renderer);
+
+    TTF_Init();    
+    TTF_Font *police = TTF_OpenFont("scv.ttf",125);
+    // On indique la couleur du texte
+    SDL_Color rouge={255,0,0,255}; // R,G,B,A
+    // On indique la position du texte
+    SDL_Rect position_texte={500,500,300,50}; // position x , position y, longueur, largeur
+    // On colle le texte dans une surface
+    SDL_Surface *surface=TTF_RenderUTF8_Blended(police, "Runways", rouge);
+    // On colle la surface sur une texture
+    SDL_Texture *texture=SDL_CreateTextureFromSurface(renderer,surface);
+    // On colle la texture sur l'écran avec la position renseignée
+    SDL_RenderCopy(renderer,texture,NULL,&position_texte);
+    // On rafraichit l'écran
+    SDL_RenderPresent(renderer);
+    // On libère la mémoire
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(surface);
+    TTF_Quit();
+
+
 }
 
 void SetDrawColor(SDL_Color Color){
