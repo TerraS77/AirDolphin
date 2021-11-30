@@ -1,26 +1,13 @@
-void randomRegistration (char imma[]);
+#include "AirManager.h"
+
+#if !defined( BDDMANAGER_H )
+#define BDDMANAGER_H
+#include "AirSim.h"
+
+char * randomRegistration ();
 int randomInt (int min,int max); 
+void savePlaneInFile(airport *airport);
+void *openChainFile(char *fileName,simulation* simulation);
 
+#endif
 
-
-// char* randomRegistration (){
-// 	char* mat=malloc(6);
-//      *mat = (char) ('A' + randomInt(0,25));
-//      *(mat+1) = 'A' + (randomInt(0,25));
-//      mat[2] = '-';
-//      mat[3] = 'A' + (random()%26);
-//      mat[4] = 'A' + (random()%26);
-//      mat[5] = 'A' + (random()%26);
-//      mat[6] ='\0';    
-// return mat;	
-// }
-
-// int randomInt (int min,int max){
-// 	int result;
-// 	static int A;
-// 	srand( time( NULL )+A );
-// 	A++;
-// 	if(A>100)A=0;
-// 	result = (rand() % (max - min)) + min;
-// 	return result;
-// 	}
