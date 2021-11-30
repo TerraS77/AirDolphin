@@ -13,9 +13,7 @@ void printRunwaysList(list runwaysList, bool completeLogs);
 void debugPrintPlane(plane *plane)
 {
     printf("\n\t\t     #############################");
-    printf("\n\t\t     |                           |");
     printf("\n\t\t     |\033[1m   Informations of plane  \033[0m |");
-    printf("\n\t\t     |                           |");
     printf("\n\t\t     #############################\n\n\n");
     printf("\t\t\t\033[1mMatriculation :\033[0m %s\n", plane->matriculation);
     printf("\t\t\t\033[1mNumber of Passengers :\033[0m %u\n", plane->passengers);
@@ -69,9 +67,7 @@ void debugPlaneStatus(planeStatus plane)
 void debugPrintRunway(runway *runway)
 {   
     printf("\n\t\t     =============================");
-    printf("\n\t\t    -|                           |-");
     printf("\n\t\t   | |\033[1m  Informations of runway\033[0m   | |");
-    printf("\n\t\t    -|                           |-");
     printf("\n\t\t     =============================\n\n\n");
     printf("\t\t\t\033[1mID :\033[0m %d\n", runway->id);
     printf("\t\t\t\033[1mLenght :\033[0m %f\n", runway->length);
@@ -101,9 +97,7 @@ void debugRunwayType(runwayType runway)
 void debugPrintAirport(airport airport)
 {
     printf("\n\t\t     ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤");
-    printf("\n\t\t    ¤|                           |¤");
     printf("\n\t\t  ¤ ¤|\033[1m  Informations of airport  \033[0m|¤ ¤");
-    printf("\n\t\t    ¤|                           |¤");
     printf("\n\t\t     ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤\n\n\n");
     printf("\t\t\t\033[1mSize of parking :\033[0m %u\n", airport.parkingSize);
     printf("\n\n\t\t    ~~~~ \033[4mPlanes in the parking\033[0m ~~~~\n\n");

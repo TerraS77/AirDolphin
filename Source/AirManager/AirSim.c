@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "AirSim.h"
-
+#include "Renderer.h"
 
 int cmprPointer(void *data1, void *data2){
     if(data1 == data2) return 0;
@@ -72,35 +72,15 @@ int msleep(unsigned int tms) {
   return usleep(tms * 1000);
 }
 
-void unitaryTestCycle(airport *airport, plane *plane){
-
-}
-
-
-void testCycle(){
-    airport *airport = newAirport(5);
-    buildAirport(airport, 1,1,1);
-    unitaryTestCycle(airport, newPlane("T_LIGHT", LIGHT, 50, 50, FLYING));
-    unitaryTestCycle(airport, newPlane("T_VIP", BUSINESS, 50, 50, FLYING));
-    unitaryTestCycle(airport, newPlane("T_AIRL", AIRLINER, 50, 50, FLYING));
-}
-
 
 int main(){
     simulation simulation = initSimulation(10,2,3,2,5);
     simulation.simulationSpeedInMs = 500;
-    // testCycle();
     airport *airport = simulation.airport;
-    //Main Cycle
+    initWindow(1920,1080);
     while (1) {
         printf("\n\t  ╔════════════════════════════════════════════════╗");
-        printf("\n\t  ║  ╔══════════════════════════════════════════╗  ║");
-        printf("\n\t  ║  ║  ╔════════════════════════════════════╗  ║  ║");
-        printf("\n\t  ║  ║  ║\033[7m                                    \033[0m║  ║  ║");
-        printf("\n\t  ║  ║  ║\033[7m              \033[1;4mNEW TURN\033[0m\033[7m              \033[0m║  ║  ║");
-        printf("\n\t  ║  ║  ║\033[7m                                    \033[0m║  ║  ║");
-        printf("\n\t  ║  ║  ╚════════════════════════════════════╝  ║  ║");
-        printf("\n\t  ║  ╚══════════════════════════════════════════╝  ║");
+        printf("\n\t  ║                    NEW TURN                    ║");
         printf("\n\t  ╚════════════════════════════════════════════════╝\n\n");
         // Every runway resolve xor request resolve
         for(int rw = 0; rw < airport->runways->length; rw++){
@@ -111,16 +91,18 @@ int main(){
                     if(canAPlaneInLQLandHere(airport, runway)) TODO = 2; //!NEED CHOICE
                     else TODO = 2;
                 } else if(canAPlaneInLQLandHere(airport, runway)) TODO = 1;
-                switch (TODO) {
-                    case 1:
-                        grantNextInLQAccessToRunway(airport, runway);
-                        break;
-                    case 2:
-                        grantTakeoffForRunway(runway);
-                        break;
-                }
-                if(TODO)
+
+                if(TODO){
+                    switch (TODO) {
+                        case 1:
+                            grantNextInLQAccessToRunway(airport, runway);
+                            break;
+                        case 2:
+                            grantTakeoffForRunway(runway);
+                            break;
+                    }
                     getSimPlaneActorInList(runway->planeLT, &simulation)->stateRemainTimeInMs = runway->length/2;
+                }
             }
             if(!isRunwayQueueFull(runway))
                 grantNextInAFRQAccessToRunway(airport, runway);
@@ -138,5 +120,6 @@ int main(){
         }
         debugPrintAirport(*simulation.airport);
         msleep(simulation.simulationSpeedInMs);
+        updateAirportRenderer(simulation);
     }
 }

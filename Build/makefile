@@ -1,17 +1,17 @@
 # Module List & Files
-moduleList = AirManager Control Renderer SmartList
+moduleList = AirManager Control SmartList renderer
 moduleListC = $(moduleList:=/*.c)
 moduleListPathC = $(addprefix ../Source/,$(moduleListC))
 moduleListH = $(moduleList:=/*.h)
 moduleListPathH = $(addprefix ../Source/,$(moduleListH))
 
 # files to compile
-subModuleList = AirSim AirManager Control Renderer SmartList
+subModuleList = AirSim AirManager Control SmartList cmdPrint renderer
 subListC = $(subModuleList:=.c)
 
 # config
-flags = -lm
-# flags = -lm $(shell pkg-config --cflags --libs sdl2)
+# flags = -lm
+flags = -lm $(shell pkg-config --cflags --libs sdl2)
 
 # EXECUTABLE
 AirDolphinApp:

@@ -1,2 +1,14 @@
 .vscode/settings.json
 Build/AirDolphinApp
+Build/SmartList.h
+Build/Renderer.h
+Build/SmartList.c
+Build/Renderer.c
+Build/Control.h
+Build/cmdPrint.h
+Build/cmdPrint.c
+Build/AirManager.c
+Build/AirManager.h
+Build/AirSim.c
+Build/AirSim.h
+Build/Control.c
