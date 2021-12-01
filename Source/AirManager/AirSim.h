@@ -15,4 +15,5 @@ typedef struct{
     int stateLengthTimeInMs;
 } sim_planeActor;
 
+sim_planeActor *getSimPlaneActorInList(plane *plane, simulation *simulation);
 #endif
