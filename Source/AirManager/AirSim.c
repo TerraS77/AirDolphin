@@ -74,15 +74,16 @@ int msleep(unsigned int tms) {
 
 
 int main(){
-    simulation simulation = initSimulation(10,2,3,2,5);
-    simulation.simulationSpeedInMs = 500;
+    simulation simulation = initSimulation(10,2,3,2,10);
+    simulation.simulationSpeedInMs = 10;
     airport *airport = simulation.airport;
     initWindow(1920,1080);
     while (1) {
-        printf("\n\t  ╔════════════════════════════════════════════════╗");
-        printf("\n\t  ║                    NEW TURN                    ║");
-        printf("\n\t  ╚════════════════════════════════════════════════╝\n\n");
+        printf("\n ╔════════════════════════════════════════════════╗");
+        printf("\n ║                    NEW TURN                    ║");
+        printf("\n ╚════════════════════════════════════════════════╝\n\n");
         // Every runway resolve xor request resolve
+        printf("└\n");
         for(int rw = 0; rw < airport->runways->length; rw++){
             runway *runway = getDataAtIndex(*airport->runways, rw);
             int TODO = 0; //0 Nothing, 1 getNextLandQ, 2 getNextTakeoffK
@@ -107,6 +108,8 @@ int main(){
             if(!isRunwayQueueFull(runway))
                 grantNextInAFRQAccessToRunway(airport, runway);
         }
+        printf("┌\n");
+        printf("└\n");
         // Planes get stateRemainTimeInMs decremented
         for(int p = 0; p < simulation.planeActors->length; p++){
             sim_planeActor *planeActor = getDataAtIndex(*simulation.planeActors, p);
@@ -118,6 +121,7 @@ int main(){
             if(planeActor->stateRemainTimeInMs <= 0)
                 planeNextAction(airport, planeActor);
         }
+        printf("┌\n");
         debugPrintAirport(*simulation.airport);
         msleep(simulation.simulationSpeedInMs);
         updateAirportRenderer(simulation);
