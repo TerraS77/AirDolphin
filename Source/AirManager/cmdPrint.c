@@ -9,18 +9,18 @@ void debugPlaneStatus(planeStatus plane);
 void debugRunwayType(runwayType runway);
 void printPlanesList(list planesList, bool completeLogs);
 void printRunwaysList(list runwaysList, bool completeLogs);
+void printParkingsList(airport airport, bool completeLogs);
 
 void debugPrintPlane(plane *plane)
 {
-    printf("\n\t\t     #############################");
-    printf("\n\t\t     |\033[1m   Informations of plane  \033[0m |");
-    printf("\n\t\t     #############################\n\n\n");
-    printf("\t\t\t\033[1mMatriculation :\033[0m %s\n", plane->matriculation);
-    printf("\t\t\t\033[1mNumber of Passengers :\033[0m %u\n", plane->passengers);
-    printf("\t\t\t\033[1mNumber Max of Passengers :\033[0m %u\n", plane->passengers);
+    printf("│ │ * [%s] : ", plane->matriculation);
     debugPlaneType(plane->type);
+    printf("\n");
+    printf("│ │ │\033[1m Passengers :\033[0m %u/%u\n", plane->passengers, plane->passengersMax);
     debugPlaneStatus(plane->status);
-    if(plane->targetRunway) printf("\t\t\t\033[1mTargetRunway :\033[0m %d\n", ((runway*) plane->targetRunway)->id);
+    if (plane->targetRunway)
+        printf(" on runway %d", ((runway *)plane->targetRunway)->id);
+    printf("\n│ │ │\n");
 }
 
 void debugPlaneType(planeType plane)
@@ -28,13 +28,13 @@ void debugPlaneType(planeType plane)
     switch (plane)
     {
     case AIRLINER:
-        printf("\t\t\t\033[1mPlaneType :\033[0m AIRLINER\n");
+        printf("AIRLINER");
         break;
-    case MEDIUM:
-        printf("\t\t\t\033[1mPlaneType :\033[0m MEDIUM\n");
+    case BUSINESS:
+        printf("BUSINESS");
         break;
-    case LARGE:
-        printf("\t\t\t\033[1mPlaneType :\033[0m LARGE\n");
+    case LIGHT:
+        printf("LIGHT");
         break;
     }
 }
@@ -44,38 +44,47 @@ void debugPlaneStatus(planeStatus plane)
     switch (plane)
     {
     case FLYING:
-        printf("\t\t\t\033[1mPlaneStatus :\033[0m FLYING\n");
+        printf("│ │ │ FLYING");
         break;
     case WAITING_LANDING:
-        printf("\t\t\t\033[1mPlaneStatus :\033[0m WAITING_LANDING\n");
+        printf("│ │ │ WAITING_LANDING");
         break;
     case LANDING:
-        printf("\t\t\t\033[1mPlaneStatus :\033[0m LANDING\n");
+        printf("│ │ │ LANDING");
         break;
     case PARKING:
-        printf("\t\t\t\033[1mPlaneStatus :\033[0m PARKING\n");
+        printf("│ │ │ PARKING");
         break;
     case WAITING_TAKEOFF:
-        printf("\t\t\t\033[1mPlaneStatus :\033[0m WAITING_TAKEOFF\n");
+        printf("│ │ │ WAITING_TAKEOFF");
         break;
     case TAKEOFF:
-        printf("\t\t\t\033[1mPlaneStatus :\033[0m TAKEOFF\n");
+        printf("│ │ │ TAKEOFF");
         break;
     }
 }
 
 void debugPrintRunway(runway *runway)
-{   
-    printf("\n\t\t     =============================");
-    printf("\n\t\t   | |\033[1m  Informations of runway\033[0m   | |");
-    printf("\n\t\t     =============================\n\n\n");
-    printf("\t\t\t\033[1mID :\033[0m %d\n", runway->id);
-    printf("\t\t\t\033[1mLenght :\033[0m %f\n", runway->length);
-    printf("\t\t\t\033[1mWidth:\033[0m %f\n", runway->width);
-    printf("\t\t\t\033[1mMax Take Off Queue:\033[0m %u\n", runway->maxTakeoffQueue);
+{
+    printf("│ │ * [%d] : ", runway->id);
     debugRunwayType(runway->type);
-    printPlanesList(*runway->takeoffQueue, false);
-    printf("\t\t\t\033[1mMatriculation :\033[0m %s\n", runway->planeLT->matriculation);
+    printf("\n");
+    printf("│ │ │ w%.1fm, l%.1fm\n", runway->width, runway->length);
+    if(runway->planeLT) printf("│ │ │ \033[1mOn Runway : \033[0m%s\n", runway->planeLT->matriculation);
+    printf("│ │ │ \033[1mQueue : \033[0m");
+    printf("%d/%u\n", runway->takeoffQueue->length, runway->maxTakeoffQueue);
+    if (runway->takeoffQueue->length)
+    {
+        printf("│ │ │└┐\n");
+        for (int n = 0; n < runway->takeoffQueue->length; n++)
+        {
+            plane *plane = getDataAtIndex(*runway->takeoffQueue, n);
+            printf("│ │ │ * \033[3m%s\033[0m\n", plane->matriculation);
+        }
+        printf("│ │ │┌┘\n");
+    }
+
+    printf("│ │ │\n");
 }
 
 void debugRunwayType(runwayType runway)
@@ -83,33 +92,38 @@ void debugRunwayType(runwayType runway)
     switch (runway)
     {
     case SMALL:
-        printf("\t\t\t\033[1mRunwayType :\033[0m SMALL \n");
+        printf("SMALL");
         break;
     case MEDIUM:
-        printf("\t\t\t\033[1mRunwayType :\033[0m MEDIUM\n");
+        printf("MEDIUM");
         break;
     case LARGE:
-        printf("\t\t\t\033[1mRunwayType :\033[0m LARGE \n");
+        printf("LARGE");
         break;
     }
 }
 
 void debugPrintAirport(airport airport)
 {
-    printf("\n\t\t     ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤");
-    printf("\n\t\t  ¤ ¤|\033[1m  Informations of airport  \033[0m|¤ ¤");
-    printf("\n\t\t     ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤\n\n\n");
-    printf("\t\t\t\033[1mSize of parking :\033[0m %u\n", airport.parkingSize);
-    printf("\n\n\t\t    ~~~~ \033[4mPlanes in the parking\033[0m ~~~~\n\n");
-    printPlanesList(*airport.parkingPlanes, false); // afficher la liste des matricules parkings
-    printf("\n\n\t\t       ~~~~ \033[4mActives Runways\033[0m ~~~~\n\n");
-    printRunwaysList(*airport.runways, true); // afficher la liste des pistes en état DebugRunway
-    printf("\n\n\t\t       ~~~~ \033[4mPlanes in range\033[0m ~~~~\n\n");
-    printPlanesList(*airport.parkingPlanes, true); // afficher la liste des matricules de tous les avions DebugPlane
-    printf("\n\n\t\t     ~~~~ \033[4mPlanes Landing Queue\033[0m ~~~~\n\n");
-    printPlanesList(*airport.landingQueue, false); // afficher la liste des matricules dans la takeoffqueue
-    printf("\n\n\t     ~~~~ \033[4mPlanes In Waiting Of Take Off Queue\033[0m ~~~~\n\n"); 
-    printPlanesList(*airport.waitForRunwayQueue, false); // afficher la liste des matricules en attente d'être dans la takeoffqueue
+    printf("\n│\033[1mAirport  \033[0m\n");
+    printf("│└┐\n│ \033[1m* In Bound (%d planes)\033[0m\n", airport.planesInRange->length);
+    printf("│ │└┐\n");
+    printPlanesList(*airport.planesInRange, true);
+    printf("│ │┌┘\n");
+    printf("│ \033[1m* Parking (%d/%u)\033[0m\n", airport.parkingPlanes->length, airport.parkingSize);
+    printf("│ │└┐\n");
+    printParkingsList(airport, false);
+    printf("│ │┌┘\n");
+    printf("│ \033[1m* In Waiting for Landing (%d planes)\033[0m\n", airport.landingQueue->length);
+    printf("│ │└┐\n");
+    printPlanesList(*airport.landingQueue, true);
+    printf("│ │┌┘\n");
+    printf("│ \033[1m* Runways (%d runways)\033[0m\n", airport.runways->length);
+    printf("│ │└┐\n");
+    printRunwaysList(*airport.runways, true);
+    printf("│ │┌┘\n");
+    printf("│┌┘\n");
+    printf("│\n");
 }
 
 void printPlanesList(list planesList, bool completeLogs)
@@ -117,10 +131,16 @@ void printPlanesList(list planesList, bool completeLogs)
     for (int n = 0; n < planesList.length; n++)
     {
         plane *plane = getDataAtIndex(planesList, n);
-        if(completeLogs) debugPrintPlane(plane);
-        else printf("\t\t\t\t%s\n", plane->matriculation);
+        if (completeLogs)
+            debugPrintPlane(plane);
+        else
+        {
+            printf("│ │ │\033[3m %s\033[0m\n", plane->matriculation);
+        }
     }
-    if(completeLogs) {}
+    if (completeLogs)
+    {
+    }
 }
 
 void printRunwaysList(list runwaysList, bool completeLogs)
@@ -128,8 +148,36 @@ void printRunwaysList(list runwaysList, bool completeLogs)
     for (int n = 0; n < runwaysList.length; n++)
     {
         runway *runway = getDataAtIndex(runwaysList, n);
-        if(completeLogs) debugPrintRunway(runway);
-        else printf("\t\t\t\t%d\n", runway->id);
+        if (completeLogs)
+            debugPrintRunway(runway);
+        else
+            printf("│ │ │%d\n", runway->id);
     }
-    if(completeLogs) {}
+    if (completeLogs)
+    {
+    }
+}
+
+void printParkingsList(airport airport, bool completeLogs)
+{
+    for (int n = 0; n < airport.parkingPlanes->length; n++)
+    {
+        plane *plane = getDataAtIndex(*airport.parkingPlanes, n);
+        if (completeLogs)
+            debugPrintPlane(plane);
+        else
+        {
+            if (searchDataInList(*airport.waitForRunwayQueue, plane))
+            {
+                printf("│ │ * \033[3;33m%s\033[0m\n", plane->matriculation);
+            }
+            else
+            {
+                printf("│ │ * \033[3m%s\033[0m\n", plane->matriculation);
+            }
+        }
+    }
+    if (completeLogs)
+    {
+    }
 }

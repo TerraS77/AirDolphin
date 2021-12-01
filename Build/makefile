@@ -11,7 +11,7 @@ subListC = $(subModuleList:=.c)
 
 # config
 # flags = -lm
-flags = -lm $(shell pkg-config --cflags --libs sdl2)
+flags = -lm $(shell pkg-config --cflags --libs sdl2) -lSDL2_ttf
 
 # EXECUTABLE
 AirDolphinApp:

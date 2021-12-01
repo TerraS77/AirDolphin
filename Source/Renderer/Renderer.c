@@ -5,14 +5,31 @@
 #include <math.h>
 #include <time.h>
 #include "renderer.h"
+#include <SDL2/SDL_ttf.h>
+
+SDL_Color YELLOW = {255,255,0,255};
+SDL_Color CYAN = {0,255,255,255};
+SDL_Color WHITE = {255,255,255,255};
+SDL_Color BLACK = {0,0,0,255};
+SDL_Color GREY = {155,155,155,255};
 
 int wWidth, wHeight;
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
 
+typedef struct{
+    int x;
+    int y;
+}Anchor;
+
+typedef enum{LEFT,CENTER, RIGHT} textAlign;
 void drawSquare(int x, int y, int width);
 void DrawCircle(int32_t centreX, int32_t centreY, int32_t radius);
 void closeWindow();
+void SetDrawColor(SDL_Color Color);
+void PrintRectangle(Anchor CSG, Anchor CID,SDL_Color couleur,int border);
+void printProgress(Anchor CSG, Anchor CID,SDL_Color couleur,int border,float pourcentage);
+void printText (char *text, int fontSize, SDL_Color color, Anchor origin, textAlign align);
 
 void initWindow(int width, int height)
 {
@@ -23,20 +40,123 @@ void initWindow(int width, int height)
         window = NULL;
         renderer = NULL;
         SDL_CreateWindowAndRenderer(width, height, 0, &window, &renderer);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SetDrawColor(BLACK);
         SDL_RenderClear(renderer);
     }
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 }
 
 void updateAirportRenderer(simulation simulation){
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SetDrawColor(BLACK);
     SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 255,127,80,255);
-    drawSquare(500, 500, 100);
+    SetDrawColor(YELLOW);
+    
     DrawCircle(200, 200, 20);
+  
+
+    PrintRectangle((Anchor){1000,400},(Anchor){1300,600},CYAN,4);
+    printProgress((Anchor){200,400},(Anchor){400,405},CYAN,1,0.5);
+    printText ("LEFT",20, YELLOW, (Anchor){400,500},LEFT);
+    printText ("CENTER",20, YELLOW, (Anchor){500,500},CENTER);
+    printText ("RIGHT",20, YELLOW, (Anchor){600,500},RIGHT);
     SDL_RenderPresent(renderer);
 }
+
+void printText (char *text, int fontSize, SDL_Color color, Anchor origin, textAlign align) {
+    TTF_Init();    
+    TTF_Font *font = TTF_OpenFont("scv.ttf",fontSize);
+    int w,h;
+    TTF_SizeText(font,text,&w,&h);
+    SDL_Rect position_texte;
+    // On indique la position du texte
+    switch (align)
+    {
+    case LEFT:
+        position_texte=(SDL_Rect){origin.x - w,origin.y-0.5*h,w,h};// position x , position y, longueur, largeur
+        SDL_RenderDrawPoint(renderer, origin.x,origin.y);
+        break;
+    case CENTER:
+        position_texte=(SDL_Rect){origin.x-0.5*w,origin.y-0.5*h,w,h};
+        SDL_RenderDrawPoint(renderer, origin.x,origin.y);
+        break;
+    case RIGHT:
+        position_texte=(SDL_Rect){origin.x,origin.y-0.5*h,w,h};
+        SDL_RenderDrawPoint(renderer, origin.x,origin.y);
+        break;
+    }
+     
+    // On colle le texte dans une surface
+    SDL_Surface *surface = TTF_RenderUTF8_Blended(font, text, color);
+    // On colle la surface sur une texture
+    SDL_Texture *texture=SDL_CreateTextureFromSurface(renderer,surface);
+    // On colle la texture sur l'écran avec la position renseignée
+    SDL_RenderCopy(renderer,texture,NULL,&position_texte);
+    // On rafraichit l'écran
+    SDL_RenderPresent(renderer);
+    // On libère la mémoire
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(surface);
+    TTF_Quit();
+
+}
+
+void SetDrawColor(SDL_Color Color){
+    SDL_SetRenderDrawColor(renderer, Color.r,Color.g,Color.b,Color.a);    
+}
+
+void PrintRectangle(Anchor CSG, Anchor CID,SDL_Color couleur,int border){
+    
+    SetDrawColor(couleur);
+
+    SDL_Rect rect1 = {(CSG.x),CSG.y,abs(CID.x-CSG.x),border};
+    SDL_RenderFillRect(renderer, &rect1);
+
+    SDL_Rect rect2 = {(CSG.x),CID.y-border,abs(CID.x-CSG.x),border};
+    SDL_RenderFillRect(renderer, &rect2);
+
+
+
+    SDL_Rect rect3 = {(CSG.x),CSG.y,border,abs(CID.y-CSG.y)};
+    SDL_RenderFillRect(renderer, &rect3);
+
+    SDL_Rect rect4 = {(CID.x)-border,CSG.y,border,abs(CID.y-CSG.y)};
+    SDL_RenderFillRect(renderer, &rect4);
+     }
+    
+
+    void printProgress(Anchor CSG, Anchor CID,SDL_Color couleur,int border,float pourcentage){
+
+    SetDrawColor(couleur);
+
+    SDL_Rect rect1 = {(CSG.x),CSG.y,abs(CID.x-CSG.x),border};
+    SDL_RenderFillRect(renderer, &rect1);
+
+    SDL_Rect rect2 = {(CSG.x),CID.y-border,abs(CID.x-CSG.x),border};
+    SDL_RenderFillRect(renderer, &rect2);
+
+
+
+    SDL_Rect rect3 = {(CSG.x),CSG.y,border+pourcentage*((CID.x-border)-(CSG.x+border)),abs(CID.y-CSG.y)};
+    SDL_RenderFillRect(renderer, &rect3);
+
+    SDL_Rect rect4 = {(CID.x)-border,CSG.y,border,abs(CID.y-CSG.y)};
+    SDL_RenderFillRect(renderer, &rect4);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void drawSquare(int x, int y, int width)
 {
