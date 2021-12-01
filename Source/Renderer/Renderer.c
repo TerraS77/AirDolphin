@@ -50,14 +50,15 @@ void updateAirportRenderer(simulation simulation){
     SetDrawColor(BLACK);
     SDL_RenderClear(renderer);
     SetDrawColor(YELLOW);
-    drawSquare(500, 500, 100);
+    
     DrawCircle(200, 200, 20);
   
 
     PrintRectangle((Anchor){1000,400},(Anchor){1300,600},CYAN,4);
     printProgress((Anchor){200,400},(Anchor){400,405},CYAN,1,0.5);
-    printText("HEY", 40, CYAN);
-
+    printText ("LEFT",20, YELLOW, (Anchor){400,500},LEFT);
+    printText ("CENTER",20, YELLOW, (Anchor){500,500},CENTER);
+    printText ("RIGHT",20, YELLOW, (Anchor){600,500},RIGHT);
     SDL_RenderPresent(renderer);
 }
 
@@ -66,8 +67,24 @@ void printText (char *text, int fontSize, SDL_Color color, Anchor origin, textAl
     TTF_Font *font = TTF_OpenFont("scv.ttf",fontSize);
     int w,h;
     TTF_SizeText(font,text,&w,&h);
+    SDL_Rect position_texte;
     // On indique la position du texte
-    SDL_Rect position_texte={500,500,w,h}; // position x , position y, longueur, largeur
+    switch (align)
+    {
+    case LEFT:
+        position_texte=(SDL_Rect){origin.x - w,origin.y-0.5*h,w,h};// position x , position y, longueur, largeur
+        SDL_RenderDrawPoint(renderer, origin.x,origin.y);
+        break;
+    case CENTER:
+        position_texte=(SDL_Rect){origin.x-0.5*w,origin.y-0.5*h,w,h};
+        SDL_RenderDrawPoint(renderer, origin.x,origin.y);
+        break;
+    case RIGHT:
+        position_texte=(SDL_Rect){origin.x,origin.y-0.5*h,w,h};
+        SDL_RenderDrawPoint(renderer, origin.x,origin.y);
+        break;
+    }
+     
     // On colle le texte dans une surface
     SDL_Surface *surface = TTF_RenderUTF8_Blended(font, text, color);
     // On colle la surface sur une texture
