@@ -29,7 +29,7 @@ void closeWindow();
 void SetDrawColor(SDL_Color Color);
 void PrintRectangle(Anchor CSG, Anchor CID,SDL_Color couleur,int border);
 void printProgress(Anchor CSG, Anchor CID,SDL_Color couleur,int border,float pourcentage);
-void printText (char *text, int fontSize, SDL_Color color);
+void printText (char *text, int fontSize, SDL_Color color, Anchor origin, textAlign align);
 
 void initWindow(int width, int height)
 {
