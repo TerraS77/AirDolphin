@@ -12,6 +12,7 @@ typedef struct{
 typedef struct{
     plane *plane;
     int stateRemainTimeInMs; 
+    int stateLengthTimeInMs;
 } sim_planeActor;
 
 #endif
