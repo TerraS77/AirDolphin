@@ -65,20 +65,20 @@ void updateAirportRenderer(simulation simulation)
     SetDrawColor(BLACK);
     SDL_RenderClear(renderer);
     
-    int x1 = 1496;
+    int x1 = 1450;
     int y1 = 25;
-    int x2 = 34;
+    int x2 = 15;
     int y2 = 25;
     interf_Radar(simulation.airport, (Anchor){x1, y1});
     interf_Parking(simulation, (Anchor){x2, y2});
 
     //TODO : PRINT ALL 6 R
-    interf_Runway(simulation,((runway *)simulation.airport->runways->first->data), (Anchor){620, 25}, 250, 400);
-    interf_Runway(simulation,((runway *)simulation.airport->runways->first->next->data), (Anchor){915, 25}, 250, 400);
-    interf_Runway(simulation,((runway *)simulation.airport->runways->first->next->next->data), (Anchor){1210, 25}, 250, 400);
-    interf_Runway(simulation,((runway *)simulation.airport->runways->last->previous->previous->data), (Anchor){620, 465}, 250, 400);
-    interf_Runway(simulation,((runway *)simulation.airport->runways->last->previous->data), (Anchor){915, 465}, 250, 400);
-    interf_Runway(simulation,((runway *)simulation.airport->runways->last->data), (Anchor){1210, 465}, 250, 400);
+    interf_Runway(simulation,((runway *)simulation.airport->runways->first->data), (Anchor){610, 25}, 250, 400);
+    interf_Runway(simulation,((runway *)simulation.airport->runways->first->next->data), (Anchor){880, 25}, 250, 400);
+    interf_Runway(simulation,((runway *)simulation.airport->runways->first->next->next->data), (Anchor){1150, 25}, 250, 400);
+    interf_Runway(simulation,((runway *)simulation.airport->runways->last->previous->previous->data), (Anchor){610, 465}, 250, 400);
+    interf_Runway(simulation,((runway *)simulation.airport->runways->last->previous->data), (Anchor){880, 465}, 250, 400);
+    interf_Runway(simulation,((runway *)simulation.airport->runways->last->data), (Anchor){1150, 465}, 250, 400);
     
     
     

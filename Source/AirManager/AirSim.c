@@ -83,7 +83,7 @@ int main(){
     simulation simulation = initSimulation(20,1,2,3,50);
     simulation.simulationSpeedInMs = 5;
     airport *airport = simulation.airport;
-    initWindow(1400,1000);
+    initWindow(1850,900);
     while (1) {
         updateAirportRenderer(simulation);
         printf("\n ╔════════════════════════════════════════════════╗");
