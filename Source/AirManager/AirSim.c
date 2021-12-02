@@ -13,6 +13,7 @@ sim_planeActor *newSimPlaneActor(char matriculation[7], planeType type, unsigned
     sim_planeActor *planeActor = malloc(sizeof(sim_planeActor));
     planeActor->plane = newPlane(matriculation, type, passengers, passengersMax, status);
     planeActor->stateRemainTimeInMs = -1;
+    planeActor->stateLengthTimeInMs = -1;
     return planeActor;
 }
 
@@ -39,6 +40,7 @@ simulation initSimulation(int parkingSize, int numberOfSmallRunway, int numberOf
             planeActors = newSimPlaneActor(str, planeNum%3, 10 + (planeNum%3)*50, 10 + 50*(planeNum%3)*(planeNum%3), PARKING); 
         appendInList(newSim.planeActors, planeActors);
         planeActors->stateRemainTimeInMs = 30 + (planeNum%4)*500;
+        planeActors->stateLengthTimeInMs = planeActors->stateRemainTimeInMs;
         loadPlainInAirport(newSim.airport, planeActors->plane);
     }
     return newSim;
@@ -50,19 +52,23 @@ void planeNextAction(airport *airport, sim_planeActor *planeActor){
     case FLYING:
         addPlaneToLandingQueue(airport, planeActor->plane);
         planeActor->stateRemainTimeInMs = -1;
+        planeActor->stateLengthTimeInMs = planeActor->stateRemainTimeInMs;
         break;
     case LANDING:
         planeExitRunway(planeActor->plane->targetRunway, planeActor->plane);
         addPlaneToParking(airport, planeActor->plane);
         planeActor->stateRemainTimeInMs = 5000*(planeActor->plane->type + 1); //TIME WAITING IN PARKING
+        planeActor->stateLengthTimeInMs = planeActor->stateRemainTimeInMs;
         break;
     case PARKING:
         addPlaneToAFRQ(airport, planeActor->plane);
         planeActor->stateRemainTimeInMs = -1;
+        planeActor->stateLengthTimeInMs = planeActor->stateRemainTimeInMs;
         break;
     case TAKEOFF:
         planeExitRunway(planeActor->plane->targetRunway, planeActor->plane);
         planeActor->stateRemainTimeInMs = 50000; //TIME FLYING BEFORE RETURN
+        planeActor->stateLengthTimeInMs = planeActor->stateRemainTimeInMs;
         break;
     }
 }
@@ -74,11 +80,12 @@ int msleep(unsigned int tms) {
 
 
 int main(){
-    simulation simulation = initSimulation(10,2,3,2,10);
-    simulation.simulationSpeedInMs = 10;
+    simulation simulation = initSimulation(10,2,2,2,57);
+    simulation.simulationSpeedInMs = 200;
     airport *airport = simulation.airport;
     initWindow(1920,1080);
     while (1) {
+        updateAirportRenderer(simulation);
         printf("\n ╔════════════════════════════════════════════════╗");
         printf("\n ║                    NEW TURN                    ║");
         printf("\n ╚════════════════════════════════════════════════╝\n\n");
@@ -103,6 +110,7 @@ int main(){
                             break;
                     }
                     getSimPlaneActorInList(runway->planeLT, &simulation)->stateRemainTimeInMs = runway->length/2;
+                    getSimPlaneActorInList(runway->planeLT, &simulation)->stateLengthTimeInMs = runway->length/2;
                 }
             }
             if(!isRunwayQueueFull(runway))
@@ -124,6 +132,5 @@ int main(){
         printf("┌\n");
         debugPrintAirport(*simulation.airport);
         msleep(simulation.simulationSpeedInMs);
-        updateAirportRenderer(simulation);
     }
 }
