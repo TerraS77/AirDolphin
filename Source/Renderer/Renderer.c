@@ -294,10 +294,9 @@ void printText(char *text, int fontSize, SDL_Color color, Anchor origin, textAli
         position_texte = (SDL_Rect){origin.x, origin.y - 0.5 * h, w, h};
         break;
     }
-    SDL_Surface *surface = TTF_RenderUTF8_Solid(font, text, color);
+    SDL_Surface *surface = TTF_RenderUTF8_Blended(font, text, color);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_RenderCopy(renderer, texture, NULL, &position_texte);
-    SDL_RenderPresent(renderer);
     SDL_DestroyTexture(texture);
     SDL_FreeSurface(surface);
     TTF_CloseFont(font);
