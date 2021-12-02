@@ -73,8 +73,16 @@ void updateAirportRenderer(simulation simulation)
     interf_Parking(simulation, (Anchor){x2, y2});
 
     //TODO : PRINT ALL 6 R
-    interf_Runway(simulation,((runway *)simulation.airport->runways->first->data), (Anchor){1000, 25}, 250, 400);
-    interf_Runway(simulation,((runway *)simulation.airport->runways->last->data), (Anchor){1000, 450}, 250, 400);
+    interf_Runway(simulation,((runway *)simulation.airport->runways->first->data), (Anchor){620, 25}, 250, 400);
+    interf_Runway(simulation,((runway *)simulation.airport->runways->first->next->data), (Anchor){915, 25}, 250, 400);
+    interf_Runway(simulation,((runway *)simulation.airport->runways->first->next->next->data), (Anchor){1210, 25}, 250, 400);
+    interf_Runway(simulation,((runway *)simulation.airport->runways->last->previous->previous->data), (Anchor){620, 465}, 250, 400);
+    interf_Runway(simulation,((runway *)simulation.airport->runways->last->previous->data), (Anchor){915, 465}, 250, 400);
+    interf_Runway(simulation,((runway *)simulation.airport->runways->last->data), (Anchor){1210, 465}, 250, 400);
+    
+    
+    
+    
     SDL_RenderPresent(renderer);
 }
 
