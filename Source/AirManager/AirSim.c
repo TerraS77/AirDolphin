@@ -80,10 +80,10 @@ int msleep(unsigned int tms) {
 
 
 int main(){
-    simulation simulation = initSimulation(10,2,2,2,20);
-    simulation.simulationSpeedInMs = 200;
+    simulation simulation = initSimulation(20,1,2,3,50);
+    simulation.simulationSpeedInMs = 5;
     airport *airport = simulation.airport;
-    initWindow(1920,1080);
+    initWindow(1400,1000);
     while (1) {
         updateAirportRenderer(simulation);
         printf("\n ╔════════════════════════════════════════════════╗");
@@ -96,7 +96,7 @@ int main(){
             int TODO = 0; //0 Nothing, 1 getNextLandQ, 2 getNextTakeoffK
             if(isRunwayFree(runway)) {
                 if(runway->takeoffQueue->length) {
-                    if(canAPlaneInLQLandHere(airport, runway)) TODO = 2; //!NEED CHOICE
+                    if(canAPlaneInLQLandHere(airport, runway)) TODO = 1; //!NEED CHOICE
                     else TODO = 2;
                 } else if(canAPlaneInLQLandHere(airport, runway)) TODO = 1;
 
@@ -130,7 +130,7 @@ int main(){
                 planeNextAction(airport, planeActor);
         }
         printf("┌\n");
-        debugPrintAirport(*simulation.airport);
+        // debugPrintAirport(*simulation.airport);
         msleep(simulation.simulationSpeedInMs);
     }
 }
