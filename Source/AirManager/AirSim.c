@@ -80,7 +80,7 @@ int msleep(unsigned int tms) {
 
 
 int main(){
-    simulation simulation = initSimulation(10,2,2,2,57);
+    simulation simulation = initSimulation(10,2,2,2,20);
     simulation.simulationSpeedInMs = 200;
     airport *airport = simulation.airport;
     initWindow(1920,1080);

@@ -239,7 +239,7 @@ void interf_Parking_PrintLine(sim_planeActor *planeActor, Anchor left, bool isIn
         printText("STDBY", 30, WHITE, (Anchor){left.x + 248, left.y}, RIGHT);
         float progressBarVal = (planeActor->stateLengthTimeInMs-(float)planeActor->stateRemainTimeInMs)/(float)planeActor->stateLengthTimeInMs;
         if(planeActor->stateRemainTimeInMs < 0) progressBarVal = 1.0;
-        printProgress((Anchor){left.x + 379,left.y - 5}, (Anchor){left.x + 522, left.y + 5}, WHITE, 2, 0.5);
+        printProgress((Anchor){left.x + 379,left.y - 5}, (Anchor){left.x + 522, left.y + 5}, WHITE, 2, progressBarVal);
     }
 }
 
@@ -294,7 +294,7 @@ void printText(char *text, int fontSize, SDL_Color color, Anchor origin, textAli
         position_texte = (SDL_Rect){origin.x, origin.y - 0.5 * h, w, h};
         break;
     }
-    SDL_Surface *surface = TTF_RenderUTF8_Blended(font, text, color);
+    SDL_Surface *surface = TTF_RenderUTF8_Solid(font, text, color);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_RenderCopy(renderer, texture, NULL, &position_texte);
     SDL_RenderPresent(renderer);
