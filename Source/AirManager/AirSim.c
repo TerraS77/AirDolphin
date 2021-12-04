@@ -80,8 +80,8 @@ int msleep(unsigned int tms) {
 
 
 int main(){
-    simulation simulation = initSimulation(20,1,2,3,50);
-    simulation.simulationSpeedInMs = 5;
+    simulation simulation = initSimulation(20,1,2,3,10);
+    simulation.simulationSpeedInMs = 500;
     airport *airport = simulation.airport;
     initWindow(1850,900);
     while (1) {
@@ -130,7 +130,15 @@ int main(){
                 planeNextAction(airport, planeActor);
         }
         printf("┌\n");
-        // debugPrintAirport(*simulation.airport);
+
+        static int debugTimer = 5000;
+        debugTimer -= simulation.simulationSpeedInMs;
+
+        if(debugTimer <= 0)
+        {
+            debugPrintAirport(*simulation.airport);
+            debugTimer = 5000;
+        } 
         msleep(simulation.simulationSpeedInMs);
     }
 }
