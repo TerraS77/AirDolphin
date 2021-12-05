@@ -19,7 +19,7 @@
  * @return int 
  */
 
-int comparePointer(void *data1, void *data2){
+int comparePointer(void *data1, void *data2) {
     if(data1 == data2) return 0;
     else return 1;
 }

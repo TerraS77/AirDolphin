@@ -120,7 +120,7 @@ void planeNextAction(airport *airport, sim_planeActor *planeActor){
         break;
     case TAKEOFF:
         planeExitRunway(planeActor->plane->targetRunway, planeActor->plane);
-        planeActor->stateRemainTimeInMs = 50000; //TIME FLYING BEFORE RETURN
+        planeActor->stateRemainTimeInMs = 5000*(planeActor->plane->type + 1); //TIME FLYING BEFORE RETURN
         planeActor->stateLengthTimeInMs = planeActor->stateRemainTimeInMs;
         break;
     }
@@ -142,12 +142,11 @@ int msleep(unsigned int tms) {
  * @return int 
  */
 int main(){
-    simulation simulation = initSimulation(20,1,2,3,10);
-    simulation.simulationSpeedInMs = 500;
+    simulation simulation = initSimulation(20,1,2,3,50);
+    simulation.simulationSpeedInMs = 30;
     airport *airport = simulation.airport;
     initWindow(1850,900);
     while (1) {
-        updateAirportRenderer(simulation);
         printf("\n ╔════════════════════════════════════════════════╗");
         printf("\n ║                    NEW TURN                    ║");
         printf("\n ╚════════════════════════════════════════════════╝\n\n");
@@ -157,26 +156,22 @@ int main(){
             runway *runway = getDataAtIndex(*airport->runways, rw);
             int TODO = 0; //0 Nothing, 1 getNextLandQ, 2 getNextTakeoffK
             if(isRunwayFree(runway)) {
-                if(runway->takeoffQueue->length) {
-                    if(canAPlaneInLQLandHere(airport, runway)) TODO = 1; //!NEED CHOICE
-                    else TODO = 2;
-                } else if(canAPlaneInLQLandHere(airport, runway)) TODO = 1;
-
+                if(canAPlaneInLQLandHere(airport, runway)) TODO = 1;
+                else if(runway->takeoffQueue->length) TODO = 2;
+                switch (TODO) {
+                    case 1:
+                        grantNextInLQAccessToRunway(airport, runway);
+                        break;
+                    case 2:
+                        grantTakeoffForRunway(runway);
+                        break;
+                }
                 if(TODO){
-                    switch (TODO) {
-                        case 1:
-                            grantNextInLQAccessToRunway(airport, runway);
-                            break;
-                        case 2:
-                            grantTakeoffForRunway(runway);
-                            break;
-                    }
                     getSimPlaneActorInList(runway->planeLT, &simulation)->stateRemainTimeInMs = runway->length/2;
                     getSimPlaneActorInList(runway->planeLT, &simulation)->stateLengthTimeInMs = runway->length/2;
                 }
             }
-            if(!isRunwayQueueFull(runway))
-                grantNextInAFRQAccessToRunway(airport, runway);
+            if(!isRunwayQueueFull(runway)) grantNextInAFRQAccessToRunway(airport, runway);
         }
         printf("┌\n");
         printf("└\n");
@@ -201,6 +196,7 @@ int main(){
             debugPrintAirport(*simulation.airport);
             debugTimer = 5000;
         } 
-        msleep(simulation.simulationSpeedInMs);
+
+        updateAirportRenderer(&simulation);
     }
 }
