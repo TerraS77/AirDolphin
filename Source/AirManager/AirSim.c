@@ -1,13 +1,40 @@
+/**
+ * @file AirSim.c
+ * @brief Functions of the simulation
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "AirSim.h"
 #include "Renderer.h"
 
+/**
+ * @brief Comparaison of pointers
+ * 
+ * @param data1 
+ * @param data2 
+ * @return int 
+ */
+
 int cmprPointer(void *data1, void *data2){
     if(data1 == data2) return 0;
     else return 1;
 }
+
+/**
+ * @brief Create a new plane for the simulation
+ * 
+ * @param matriculation 
+ * @param type 
+ * @param passengers 
+ * @param passengersMax 
+ * @param status 
+ * @return sim_planeActor* 
+ */
 
 sim_planeActor *newSimPlaneActor(char matriculation[7], planeType type, unsigned int passengers, unsigned int passengersMax, planeStatus status){
     sim_planeActor *planeActor = malloc(sizeof(sim_planeActor));
@@ -17,6 +44,14 @@ sim_planeActor *newSimPlaneActor(char matriculation[7], planeType type, unsigned
     return planeActor;
 }
 
+/**
+ * @brief Get the Sim Plane Actor In List object
+ * 
+ * @param plane 
+ * @param simulation 
+ * @return sim_planeActor* 
+ */
+
 sim_planeActor *getSimPlaneActorInList(plane *plane, simulation *simulation){
     for(int p = 0; p < simulation->planeActors->length; p++){
         sim_planeActor *planeActor = getDataAtIndex(*simulation->planeActors, p);
@@ -24,6 +59,17 @@ sim_planeActor *getSimPlaneActorInList(plane *plane, simulation *simulation){
     }
     return NULL;
 }
+
+/**
+ * @brief Initialise the simulation
+ * 
+ * @param parkingSize 
+ * @param numberOfSmallRunway 
+ * @param numberOfMediumRunway 
+ * @param numberOfLargeRunway 
+ * @param numberOfPlanes 
+ * @return simulation 
+ */
 
 simulation initSimulation(int parkingSize, int numberOfSmallRunway, int numberOfMediumRunway, int numberOfLargeRunway, int numberOfPlanes){
     simulation newSim;
@@ -45,6 +91,13 @@ simulation initSimulation(int parkingSize, int numberOfSmallRunway, int numberOf
     }
     return newSim;
 }
+
+/**
+ * @brief Give action to the next plane
+ * 
+ * @param airport 
+ * @param planeActor 
+ */
 
 void planeNextAction(airport *airport, sim_planeActor *planeActor){
     switch (planeActor->plane->status)
@@ -73,12 +126,21 @@ void planeNextAction(airport *airport, sim_planeActor *planeActor){
     }
 }
 
-
+/**
+ * @brief Function for time
+ * 
+ * @param tms 
+ * @return int 
+ */
 int msleep(unsigned int tms) {
   return usleep(tms * 1000);
 }
 
-
+/**
+ * @brief Function main
+ * 
+ * @return int 
+ */
 int main(){
     simulation simulation = initSimulation(20,1,2,3,10);
     simulation.simulationSpeedInMs = 500;

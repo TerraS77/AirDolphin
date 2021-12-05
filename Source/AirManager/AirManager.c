@@ -1,13 +1,39 @@
+/**
+ * @file AirManager.c
+ * @brief Functions for the Manager
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include "AirManager.h"
 
+/**
+ * @brief Compare the ponter
+ * 
+ * @param data1 
+ * @param data2 
+ * @return int 
+ */
+
 int comparePointer(void *data1, void *data2){
     if(data1 == data2) return 0;
     else return 1;
 }
+
+/**
+ * @brief Create a plane
+ * 
+ * @param matriculation 
+ * @param type 
+ * @param passengers 
+ * @param passengersMax 
+ * @param status 
+ * @return plane* 
+ */
 
 plane* newPlane(char matriculation[7], planeType type, unsigned int passengers, unsigned int passengersMax, planeStatus status){
     plane *plane_new = malloc(sizeof(plane));
@@ -20,15 +46,38 @@ plane* newPlane(char matriculation[7], planeType type, unsigned int passengers, 
     return plane_new;
 }
 
+/**
+ * @brief Remove the plane
+ * 
+ * @param airport 
+ * @param plane 
+ */
+
 void removePlane(airport *airport, plane *plane){
     deleteInList(airport->planesInRange, plane);
     free(plane);
 }
 
+/**
+ * @brief Load plane in the airport
+ * 
+ * @param airport 
+ * @param plane 
+ */
+
 void loadPlainInAirport(airport* airport, plane *plane){
     appendInList(airport->planesInRange, plane);
     if(plane->status == PARKING) appendInList(airport->parkingPlanes, plane);
 }
+
+/**
+ * @brief Ask if it can land ?
+ * 
+ * @param plane 
+ * @param runway 
+ * @return true 
+ * @return false 
+ */
 
 bool canItLandHere(plane *plane, runway *runway){
     if(plane->type == AIRLINER)
@@ -37,6 +86,16 @@ bool canItLandHere(plane *plane, runway *runway){
         return runway->type == SMALL;
     return true;
 }
+
+/**
+ * @brief Yes or No for the landing question
+ * 
+ * @param airport 
+ * @param runway 
+ * @return true 
+ * @return false 
+ */
+
 
 bool canAPlaneInLQLandHere(airport *airport, runway *runway){
     if(isParkingQueueFull(airport)) return false;
@@ -47,6 +106,17 @@ bool canAPlaneInLQLandHere(airport *airport, runway *runway){
     }
     return nWhoCanLand > 0;
 }
+
+
+/**
+ * @brief Create a runway
+ * 
+ * @param length 
+ * @param width 
+ * @param type 
+ * @param maxTakeoffQueue 
+ * @return runway* 
+ */
 
 runway* newRunway(float length, float width, runwayType type, unsigned int maxTakeoffQueue){
     runway* runway_new = malloc(sizeof(runway));
@@ -62,11 +132,25 @@ runway* newRunway(float length, float width, runwayType type, unsigned int maxTa
     return runway_new;
 }
 
+/**
+ * @brief Boolean is the runway free
+ * 
+ * @param newRunway 
+ * @return true 
+ * @return false 
+ */
+
 bool isRunwayFree(runway* newRunway){
     return newRunway->planeLT == NULL;
 }
 
-//Runway Slot Manager
+/**
+ * @brief Add Plane to the runway
+ * 
+ * @param runway 
+ * @param plane 
+ */
+
 void addPlaneToRunway(runway *runway, plane *plane){
     if(!isRunwayFree(runway))
         printf("\033[1;31mERROR : Acces given to used runway (%s on %d, used by %s)\033[0m\n", plane->matriculation, runway->id, runway->planeLT->matriculation);
@@ -76,6 +160,14 @@ void addPlaneToRunway(runway *runway, plane *plane){
     printf("\033[0;34mCONTROL : %s, you are clear for %s on runway %d.\033[0m\n", plane->matriculation, plane->status == LANDING ? "landing" : "takeoff", runway->id);
     plane->targetRunway = runway;
 }
+
+
+/**
+ * @brief Plane exit the runway
+ * 
+ * @param runway 
+ * @param plane 
+ */
 
 void planeExitRunway(runway *runway, plane *plane){
     runway->planeLT = NULL;
@@ -90,13 +182,24 @@ void planeExitRunway(runway *runway, plane *plane){
     plane->targetRunway = NULL;
 }
 
-//Runway Queue Manager
+/**
+ * @brief Grant Take off for runway
+ * 
+ * @param runway 
+ */
 void grantTakeoffForRunway(runway *runway){
     if(runway->takeoffQueue->length == 0) return;
     plane *planeToTakeoff = runway->takeoffQueue->first->data;
     deleteInList(runway->takeoffQueue, planeToTakeoff);
     addPlaneToRunway(runway, planeToTakeoff);
 }
+
+/**
+ * @brief Add plane in the take off queue
+ * 
+ * @param runway 
+ * @param plane 
+ */
 
 void addPlaneToRunwayQueue(runway *runway, plane *plane){
     if(isRunwayQueueFull(runway))
@@ -107,9 +210,24 @@ void addPlaneToRunwayQueue(runway *runway, plane *plane){
     appendInList(runway->takeoffQueue, plane);
 }
 
+/**
+ * @brief Is the runway queue full ?
+ * 
+ * @param runway 
+ * @return true 
+ * @return false 
+ */
 bool isRunwayQueueFull(runway *runway){
     return runway->maxTakeoffQueue <= runway->takeoffQueue->length;
 }
+
+
+/**
+ * @brief Know the parking Size
+ * 
+ * @param parkingSize 
+ * @return airport* 
+ */
 
 airport* newAirport(unsigned int parkingSize){
     airport *airport_new = malloc(sizeof(airport));
@@ -121,6 +239,14 @@ airport* newAirport(unsigned int parkingSize){
     airport_new->parkingSize = parkingSize;
     return airport_new;
 }
+
+
+/**
+ * @brief Add plane to Parking
+ * 
+ * @param airport 
+ * @param plane 
+ */
 
 void buildAirport(airport* airport, int numberOfSmallRunway, int numberOfMediumRunway, int numberOfLargeRunway){
     for(int NOLR = 0; NOLR<numberOfLargeRunway; NOLR++){
@@ -137,12 +263,30 @@ void buildAirport(airport* airport, int numberOfSmallRunway, int numberOfMediumR
     }
 }
 
+
+/**
+ * @brief Is the parking full ?
+ * 
+ * @param airport 
+ * @return true 
+ * @return false 
+ */
+
 void addPlaneToParking(airport* airport, plane *plane){
     if(isParkingFull(airport))
         printf("\033[1;31mERROR : Acces given to full parking (%s)\033[0m\n", plane->matriculation);
     plane->status = PARKING;
     appendInList(airport->parkingPlanes, plane);
 }
+
+
+/**
+ * @brief Is the queue for parking full ?
+ * 
+ * @param airport 
+ * @return true 
+ * @return false 
+ */
 
 bool isParkingFull(airport* airport){
     return airport->parkingSize <= airport->parkingPlanes->length;
@@ -158,12 +302,26 @@ bool isParkingQueueFull(airport* airport){
     return airport->parkingSize <= airport->parkingPlanes->length + howManyPlanesAreLandingOnRunways;
 }
 
-//LandingQueue List Requests
+
+/**
+ * @brief Add plane to landing queue
+ * 
+ * @param airport 
+ * @param plane 
+ */
 void addPlaneToLandingQueue(airport* airport, plane *plane){
     plane->status = WAITING_LANDING;
     appendInList(airport->landingQueue, plane);
     printf("\033[0;34m%s : Request for landing.\033[0m\n", plane->matriculation);
 }
+
+/**
+ * @brief grant INLQ access to runway
+ * 
+ * @param airport 
+ * @param runway 
+ */
+
 
 void grantPlaneInLQAccessToRunway(airport* airport, runway *runway, plane *plane){
     if(!isRunwayFree(runway)) printf("\033[1;31mERROR : Landing clearance to used runway (%s on %d)\033[0m\n", plane->matriculation, runway->id);
@@ -171,6 +329,13 @@ void grantPlaneInLQAccessToRunway(airport* airport, runway *runway, plane *plane
     deleteInList(airport->landingQueue, plane);
     addPlaneToRunway(runway, plane);
 }
+
+/**
+ * @brief Grant Next INLQ Acees to runway
+ * 
+ * @param airport 
+ * @param runway 
+ */
 
 void grantNextInLQAccessToRunway(airport* airport, runway *runway){
     for(int p = 0; p<airport->landingQueue->length; p++){
@@ -183,7 +348,12 @@ void grantNextInLQAccessToRunway(airport* airport, runway *runway){
     printf("\033[1;31mERROR : Landing clearance to uncompatible runway, or no plane in LQ (%d)\033[0m\n", runway->id);
 }
 
-//AskForRunwayQueue List Requests
+/**
+ * @brief Add plane for AFRQ
+ * 
+ * @param airport 
+ * @param plane 
+ */
 void addPlaneToAFRQ(airport* airport, plane *plane){
     if(searchDataInList(*airport->waitForRunwayQueue, plane))
         return;
@@ -191,11 +361,25 @@ void addPlaneToAFRQ(airport* airport, plane *plane){
     printf("\033[0;34m%s : Request for a takeoff runway.\033[0m\n", plane->matriculation);
 }
 
+/**
+ * @brief Grant the AFRQ Access to runway
+ * 
+ * @param airport 
+ * @param runway 
+ */
+
 void grantPlaneInAFRQAccessToRunway(airport* airport, runway *runway, plane *plane){
     deleteInList(airport->waitForRunwayQueue, plane);
     deleteInList(airport->parkingPlanes, plane);
     addPlaneToRunwayQueue(runway, plane);
 }
+
+/**
+ * @brief Grant the next AFRQ Access to runway
+ * 
+ * @param airport 
+ * @param runway 
+ */
 
 void grantNextInAFRQAccessToRunway(airport* airport, runway *runway){
     for(int p = 0; p<airport->waitForRunwayQueue->length; p++){

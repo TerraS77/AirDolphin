@@ -1,8 +1,18 @@
+/**
+ * @file cmdPrint.c
+ * @brief Print the commands on the terminal
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include "cmdPrint.h"
+
 
 void debugPlaneType(planeType plane);
 void debugPlaneStatus(planeStatus plane);
@@ -11,6 +21,12 @@ void printPlanesList(list planesList, bool completeLogs);
 void printRunwaysList(list runwaysList, bool completeLogs);
 void printParkingsList(airport airport, bool completeLogs);
 
+
+/**
+ * @brief Print the plane
+ * 
+ * @param plane 
+ */
 void debugPrintPlane(plane *plane)
 {
     printf("│ │ * [%s] : ", plane->matriculation);
@@ -23,6 +39,11 @@ void debugPrintPlane(plane *plane)
     printf("\n│ │ │\n");
 }
 
+/**
+ * @brief Print Plane Type
+ * 
+ * @param plane 
+ */
 void debugPlaneType(planeType plane)
 {
     switch (plane)
@@ -38,6 +59,12 @@ void debugPlaneType(planeType plane)
         break;
     }
 }
+
+/**
+ * @brief Print Plane Status
+ * 
+ * @param plane 
+ */
 
 void debugPlaneStatus(planeStatus plane)
 {
@@ -64,6 +91,12 @@ void debugPlaneStatus(planeStatus plane)
     }
 }
 
+/**
+ * @brief Print the Runway
+ * 
+ * @param runway 
+ */
+
 void debugPrintRunway(runway *runway)
 {
     printf("│ │ * [%d] : ", runway->id);
@@ -87,6 +120,12 @@ void debugPrintRunway(runway *runway)
     printf("│ │ │\n");
 }
 
+/**
+ * @brief Print Runway Type
+ * 
+ * @param runway 
+ */
+
 void debugRunwayType(runwayType runway)
 {
     switch (runway)
@@ -102,6 +141,12 @@ void debugRunwayType(runwayType runway)
         break;
     }
 }
+
+/**
+ * @brief Print the complete airport
+ * 
+ * @param airport 
+ */
 
 void debugPrintAirport(airport airport)
 {
@@ -126,6 +171,13 @@ void debugPrintAirport(airport airport)
     printf("│\n");
 }
 
+/**
+ * @brief Print the list of planes
+ * 
+ * @param planesList 
+ * @param completeLogs 
+ */
+
 void printPlanesList(list planesList, bool completeLogs)
 {
     for (int n = 0; n < planesList.length; n++)
@@ -143,6 +195,13 @@ void printPlanesList(list planesList, bool completeLogs)
     }
 }
 
+/**
+ * @brief Print the list of runways
+ * 
+ * @param runwaysList 
+ * @param completeLogs 
+ */
+
 void printRunwaysList(list runwaysList, bool completeLogs)
 {
     for (int n = 0; n < runwaysList.length; n++)
@@ -157,6 +216,13 @@ void printRunwaysList(list runwaysList, bool completeLogs)
     {
     }
 }
+
+/**
+ * @brief Print List of planes in the parking
+ * 
+ * @param airport 
+ * @param completeLogs 
+ */
 
 void printParkingsList(airport airport, bool completeLogs)
 {
