@@ -84,12 +84,6 @@ int msleep(unsigned int tms) {
   return usleep(tms * 1000);
 }
 
-/**
- * @fn int main()
- * @brief Function main
- * 
- * @return int 
- */
 int main(){
     simulation simulation = initSimulation(20,1,2,3,50);
     simulation.simulationSpeedInMs = 30;
