@@ -42,6 +42,7 @@ void printRectangleWithBorder(Anchor CSG, Anchor CID, SDL_Color couleur, int bor
 void printProgress(Anchor CSG, Anchor CID, SDL_Color couleur, int border, float pourcentage);
 void printText(char *text, int fontSize, SDL_Color color, Anchor origin, textAlign align);
 
+void interf_AirportToRender(simulation simulation);
 void interf_Runway(simulation simulation,runway *runway, Anchor CSG, int w, int h);
 void interf_Radar(airport *airport, Anchor left);
 void interf_Radar_PrintLine(plane *plane, Anchor left);
