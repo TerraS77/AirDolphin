@@ -35,25 +35,39 @@ typedef struct {
     char *text;
 } button;
 
-void DrawCircle(int32_t centreX, int32_t centreY, int32_t radius);
+
 void closeWindow();
+
 void SetDrawColor(SDL_Color Color);
+
 void printRectangleWithBorder(Anchor CSG, Anchor CID, SDL_Color couleur, int border);
+
 void printProgress(Anchor CSG, Anchor CID, SDL_Color couleur, int border, float pourcentage);
+
 void printText(char *text, int fontSize, SDL_Color color, Anchor origin, textAlign align);
 
 void interf_AirportToRender(simulation simulation);
+
 void interf_Runway(simulation simulation,runway *runway, Anchor CSG, int w, int h);
+
 void interf_Radar(airport *airport, Anchor left);
+
 void interf_Radar_PrintLine(plane *plane, Anchor left);
+
 void interf_Parking(simulation simulation, Anchor left);
+
 void interf_Parking_PrintLine(sim_planeActor *planeActor, Anchor left, bool isInWFTR);
 
 void interf_launchMenu(simulation *simulation);
+
 button newButton(Anchor center, int h, int w, char *text, menuAction action);
+
 void printButtons(button *buttons, int nButtons);
+
 void updateHoverButtons(button *buttons, int nButtons,int mx,int my);
+
 menuAction getActionButton(button *buttons, int nButtons);
+
 bool isButtonHover(int mx, int my, button button);
 
 void initWindow(int width, int height)
