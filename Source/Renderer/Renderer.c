@@ -117,11 +117,10 @@ void interf_launchMenu(simulation *simulation){
     Anchor menuCSG = {center.x - (0.5 * buttonW) - (0.5 * margin), center.y - (2 * buttonH) - (2.5 * margin)};
     Anchor menuCIG = {center.x + (0.5 * buttonW) + (0.5 * margin), center.y + (2 * buttonH) + (2.5 * margin)};
     button buttons[4];
-    buttons[0] = newButton((Anchor) {center.x, center.y - (1.5*margin*buttonH)}, buttonH, buttonW, "RESUME",MENU_CONTINUE);
-    buttons[1] = newButton((Anchor) {center.x, center.y - 0.5*(margin*buttonH)}, buttonH, buttonW, "SAVE", MENU_SAVE);
-    buttons[2] = newButton((Anchor) {center.x, center.y + 0.5*(margin*buttonH)}, buttonH, buttonW, "OPEN", MENU_OPEN);
-    buttons[3] = newButton((Anchor) {center.x, center.y + 1.5*(margin*buttonH)}, buttonH, buttonW, "QUIT", MENU_QUIT);
-    printf("%d, %d\n", (int) 1.5*margin*buttonH,(int) center.y - 0.5*(margin*buttonH));
+    buttons[0] = newButton((Anchor) {center.x, center.y - 1.5*(margin+buttonH)}, buttonH, buttonW, "RESUME",MENU_CONTINUE);
+    buttons[1] = newButton((Anchor) {center.x, center.y - 0.5*(margin+buttonH)}, buttonH, buttonW, "SAVE", MENU_SAVE);
+    buttons[2] = newButton((Anchor) {center.x, center.y + 0.5*(margin+buttonH)}, buttonH, buttonW, "OPEN", MENU_OPEN);
+    buttons[3] = newButton((Anchor) {center.x, center.y + 1.5*(margin+buttonH)}, buttonH, buttonW, "QUIT", MENU_QUIT);
     while(1){
         SDL_GetMouseState(&mx, &my);
         updateHoverButtons(buttons, 4, mx, my);
