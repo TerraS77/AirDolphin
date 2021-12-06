@@ -100,7 +100,9 @@ void openChainFile(char *fileName,simulation* simulation)// list == planes in ra
             plane*plane=sMakeChainData(buffer);
             sim_planeActor *planeActor = malloc(sizeof(sim_planeActor));
             planeActor->plane = plane;
-            planeActor->stateRemainTimeInMs = -1;
+            planeActor->stateRemainTimeInMs = randomInt(50, 5000);
+            planeActor->stateLengthTimeInMs = planeActor->stateRemainTimeInMs;
+            
             appendInList(listPlane, plane);
             appendInList(listAC, planeActor);
             if(plane->status==PARKING) appendInList(listPK, plane);
@@ -138,14 +140,14 @@ void openChainFile(char *fileName,simulation* simulation)// list == planes in ra
 //     return mat;
 // }
 
-// int randomInt(int min, int max)
-// {
-//     int result;
-//     static int A;
-//     srand(time(NULL) + A);
-//     A++;
-//     if (A > 100)
-//         A = 0;
-//     result = (rand() % (max - min)) + min;
-//     return result;
-// }
+int randomInt(int min, int max)
+{
+    int result;
+    static int A;
+    srand(time(NULL) + A);
+    A++;
+    if (A > 100)
+        A = 0;
+    result = (rand() % (max - min)) + min;
+    return result;
+}
