@@ -201,14 +201,6 @@ void grantPlaneInAFRQAccessToRunway(airport* airport, runway *runway, plane *pla
     addPlaneToRunwayQueue(runway, plane);
 }
 
-/**
- * @fn void grantNextInAFRQAccessToRunway(airport* airport, runway *runway)
- * @brief Grant the next AFRQ Access to runway
- * 
- * @param airport 
- * @param runway 
- */
-
 void grantNextInAFRQAccessToRunway(airport* airport, runway *runway){
     for(int p = 0; p<airport->waitForRunwayQueue->length; p++){
         plane *plane = getDataAtIndex(*airport->waitForRunwayQueue, p);
