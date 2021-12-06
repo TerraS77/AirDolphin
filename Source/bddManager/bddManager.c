@@ -1,13 +1,22 @@
+/**
+ * @file bddManager.c
+ * @brief  continent all functions manipulating the DB: save and load 
+ * @version 0.1
+ * @date 2021-12-06
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "bddManager.h"
 
+
 int CmpPtr(void *data1, void *data2){
     if(data1 == data2) return 0;
     else return 1;
 }
-
 
 void savePlanesInFile(airport *airport)
 {
@@ -46,6 +55,8 @@ void savePlanesInFile(airport *airport)
     fclose(bdd);
 }
 
+ 
+
 plane *sMakeChainData(char buffer[100])
 {
     char type[30], status[30];
@@ -53,7 +64,6 @@ plane *sMakeChainData(char buffer[100])
     plane *newData = newPlane("",AIRLINER,0,0,FLYING);
     // char masssBufffer[10];
     sscanf(buffer, "%[^ ] - %[^ ] | %u/%u | %s", newData->matriculation, type, &newData->passengers, &newData->passengersMax, status);
-   
 
 
     if (strcmp("AIRLINER", type)==0)newData->type=AIRLINER;
@@ -66,9 +76,6 @@ plane *sMakeChainData(char buffer[100])
     return newData;
 }
 
-// recup type et stat need to put in string and compare value to enter right type and shit
-// need to trabsforme dat in right flyin EG flyung 0 (( STRCMP ))
-// CAD comme flying est un int en string  faut faire strcmp et si flying == flying alors statu == flying )
 
 void openChainFile(char *fileName,simulation* simulation)// list == planes in range
 {
