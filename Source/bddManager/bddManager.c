@@ -81,6 +81,7 @@ void openChainFile(char *fileName,simulation* simulation)// list == planes in ra
     if (file == NULL)
     {
         printf("\033[1;31mERROR : Echec de l'ouverture de %s.\033[0m", fileName);
+        return;
         
     }
     char cursor = fgetc(file);
@@ -102,7 +103,7 @@ void openChainFile(char *fileName,simulation* simulation)// list == planes in ra
             planeActor->stateRemainTimeInMs = -1;
             appendInList(listPlane, plane);
             appendInList(listAC, planeActor);
-            if(plane->status==PARKING)appendInList(listPK, plane);
+            if(plane->status==PARKING) appendInList(listPK, plane);
         
 
         //out of if
@@ -113,7 +114,15 @@ void openChainFile(char *fileName,simulation* simulation)// list == planes in ra
     printf("loaded\n");
     simulation->airport->planesInRange=listPlane;
     simulation->airport->parkingPlanes=listPK;
+    emptyList(simulation->airport->landingQueue);
+    emptyList(simulation->airport->waitForRunwayQueue);
+    for(int n = 0; n<simulation->airport->runways->length; n++){
+        runway *runway = getDataAtIndex(*simulation->airport->runways, n);
+        runway->planeLT = NULL;
+        emptyList(runway->takeoffQueue);
+    }
     simulation->planeActors=listAC;
+
 }
 
 // char* randomRegistration()
