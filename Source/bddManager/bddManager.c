@@ -156,7 +156,7 @@ char* randomRegistration()
         *(mat + 5) = 'A' + (randomInt(0,25));
     }
     *(mat + 6) = '\0';
-    printf("%s\n", mat);
+   
     return mat;
 }
 
