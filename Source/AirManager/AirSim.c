@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include "AirSim.h"
 #include "Renderer.h"
+#include "bddManager.h"
 
 int cmprPointer(void *data1, void *data2){
     if(data1 == data2) return 0;
@@ -37,13 +38,11 @@ simulation initSimulation(int parkingSize, int numberOfSmallRunway, int numberOf
     newSim.planeActors = newList(cmprPointer);
     buildAirport(newSim.airport, numberOfSmallRunway, numberOfMediumRunway, numberOfLargeRunway);
     for(int planeNum = 1; planeNum<=numberOfPlanes; planeNum++){
-        char str[7];
-        sprintf(str, "FR-%d", planeNum*planeNum*3+1);
         sim_planeActor *planeActors;
         if(planeNum%2)
-            planeActors = newSimPlaneActor(str, planeNum%3, 10 + (planeNum%3)*50, 10 + 50*(planeNum%3)*(planeNum%3), FLYING); 
+            planeActors = newSimPlaneActor(randomRegistration(), planeNum%3, 10 + (planeNum%3)*50, 10 + 50*(planeNum%3)*(planeNum%3), FLYING); 
         else
-            planeActors = newSimPlaneActor(str, planeNum%3, 10 + (planeNum%3)*50, 10 + 50*(planeNum%3)*(planeNum%3), PARKING); 
+            planeActors = newSimPlaneActor(randomRegistration(), planeNum%3, 10 + (planeNum%3)*50, 10 + 50*(planeNum%3)*(planeNum%3), PARKING); 
         appendInList(newSim.planeActors, planeActors);
         planeActors->stateRemainTimeInMs = 30 + (planeNum%4)*500;
         planeActors->stateLengthTimeInMs = planeActors->stateRemainTimeInMs;

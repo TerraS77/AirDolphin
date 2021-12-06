@@ -20,6 +20,7 @@ int CmpPtr(void *data1, void *data2){
 
 void savePlanesInFile(airport *airport)
 {
+    randomRegistration();
     chainItem *PlaneContainer = airport->planesInRange->first;
     FILE *bdd = fopen("database.bdd", "w");
 
@@ -134,18 +135,30 @@ void openChainFile(char *fileName,simulation* simulation)// list == planes in ra
 
 }
 
-// char* randomRegistration()
-// {
-//     char *mat = malloc(6);
-//     *mat = (char)('A' + randomInt(0, 25));
-//     *(mat + 1) = 'A' + (randomInt(0, 25));
-//     mat[2] = '-';
-//     mat[3] = 'A' + (random() % 26);
-//     mat[4] = 'A' + (random() % 26);
-//     mat[5] = 'A' + (random() % 26);
-//     mat[6] = '\0';
-//     return mat;
-// }
+ 
+char* randomRegistration()
+{
+    char paysMat[10][3] = {
+        "FR", "EN", "DE", "US", "HL", "CU", "LX", "CN", "LN", "ZK"
+    };
+    char *mat = malloc(7);
+    int randomPaysMat = randomInt(0,9);
+    *mat = (char)paysMat[randomPaysMat][0];
+    *(mat + 1) = (char)paysMat[randomPaysMat][1];
+    *(mat + 2) = '-';
+    if(randomPaysMat<2){
+        *(mat + 3) = '0' + (randomInt(0,9));
+        *(mat + 4) = '0' + (randomInt(0,9));
+        *(mat + 5) = '0' + (randomInt(0,9));
+    }else {
+        *(mat + 3) = 'A' + (randomInt(0,25));
+        *(mat + 4) = 'A' + (randomInt(0,25));
+        *(mat + 5) = 'A' + (randomInt(0,25));
+    }
+    *(mat + 6) = '\0';
+    printf("%s\n", mat);
+    return mat;
+}
 
 int randomInt(int min, int max)
 {
