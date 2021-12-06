@@ -15,12 +15,18 @@
  * 
  */
 typedef enum{
-    FLYING,             /** Plane is in standby, flying */
-    WAITING_LANDING,    /** Plane is flying and in landing queue */
-    LANDING,            /** Plane is currently landing on a runway */
-    PARKING,            /** Plane is currently at parking */
-    WAITING_TAKEOFF,    /** Plane is in a runway queue */
-    TAKEOFF             /** Plane is curretly taking off on a runway */
+    /** Plane is in standby, flying */
+    FLYING,             
+    /** Plane is flying and in landing queue */
+    WAITING_LANDING,    
+    /** Plane is currently landing on a runway */
+    LANDING,            
+    /** Plane is currently at parking */
+    PARKING,            
+    /** Plane is in a runway queue */
+    WAITING_TAKEOFF,    
+    /** Plane is curretly taking off on a runway */
+    TAKEOFF             
 } planeStatus;
 
 
@@ -34,12 +40,18 @@ typedef enum{AIRLINER, BUSINESS, LIGHT} planeType;
  * @brief Airport containing all the planes and runways of the simulation
  */
 typedef struct{
-    unsigned int parkingSize;   /** Size of the parking */
-    list *runways;              /** Runways of Airport */
-    list *planesInRange;        /** All the planes in range of the control tower registration system*/
-    list *parkingPlanes;        /** Planes in the parking */
-    list *landingQueue;         /** All planes in the landing queue */
-    list *waitForRunwayQueue;   /** Planes in parking waiting for a landing */
+    /** Size of the parking */
+    unsigned int parkingSize;   
+    /** Runways of Airport */
+    list *runways;              
+    /** All the planes in range of the control tower registration system*/
+    list *planesInRange;        
+    /** Planes in the parking */
+    list *parkingPlanes;        
+    /** All planes in the landing queue */
+    list *landingQueue;         
+    /** Planes in parking waiting for a landing */
+    list *waitForRunwayQueue;   
 }airport;
 
 /**
@@ -47,12 +59,18 @@ typedef struct{
  * 
  */
 typedef struct{
-    char matriculation[7];         /** Normalized matriculation of the planes */
-    planeType type;                /** Class of plane */
-    unsigned int passengers;       /** Number of passengers */
-    unsigned int passengersMax;    /** Number of max passengers */
-    planeStatus status;            /** Status of the plane */
-    void *targetRunway;            /** Current runway of the plane, NULL if not on a runway */
+    /** Normalized matriculation of the planes */
+    char matriculation[7];         
+    /** Class of plane */
+    planeType type;                
+    /** Number of passengers */
+    unsigned int passengers;       
+    /** Number of max passengers */
+    unsigned int passengersMax;    
+    /** Status of the plane */
+    planeStatus status;            
+    /** Current runway of the plane, NULL if not on a runway */
+    void *targetRunway;            
 }plane;
 
 /**
@@ -69,13 +87,20 @@ typedef enum{
  * 
  */
 typedef struct{
-    char id;                        /** Runway identifier */
-    float length;                   /** Length of runway in meters */
-    float width;                    /** Width of runway in meters */
-    runwayType type;                /** Runway class */
-    unsigned int maxTakeoffQueue;   /** Size of the take off queue */
-    list *takeoffQueue;             /** List of planes in take off queue */
-    plane *planeLT;                 /** Plane currently landing or taking off on the runway */
+    /** Runway identifier */
+    char id;                        
+    /** Length of runway in meters */
+    float length;                   
+    /** Width of runway in meters */
+    float width;                    
+    /** Runway class */
+    runwayType type;                
+    /** Size of the take off queue */
+    unsigned int maxTakeoffQueue;   
+    /** List of planes in take off queue */
+    list *takeoffQueue;             
+    /** Plane currently landing or taking off on the runway */
+    plane *planeLT;                 
 }runway;
 
 

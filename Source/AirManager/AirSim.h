@@ -16,8 +16,11 @@
  */
 
 typedef struct{
+    /** Simulation speed in milleseconds*/
     unsigned int simulationSpeedInMs;
+    /** Airport of the simulation*/
     airport *airport;
+    /** All of planes actors*/
     list *planeActors;
 } simulation;
 
@@ -27,8 +30,11 @@ typedef struct{
  */
 
 typedef struct{
+    /** Plane of planeActor*/
     plane *plane;
-    int stateRemainTimeInMs; 
+    /** State remaining time for the current task in milleseconds*/
+    int stateRemainTimeInMs;
+    /** State remaining length time for the current task in milleseconds*/
     int stateLengthTimeInMs;
 } sim_planeActor;
 
