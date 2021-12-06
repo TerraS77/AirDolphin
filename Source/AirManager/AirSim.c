@@ -1,7 +1,6 @@
 /**
  * @file AirSim.c
  * @brief Functions of the simulation
- * @copyright Copyright (c) 2021
  * 
  */
 
@@ -48,7 +47,7 @@ simulation initSimulation(int parkingSize, int numberOfSmallRunway, int numberOf
         appendInList(newSim.planeActors, planeActors);
         planeActors->stateRemainTimeInMs = 30 + (planeNum%4)*500;
         planeActors->stateLengthTimeInMs = planeActors->stateRemainTimeInMs;
-        loadPlainInAirport(newSim.airport, planeActors->plane);
+        loadPlaneInAirport(newSim.airport, planeActors->plane);
     }
     return newSim;
 }
