@@ -11,35 +11,42 @@ typedef int (*compareTwoPointersFunction)(void *data1, void *data2);
 typedef void (*voidOnePointersFunction)(void *data);
 typedef struct chainItem chainItem;
 
+/**
+ * @brief Item container of list 
+ * 
+ */
 struct chainItem{
-    void *data;
-    int index;
-    chainItem *previous;
-    chainItem *next;
+    void *data; /**Pointer to stored data*/
+    int index; /**Index of item*/
+    chainItem *previous; /**Previous item in list, NULL if none*/
+    chainItem *next; /**Next item in list, NULL if none */
 };
 
+/**
+ * @brief List object
+ * 
+ */
 typedef struct{
-    int length;
-    chainItem *first;
-    chainItem *last;
-    compareTwoPointersFunction comparator;
+    int length;                             /** Length of list*/
+    chainItem *first;                       /** First item of the list*/
+    chainItem *last;                        /** Last item of the list*/
+    compareTwoPointersFunction comparator;  /** Function to compare data on the list*/
 } list;
 
 /**
- * @brief Permit to create a new list
+ * @brief Allow to create a new list
  * 
  * @param comparatorFunction 
- * @return list* 
+ * @return list
  */
-
 list *newList(compareTwoPointersFunction comparatorFunction);
 
 /**
- * @brief Get the Data At Index object
+ * @brief Get the Data at index in list
  * 
  * @param list 
  * @param index 
- * @return void* 
+ * @return pointer to data
  */
 
 void *getDataAtIndex(list list, int index);
@@ -127,5 +134,3 @@ void *searchDataInList(list list, void *data);
 
 void emptyList(list *list);
 #endif
-
-//Return 0 if equal, a positive int if data1 > data2, a negative int if data2 < data1;
