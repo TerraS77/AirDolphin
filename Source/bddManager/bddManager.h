@@ -2,10 +2,6 @@
  * @file bddManager.h
  *
  * @brief groups the function declarations of bddManager.c 
- * @version 0.1
- * @date 2021-12-06
- * 
- * @copyright Copyright (c) 2021
  * 
  */
 #include "AirManager.h"
@@ -15,7 +11,8 @@
 #include "AirSim.h"
 
 /**
- * @brief a été utilise pour la creation aleatoire des Id pour la BDD 
+ * @brief Allows an automatic generation of matriculation
+ *   
  * 
  * @return char* 
  */
