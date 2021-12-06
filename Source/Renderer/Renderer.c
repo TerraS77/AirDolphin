@@ -5,6 +5,7 @@
 #include <math.h>
 #include <time.h>
 #include "renderer.h"
+#include "bddManager.h"
 #include <SDL2/SDL_ttf.h>
 
 SDL_Color YELLOW = {255, 255, 0, 255};
@@ -23,12 +24,16 @@ typedef struct
     int y;
 } Anchor;
 
-typedef enum
-{
-    LEFT,
-    CENTER,
-    RIGHT
-} textAlign;
+typedef enum { LEFT, CENTER, RIGHT } textAlign;
+typedef enum { MENU_CONTINUE, MENU_SAVE, MENU_OPEN, MENU_QUIT, MENU_NULL} menuAction;
+typedef struct {
+    Anchor CSG;
+    Anchor CID;
+    Anchor center;
+    menuAction action;
+    bool selected;
+    char *text;
+} button;
 
 void DrawCircle(int32_t centreX, int32_t centreY, int32_t radius);
 void closeWindow();
@@ -42,6 +47,13 @@ void interf_Radar(airport *airport, Anchor left);
 void interf_Radar_PrintLine(plane *plane, Anchor left);
 void interf_Parking(simulation simulation, Anchor left);
 void interf_Parking_PrintLine(sim_planeActor *planeActor, Anchor left, bool isInWFTR);
+
+void interf_launchMenu(simulation *simulation);
+button newButton(Anchor center, int h, int w, char *text, menuAction action);
+void printButtons(button *buttons, int nButtons);
+void updateHoverButtons(button *buttons, int nButtons,int mx,int my);
+menuAction getActionButton(button *buttons, int nButtons);
+bool isButtonHover(int mx, int my, button button);
 
 void initWindow(int width, int height)
 {
@@ -63,36 +75,155 @@ void updateAirportRenderer(simulation *simulation)
 {
     static int frameProcessingDelta = 0;
     static Uint32 frameProcessingTimestamp = 0;
-
+    bool menuActive = false;
     SDL_Event event;
-    while ( SDL_PollEvent(&event) )
-    {
-        if(event.type == SDL_QUIT){
-            closeWindow();
-            exit(0);
+
+    while (SDL_PollEvent(&event)) {
+        switch (event.type) {
+            case SDL_QUIT:
+                closeWindow();
+                exit(0);
+                break;
+            case SDL_KEYDOWN :
+                switch (event.key.keysym.sym) {
+                    case SDLK_ESCAPE:
+                        menuActive = !menuActive;
+                        break;
+                }
+                break;
         }
     }
 
+    if(menuActive) interf_launchMenu(simulation);
     SetDrawColor(BLACK);
     SDL_RenderClear(renderer);
 
-    interf_Radar(simulation->airport, (Anchor){1450, 25});
-    interf_Parking(*simulation, (Anchor){15, 25});
-
-    for(int runwayId = 0; runwayId < 6; runwayId++){
-        Anchor anchorOfRunway = {610,25};
-        if(runwayId > 2) anchorOfRunway.y = 465;
-        if(runwayId%3 == 1) anchorOfRunway.x = 880;
-        if(runwayId%3 == 2) anchorOfRunway.x = 1150;
-        runway *runway = getDataAtIndex(*simulation->airport->runways, runwayId);
-        interf_Runway(*simulation, runway, anchorOfRunway, 250, 400);
-    }
+    interf_AirportToRender(*simulation);
 
     SDL_RenderPresent(renderer);
     if(frameProcessingTimestamp) frameProcessingDelta = SDL_GetTicks() - frameProcessingTimestamp;
     int waitTime = simulation->simulationSpeedInMs - frameProcessingDelta;
     if(waitTime > 0) SDL_Delay(waitTime);
     frameProcessingTimestamp = SDL_GetTicks();
+}
+
+void interf_launchMenu(simulation *simulation){
+    SDL_Event event;
+    int mx, my = 0;
+    int buttonH = 100;
+    int margin = 10;
+    int buttonW = 400;
+    Anchor center = {wWidth/2, wHeight/2};
+    Anchor menuCSG = {center.x - (0.5 * buttonW) - (0.5 * margin), center.y - (2 * buttonH) - (2.5 * margin)};
+    Anchor menuCIG = {center.x + (0.5 * buttonW) + (0.5 * margin), center.y + (2 * buttonH) + (2.5 * margin)};
+    button buttons[4];
+    buttons[0] = newButton((Anchor) {center.x, center.y - (1.5*margin*buttonH)}, buttonH, buttonW, "RESUME",MENU_CONTINUE);
+    buttons[1] = newButton((Anchor) {center.x, center.y - 0.5*(margin*buttonH)}, buttonH, buttonW, "SAVE", MENU_SAVE);
+    buttons[2] = newButton((Anchor) {center.x, center.y + 0.5*(margin*buttonH)}, buttonH, buttonW, "OPEN", MENU_OPEN);
+    buttons[3] = newButton((Anchor) {center.x, center.y + 1.5*(margin*buttonH)}, buttonH, buttonW, "QUIT", MENU_QUIT);
+    printf("%d, %d\n", (int) 1.5*margin*buttonH,(int) center.y - 0.5*(margin*buttonH));
+    while(1){
+        SDL_GetMouseState(&mx, &my);
+        updateHoverButtons(buttons, 4, mx, my);
+        while (SDL_PollEvent(&event)) {
+            switch (event.type) {
+                case SDL_QUIT:
+                    closeWindow();
+                    exit(0);
+                    break;
+                case SDL_KEYDOWN :
+                    switch (event.key.keysym.sym) {
+                        case SDLK_ESCAPE:
+                            return;
+                    }
+                    break;
+                case SDL_MOUSEBUTTONDOWN :
+                    switch (getActionButton(buttons, 4))
+                    {
+                        case MENU_CONTINUE:
+                            return;
+                        case MENU_QUIT:
+                            closeWindow();
+                            exit(0);
+                            return;
+                        case MENU_OPEN:
+                            openChainFile("database.bdd", simulation);
+                            return;
+                        case MENU_SAVE:
+                            savePlanesInFile(simulation->airport);
+                            return;
+                    }
+                    break;
+            }
+        }
+        SetDrawColor(BLACK);
+        SDL_RenderClear(renderer);
+
+        interf_AirportToRender(*simulation);
+        printProgress(menuCSG, menuCIG, BLACK, 1, 1);
+        printButtons(buttons, 4);
+
+        SDL_RenderPresent(renderer);
+    }
+}
+
+button newButton(Anchor center, int h, int w, char *text, menuAction action){
+    button newButton;
+    newButton.center = center;
+    newButton.CSG = (Anchor) {center.x - w/2, center.y - h/2};
+    newButton.CID = (Anchor) {center.x + w/2, center.y + h/2};
+    newButton.text = text;
+    newButton.selected = false;
+    newButton.action = action;
+    return newButton;
+}
+
+void printButtons(button *buttons, int nButtons){
+    for(int n = 0; n < nButtons; n++){
+        button button = *(buttons + n);
+        if(button.selected){
+            printProgress(button.CSG, button.CID, WHITE, 1, 1);
+            printText(button.text, 30, BLACK, button.center, CENTER);
+        }else{
+            printRectangleWithBorder(button.CSG, button.CID, WHITE, 4);
+            printText(button.text, 30, WHITE, button.center, CENTER);
+        }
+    }
+}
+
+void updateHoverButtons(button *buttons, int nButtons,int mx,int my){
+    for(int n = 0; n < nButtons; n++){
+        button *button = (buttons + n);
+        button->selected = isButtonHover(mx, my, *button);
+    }
+}
+
+menuAction getActionButton(button *buttons, int nButtons){
+    for(int n = 0; n < nButtons; n++){
+        button button = *(buttons + n);
+        if(button.selected) return button.action;
+    }
+    return MENU_NULL;
+}
+
+bool isButtonHover(int mx, int my, button button){
+    bool isHoverX = (mx < button.CID.x) && (mx > button.CSG.x);
+    bool isHoverY = (my < button.CID.y) && (my > button.CSG.y);
+    return isHoverX && isHoverY;
+}
+
+void interf_AirportToRender(simulation simulation){
+    interf_Radar(simulation.airport, (Anchor){1450, 25});
+    interf_Parking(simulation, (Anchor){15, 25});
+
+    for(int runwayId = 0; runwayId < 6; runwayId++){
+        Anchor anchorOfRunway = {610,25};
+        if(runwayId > 2) anchorOfRunway.y = 465;
+        if(runwayId%3 == 1) anchorOfRunway.x = 880;
+        if(runwayId%3 == 2) anchorOfRunway.x = 1150;
+        runway *runway = getDataAtIndex(*simulation.airport->runways, runwayId);
+        interf_Runway(simulation, runway, anchorOfRunway, 250, 400);
+    }
 }
 
 void interf_Runway(simulation simulation,runway *runway, Anchor CSG, int w, int h)

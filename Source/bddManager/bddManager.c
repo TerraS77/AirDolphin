@@ -9,10 +9,10 @@ int CmpPtr(void *data1, void *data2){
 }
 
 
-void savePlaneInFile(airport *airport)
+void savePlanesInFile(airport *airport)
 {
     chainItem *PlaneContainer = airport->planesInRange->first;
-    FILE *bdd = fopen("planes.bdd", "w");
+    FILE *bdd = fopen("database.bdd", "w");
 
     while (PlaneContainer != NULL)
     {
@@ -70,7 +70,7 @@ plane *sMakeChainData(char buffer[100])
 // need to trabsforme dat in right flyin EG flyung 0 (( STRCMP ))
 // CAD comme flying est un int en string  faut faire strcmp et si flying == flying alors statu == flying )
 
-void *openChainFile(char *fileName,simulation* simulation)// list == planes in range
+void openChainFile(char *fileName,simulation* simulation)// list == planes in range
 {
     
     list* listPlane=newList(CmpPtr);
@@ -114,7 +114,6 @@ void *openChainFile(char *fileName,simulation* simulation)// list == planes in r
     simulation->airport->planesInRange=listPlane;
     simulation->airport->parkingPlanes=listPK;
     simulation->planeActors=listAC;
-    
 }
 
 // char* randomRegistration()

@@ -1,12 +1,12 @@
 # Module List & Files
-moduleList = AirManager Control SmartList renderer
+moduleList = AirManager SmartList renderer bddManager
 moduleListC = $(moduleList:=/*.c)
 moduleListPathC = $(addprefix ../Source/,$(moduleListC))
 moduleListH = $(moduleList:=/*.h)
 moduleListPathH = $(addprefix ../Source/,$(moduleListH))
 
 # files to compile
-subModuleList = AirSim AirManager Control SmartList cmdPrint renderer
+subModuleList = AirSim AirManager SmartList cmdPrint renderer bddManager
 subListC = $(subModuleList:=.c)
 
 # config

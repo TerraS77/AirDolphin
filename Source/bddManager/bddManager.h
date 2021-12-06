@@ -6,8 +6,8 @@
 
 char * randomRegistration ();
 int randomInt (int min,int max); 
-void savePlaneInFile(airport *airport);
-void *openChainFile(char *fileName,simulation* simulation);
+void savePlanesInFile(airport *airport);
+void openChainFile(char *fileName,simulation* simulation);
 
 #endif
 
