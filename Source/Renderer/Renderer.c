@@ -1,3 +1,11 @@
+/**
+ * @file Renderer.c
+ * @brief Window manager, simulation renderer, temporisation and menus
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>

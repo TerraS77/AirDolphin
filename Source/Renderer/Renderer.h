@@ -1,3 +1,11 @@
+/**
+ * @file Renderer.h
+ * @brief Header of Renderer.c
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #include "AirSim.h"
 
 /**
