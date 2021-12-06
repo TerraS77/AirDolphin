@@ -12,9 +12,7 @@
 #include <stdio.h>
 #include "bddManager.h"
 
-/**
- fait 
- */
+
 int CmpPtr(void *data1, void *data2){
     if(data1 == data2) return 0;
     else return 1;
@@ -58,8 +56,7 @@ void savePlanesInFile(airport *airport)
 }
 
  
-/**fait 
- */
+
 plane *sMakeChainData(char buffer[100])
 {
     char type[30], status[30];
@@ -80,7 +77,6 @@ plane *sMakeChainData(char buffer[100])
 }
 
 
-/** FAIT */
 void openChainFile(char *fileName,simulation* simulation)// list == planes in range
 {
     
