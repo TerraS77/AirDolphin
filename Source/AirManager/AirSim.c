@@ -147,9 +147,6 @@ int main(){
     airport *airport = simulation.airport;
     initWindow(1850,900);
     while (1) {
-        printf("\n ╔════════════════════════════════════════════════╗");
-        printf("\n ║                    NEW TURN                    ║");
-        printf("\n ╚════════════════════════════════════════════════╝\n\n");
         // Every runway resolve xor request resolve
         printf("└\n");
         for(int rw = 0; rw < airport->runways->length; rw++){

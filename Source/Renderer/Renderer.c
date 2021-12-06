@@ -115,8 +115,8 @@ void interf_launchMenu(simulation *simulation){
     int margin = 10;
     int buttonW = 400;
     Anchor center = {wWidth/2, wHeight/2};
-    Anchor menuCSG = {center.x - (0.5 * buttonW) - (0.5 * margin), center.y - (2 * buttonH) - (2.5 * margin)};
-    Anchor menuCIG = {center.x + (0.5 * buttonW) + (0.5 * margin), center.y + (2 * buttonH) + (2.5 * margin)};
+    Anchor menuCSG = {center.x - (0.5 * buttonW) - (3.5 * margin), center.y - (2 * buttonH) - (5.5 * margin)};
+    Anchor menuCIG = {center.x + (0.5 * buttonW) + (3.5 * margin), center.y + (2 * buttonH) + (5.5 * margin)};
     button buttons[4];
     buttons[0] = newButton((Anchor) {center.x, center.y - 1.5*(margin+buttonH)}, buttonH, buttonW, "RESUME",MENU_CONTINUE);
     buttons[1] = newButton((Anchor) {center.x, center.y - 0.5*(margin+buttonH)}, buttonH, buttonW, "SAVE", MENU_SAVE);
@@ -156,11 +156,12 @@ void interf_launchMenu(simulation *simulation){
                     break;
             }
         }
-        SetDrawColor(BLACK);
-        SDL_RenderClear(renderer);
+        // SetDrawColor(BLACK);
+        // SDL_RenderClear(renderer);
 
-        interf_AirportToRender(*simulation);
+        // interf_AirportToRender(*simulation);
         printProgress(menuCSG, menuCIG, BLACK, 1, 1);
+        printRectangleWithBorder(menuCSG, menuCIG, YELLOW, 2);
         printButtons(buttons, 4);
 
         SDL_RenderPresent(renderer);
@@ -182,11 +183,11 @@ void printButtons(button *buttons, int nButtons){
     for(int n = 0; n < nButtons; n++){
         button button = *(buttons + n);
         if(button.selected){
-            printProgress(button.CSG, button.CID, WHITE, 1, 1);
+            printProgress(button.CSG, button.CID, YELLOW, 1, 1);
             printText(button.text, 30, BLACK, button.center, CENTER);
         }else{
-            printRectangleWithBorder(button.CSG, button.CID, WHITE, 4);
-            printText(button.text, 30, WHITE, button.center, CENTER);
+            printRectangleWithBorder(button.CSG, button.CID, YELLOW, 4);
+            printText(button.text, 30, YELLOW, button.center, CENTER);
         }
     }
 }
