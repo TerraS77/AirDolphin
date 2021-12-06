@@ -2,13 +2,9 @@
 /**
  * @file AirManager.h
  * @brief Manager 
- * @version 0.1
- * @date 2021-12-05
  * 
  * @copyright Copyright (c) 2021
- * 
  */
-
 
 #include <stdbool.h>
 #include "SmartList.h"
@@ -270,3 +266,212 @@ void addPlaneToAFRQ(airport* airport, plane *plane);
 void grantNextInAFRQAccessToRunway(airport* airport, runway *runway);
 
 #endif
+
+/**
+ * @fn int comparePointer(void *data1, void *data2)
+ * @brief Compare the ponter
+ * 
+ * @param data1 
+ * @param data2 
+ * @return int 
+ */
+
+/**
+ * @fn plane* newPlane(char matriculation[7], planeType type, unsigned int passengers, unsigned int passengersMax, planeStatus status)
+ * @brief Create a plane
+ * 
+ * @param matriculation 
+ * @param type 
+ * @param passengers 
+ * @param passengersMax 
+ * @param status 
+ * @return plane* 
+ */
+
+/**
+ * @fn void removePlane(airport *airport, plane *plane)
+ * @brief Remove the plane
+ * 
+ * @param airport 
+ * @param plane 
+ */
+
+/**
+ * @fn void loadPlainInAirport(airport* airport, plane *plane)
+ * @brief Load plane in the airport
+ * 
+ * @param airport 
+ * @param plane 
+ */
+
+/**
+ * @fn bool canItLandHere(plane *plane, runway *runway)
+ * @brief Ask if it can land ?
+ * 
+ * @param plane 
+ * @param runway 
+ * @return true 
+ * @return false 
+ */
+
+/**
+ * @fn bool canAPlaneInLQLandHere(airport *airport, runway *runway)
+ * @brief Yes or No for the landing question
+ * 
+ * @param airport 
+ * @param runway 
+ * @return true 
+ * @return false 
+ */
+
+/**
+ * @fn runway* newRunway(float length, float width, runwayType type, unsigned int maxTakeoffQueue)
+ * @brief Create a runway
+ * 
+ * @param length 
+ * @param width 
+ * @param type 
+ * @param maxTakeoffQueue 
+ * @return runway* 
+ */
+
+/**
+ * @fn bool isRunwayFree(runway* newRunway)
+ * @brief Boolean is the runway free
+ * 
+ * @param newRunway 
+ * @return true 
+ * @return false 
+ */
+
+/**
+ * @fn void addPlaneToRunway(runway *runway, plane *plane)
+ * @brief Add Plane to the runway
+ * 
+ * @param runway 
+ * @param plane 
+ */
+
+
+/**
+ * @fn void planeExitRunway(runway *runway, plane *plane)
+ * @brief Plane exit the runway
+ * 
+ * @param runway 
+ * @param plane 
+ */
+
+/**
+ * @fn void grantTakeoffForRunway(runway *runway)
+ * @brief Grant Take off for runway
+ * 
+ * @param runway 
+ */
+
+/**
+ * @fn void addPlaneToRunwayQueue(runway *runway, plane *plane)
+ * @brief Add plane in the take off queue
+ * 
+ * @param runway 
+ * @param plane 
+ */
+
+/**
+ * @fn bool isRunwayQueueFull(runway *runway)
+ * @brief Is the runway queue full ?
+ * 
+ * @param runway 
+ * @return true 
+ * @return false 
+ */
+
+/**
+ * @fn airport* newAirport(unsigned int parkingSize)
+ * @brief Know the parking Size
+ * 
+ * @param parkingSize 
+ * @return airport* 
+ */
+
+/**
+ * @fn void buildAirport(airport* airport, int numberOfSmallRunway, int numberOfMediumRunway, int numberOfLargeRunway)
+ * @brief Add plane to Parking
+ * 
+ * @param airport 
+ * @param plane 
+ */
+
+/**
+ * @fn void addPlaneToParking(airport* airport, plane *plane)
+ * @brief Is the parking full ?
+ * 
+ * @param airport 
+ * @return true 
+ * @return false 
+ */
+
+/**
+ * @fn bool isParkingFull(airport* airport)
+ * @brief Is the parking full ?
+ * 
+ * @param airport 
+ * @return true 
+ * @return false 
+ */
+
+/**
+ * @fn bool isParkingQueueFull(airport* airport)
+ * @brief Is the queue for parking full ?
+ * 
+ * @param airport 
+ * @return true 
+ * @return false 
+ */
+
+/**
+ * @fn void addPlaneToLandingQueue(airport* airport, plane *plane)
+ * @brief Add plane to landing queue
+ * 
+ * @param airport 
+ * @param plane 
+ */
+
+/**
+ * @fn void grantPlaneInLQAccessToRunway(airport* airport, runway *runway, plane *plane)
+ * @brief grant INLQ access to runway
+ * 
+ * @param airport 
+ * @param runway 
+ */
+
+/**
+ * @fn void grantNextInLQAccessToRunway(airport* airport, runway *runway)
+ * @brief Grant Next INLQ Acees to runway
+ * 
+ * @param airport 
+ * @param runway 
+ */
+
+/**
+ * @fn void addPlaneToAFRQ(airport* airport, plane *plane)
+ * @brief Add plane for AFRQ
+ * 
+ * @param airport 
+ * @param plane 
+ */
+
+/**
+ * @fn void grantPlaneInAFRQAccessToRunway(airport* airport, runway *runway, plane *plane)
+ * @brief Grant the AFRQ Access to runway
+ * 
+ * @param airport 
+ * @param runway 
+ */
+
+/**
+ * @fn void grantNextInAFRQAccessToRunway(airport* airport, runway *runway)
+ * @brief Grant the next AFRQ Access to runway
+ * 
+ * @param airport 
+ * @param runway 
+ */
