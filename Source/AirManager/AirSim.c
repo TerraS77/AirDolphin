@@ -1,6 +1,6 @@
 /**
  * @file AirSim.c
- * @brief Functions of the simulation
+ * @brief Manage the simulation of planes dynamic behaviours
  * 
  */
 

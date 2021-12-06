@@ -1,7 +1,6 @@
 /**
  * @file AirManager.c
  * @brief Functions for the Manager
- * @copyright Copyright (c) 2021
  * 
  */
 
@@ -33,7 +32,7 @@ void removePlane(airport *airport, plane *plane){
     free(plane);
 }
 
-void loadPlainInAirport(airport* airport, plane *plane){
+void loadPlaneInAirport(airport* airport, plane *plane){
     appendInList(airport->planesInRange, plane);
     if(plane->status == PARKING) appendInList(airport->parkingPlanes, plane);
 }
@@ -70,8 +69,8 @@ runway* newRunway(float length, float width, runwayType type, unsigned int maxTa
     return runway_new;
 }
 
-bool isRunwayFree(runway* newRunway){
-    return newRunway->planeLT == NULL;
+bool isRunwayFree(runway* runway){
+    return runway->planeLT == NULL;
 }
 
 void addPlaneToRunway(runway *runway, plane *plane){
