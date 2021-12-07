@@ -25,10 +25,14 @@ typedef struct chainItem chainItem;
  * 
  */
 struct chainItem{
-    void *data; /**Pointer to stored data*/
-    int index; /**Index of item*/
-    chainItem *previous; /**Previous item in list, NULL if none*/
-    chainItem *next; /**Next item in list, NULL if none */
+    /**Pointer to stored data*/
+    void *data; 
+    /**Index of item*/
+    int index;
+    /**Previous item in list, NULL if none*/
+    chainItem *previous;
+    /**Next item in list, NULL if none */
+    chainItem *next; 
 };
 
 /**
@@ -36,10 +40,14 @@ struct chainItem{
  * 
  */
 typedef struct{
-    int length;                             /** Length of list*/
-    chainItem *first;                       /** First item of the list*/
-    chainItem *last;                        /** Last item of the list*/
-    compareTwoPointersFunction comparator;  /** Function to compare data on the list*/
+    /** Length of list*/
+    int length;                             
+    /** First item of the list*/
+    chainItem *first;                       
+    /** Last item of the list*/
+    chainItem *last;                        
+    /** Function to compare data on the list*/
+    compareTwoPointersFunction comparator;  
 } list;
 
 /**

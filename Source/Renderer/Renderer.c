@@ -26,58 +26,83 @@ int wWidth, wHeight;
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
 
+/**
+ * @brief 2D Coordinates set
+ */
 typedef struct
 {
+    /** x coordinates */
     int x;
+    /** y coordinates*/
     int y;
 } Anchor;
 
-typedef enum { LEFT, CENTER, RIGHT } textAlign;
-typedef enum { MENU_CONTINUE, MENU_SAVE, MENU_OPEN, MENU_QUIT, MENU_NULL} menuAction;
+/**
+ * @brief Enumeration of text rendering alignements
+ */
+typedef enum {
+    /** Align text to left */
+    LEFT,
+    /** Align text to center */
+    CENTER,
+    /** Align text to right */
+    RIGHT 
+} textAlign;
+
+/**
+ * @brief Actions of pause menu
+ * 
+ */
+typedef enum {
+    /** Resume simulation*/
+    MENU_CONTINUE, 
+    /** Save planes status in a file*/
+    MENU_SAVE,
+    /** Open planes status in a file*/
+    MENU_OPEN,
+    /** Quit application*/
+    MENU_QUIT, 
+    /** No action*/
+    MENU_NULL
+} menuAction;
+
+/**
+ * @brief Button item for rendering
+ * 
+ */
 typedef struct {
+    /** Top left point*/
     Anchor CSG;
+    /** Inferior right point*/
     Anchor CID;
+    /** Center point*/
     Anchor center;
+    /** Action of the button*/
     menuAction action;
+    /** Is the button selected*/
     bool selected;
+    /** Text on the button */
     char *text;
 } button;
 
 
 void closeWindow();
-
 void SetDrawColor(SDL_Color Color);
-
 void printRectangleWithBorder(Anchor CSG, Anchor CID, SDL_Color couleur, int border);
-
 void printProgress(Anchor CSG, Anchor CID, SDL_Color couleur, int border, float pourcentage);
-
 void printText(char *text, int fontSize, SDL_Color color, Anchor origin, textAlign align);
-
 void interf_AirportToRender(simulation simulation);
-
 void interf_Runway(simulation simulation,runway *runway, Anchor CSG, int w, int h);
-
 void interf_Radar(airport *airport, Anchor left);
-
 void interf_Radar_PrintLine(plane *plane, Anchor left);
-
 void interf_Parking(simulation simulation, Anchor left);
-
 void interf_Parking_PrintLine(sim_planeActor *planeActor, Anchor left, bool isInWFTR);
-
 void interf_launchMenu(simulation *simulation);
-
 button newButton(Anchor center, int h, int w, char *text, menuAction action);
-
 void printButtons(button *buttons, int nButtons);
-
 void updateHoverButtons(button *buttons, int nButtons,int mx,int my);
-
 menuAction getActionButton(button *buttons, int nButtons);
-
 bool isButtonHover(int mx, int my, button button);
-
 void initWindow(int width, int height)
 {
     wWidth = width;

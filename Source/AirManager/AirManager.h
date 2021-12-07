@@ -34,7 +34,14 @@ typedef enum{
  * @brief Enumeration of the planed types 
  * 
  */
-typedef enum{AIRLINER, BUSINESS, LIGHT} planeType;
+typedef enum{
+    /** Plane is an Airliner and can land on LARGE runways */
+    AIRLINER,
+    /** Plane is a Business Class and can land on all runways */
+    BUSINESS,
+    /** Plane is Ligth Class and can land on SMALL runways */
+    LIGHT
+} planeType;
 
 /**
  * @brief Airport containing all the planes and runways of the simulation
@@ -77,9 +84,12 @@ typedef struct{
  * @brief Enumeration of runways classes
  */
 typedef enum{
-    SMALL,      /** Small runway */
-    MEDIUM,     /** Medium runway */
-    LARGE       /** Large runway */
+    /** Small runway */
+    SMALL,      
+    /** Medium runway */
+    MEDIUM,     
+    /** Large runway */
+    LARGE       
 } runwayType;
 
 /**
