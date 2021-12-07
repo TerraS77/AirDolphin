@@ -1,0 +1,178 @@
+\hypertarget{_air_sim_8c}{}\doxysection{Air\+Sim.\+c File Reference}
+\label{_air_sim_8c}\index{AirSim.c@{AirSim.c}}
+
+
+Manage the simulation of planes dynamic behaviours.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}Air\+Sim.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Renderer.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}bdd\+Manager.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{_air_sim_8c_ab1cab9f83b4115ae474c6b96c1e71465}{cmpr\+Pointer}} (void $\ast$data1, void $\ast$data2)
+\begin{DoxyCompactList}\small\item\em Comparaison of pointers. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structsim__plane_actor}{sim\+\_\+plane\+Actor}} $\ast$ \mbox{\hyperlink{_air_sim_8c_ab0797c6b480611c526f9aae5328ed9b3}{new\+Sim\+Plane\+Actor}} (char matriculation\mbox{[}7\mbox{]}, \mbox{\hyperlink{_air_manager_8h_a2a01c5db75a78c5ec2a4804e65a5a28c}{plane\+Type}} type, unsigned int passengers, unsigned int passengers\+Max, \mbox{\hyperlink{_air_manager_8h_a4d4784741db00d82597c0ad8eed0413c}{plane\+Status}} status)
+\begin{DoxyCompactList}\small\item\em Create a new plane for the simulation. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structsim__plane_actor}{sim\+\_\+plane\+Actor}} $\ast$ \mbox{\hyperlink{_air_sim_8c_a07fc3073d0cdaa6b7b186079d06ea62d}{get\+Sim\+Plane\+Actor\+In\+List}} (\mbox{\hyperlink{structplane}{plane}} $\ast$\mbox{\hyperlink{structplane}{plane}}, \mbox{\hyperlink{structsimulation}{simulation}} $\ast$\mbox{\hyperlink{structsimulation}{simulation}})
+\begin{DoxyCompactList}\small\item\em Get the Sim Plane Actor In List object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structsimulation}{simulation}} \mbox{\hyperlink{_air_sim_8c_ab4df76ed491fd00ae211ee1b50088f96}{init\+Simulation}} (int parking\+Size, int number\+Of\+Small\+Runway, int number\+Of\+Medium\+Runway, int number\+Of\+Large\+Runway, int number\+Of\+Planes)
+\begin{DoxyCompactList}\small\item\em Initialise the simulation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_sim_8c_a513a957016a5cf30e0dcbba9469068a7}{plane\+Next\+Action}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}}, \mbox{\hyperlink{structsim__plane_actor}{sim\+\_\+plane\+Actor}} $\ast$plane\+Actor)
+\begin{DoxyCompactList}\small\item\em Give action to the next plane. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{_air_sim_8c_a3a1dbec63e4c21e758cd60361f87e3bf}{msleep}} (unsigned int tms)
+\begin{DoxyCompactList}\small\item\em Function for time. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{_air_sim_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\begin{DoxyCompactList}\small\item\em Function main. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manage the simulation of planes dynamic behaviours. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_air_sim_8c_ab1cab9f83b4115ae474c6b96c1e71465}\label{_air_sim_8c_ab1cab9f83b4115ae474c6b96c1e71465}} 
+\index{AirSim.c@{AirSim.c}!cmprPointer@{cmprPointer}}
+\index{cmprPointer@{cmprPointer}!AirSim.c@{AirSim.c}}
+\doxysubsubsection{\texorpdfstring{cmprPointer()}{cmprPointer()}}
+{\footnotesize\ttfamily int cmpr\+Pointer (\begin{DoxyParamCaption}\item[{void $\ast$}]{data1,  }\item[{void $\ast$}]{data2 }\end{DoxyParamCaption})}
+
+
+
+Comparaison of pointers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data1} & \\
+\hline
+{\em data2} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_sim_8c_a07fc3073d0cdaa6b7b186079d06ea62d}\label{_air_sim_8c_a07fc3073d0cdaa6b7b186079d06ea62d}} 
+\index{AirSim.c@{AirSim.c}!getSimPlaneActorInList@{getSimPlaneActorInList}}
+\index{getSimPlaneActorInList@{getSimPlaneActorInList}!AirSim.c@{AirSim.c}}
+\doxysubsubsection{\texorpdfstring{getSimPlaneActorInList()}{getSimPlaneActorInList()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structsim__plane_actor}{sim\+\_\+plane\+Actor}}$\ast$ get\+Sim\+Plane\+Actor\+In\+List (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structplane}{plane}} $\ast$}]{plane,  }\item[{\mbox{\hyperlink{structsimulation}{simulation}} $\ast$}]{simulation }\end{DoxyParamCaption})}
+
+
+
+Get the Sim Plane Actor In List object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em plane} & \\
+\hline
+{\em simulation} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+sim\+\_\+plane\+Actor$\ast$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_sim_8c_ab4df76ed491fd00ae211ee1b50088f96}\label{_air_sim_8c_ab4df76ed491fd00ae211ee1b50088f96}} 
+\index{AirSim.c@{AirSim.c}!initSimulation@{initSimulation}}
+\index{initSimulation@{initSimulation}!AirSim.c@{AirSim.c}}
+\doxysubsubsection{\texorpdfstring{initSimulation()}{initSimulation()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structsimulation}{simulation}} init\+Simulation (\begin{DoxyParamCaption}\item[{int}]{parking\+Size,  }\item[{int}]{number\+Of\+Small\+Runway,  }\item[{int}]{number\+Of\+Medium\+Runway,  }\item[{int}]{number\+Of\+Large\+Runway,  }\item[{int}]{number\+Of\+Planes }\end{DoxyParamCaption})}
+
+
+
+Initialise the simulation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parking\+Size} & \\
+\hline
+{\em number\+Of\+Small\+Runway} & \\
+\hline
+{\em number\+Of\+Medium\+Runway} & \\
+\hline
+{\em number\+Of\+Large\+Runway} & \\
+\hline
+{\em number\+Of\+Planes} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+simulation 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_sim_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{_air_sim_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+\index{AirSim.c@{AirSim.c}!main@{main}}
+\index{main@{main}!AirSim.c@{AirSim.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Function main. 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_sim_8c_a3a1dbec63e4c21e758cd60361f87e3bf}\label{_air_sim_8c_a3a1dbec63e4c21e758cd60361f87e3bf}} 
+\index{AirSim.c@{AirSim.c}!msleep@{msleep}}
+\index{msleep@{msleep}!AirSim.c@{AirSim.c}}
+\doxysubsubsection{\texorpdfstring{msleep()}{msleep()}}
+{\footnotesize\ttfamily int msleep (\begin{DoxyParamCaption}\item[{unsigned int}]{tms }\end{DoxyParamCaption})}
+
+
+
+Function for time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tms} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_sim_8c_ab0797c6b480611c526f9aae5328ed9b3}\label{_air_sim_8c_ab0797c6b480611c526f9aae5328ed9b3}} 
+\index{AirSim.c@{AirSim.c}!newSimPlaneActor@{newSimPlaneActor}}
+\index{newSimPlaneActor@{newSimPlaneActor}!AirSim.c@{AirSim.c}}
+\doxysubsubsection{\texorpdfstring{newSimPlaneActor()}{newSimPlaneActor()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structsim__plane_actor}{sim\+\_\+plane\+Actor}} $\ast$ new\+Sim\+Plane\+Actor (\begin{DoxyParamCaption}\item[{char}]{matriculation\mbox{[}7\mbox{]},  }\item[{\mbox{\hyperlink{_air_manager_8h_a2a01c5db75a78c5ec2a4804e65a5a28c}{plane\+Type}}}]{type,  }\item[{unsigned int}]{passengers,  }\item[{unsigned int}]{passengers\+Max,  }\item[{\mbox{\hyperlink{_air_manager_8h_a4d4784741db00d82597c0ad8eed0413c}{plane\+Status}}}]{status }\end{DoxyParamCaption})}
+
+
+
+Create a new plane for the simulation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em matriculation} & \\
+\hline
+{\em type} & \\
+\hline
+{\em passengers} & \\
+\hline
+{\em passengers\+Max} & \\
+\hline
+{\em status} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+sim\+\_\+plane\+Actor$\ast$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_sim_8c_a513a957016a5cf30e0dcbba9469068a7}\label{_air_sim_8c_a513a957016a5cf30e0dcbba9469068a7}} 
+\index{AirSim.c@{AirSim.c}!planeNextAction@{planeNextAction}}
+\index{planeNextAction@{planeNextAction}!AirSim.c@{AirSim.c}}
+\doxysubsubsection{\texorpdfstring{planeNextAction()}{planeNextAction()}}
+{\footnotesize\ttfamily void plane\+Next\+Action (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport,  }\item[{\mbox{\hyperlink{structsim__plane_actor}{sim\+\_\+plane\+Actor}} $\ast$}]{plane\+Actor }\end{DoxyParamCaption})}
+
+
+
+Give action to the next plane. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em airport} & \\
+\hline
+{\em plane\+Actor} & \\
+\hline
+\end{DoxyParams}

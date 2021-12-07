@@ -1,0 +1,514 @@
+\hypertarget{_air_manager_8c}{}\doxysection{Air\+Manager.\+c File Reference}
+\label{_air_manager_8c}\index{AirManager.c@{AirManager.c}}
+
+
+Functions for the Manager.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}Air\+Manager.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_air_manager_8c_ada45487a357386f50ef666e293707b28}\label{_air_manager_8c_ada45487a357386f50ef666e293707b28}} 
+int {\bfseries compare\+Pointer} (void $\ast$data1, void $\ast$data2)
+\item 
+\mbox{\hyperlink{structplane}{plane}} $\ast$ \mbox{\hyperlink{_air_manager_8c_aa11c020e6aa8bf76b531ac290225419b}{new\+Plane}} (char matriculation\mbox{[}7\mbox{]}, \mbox{\hyperlink{_air_manager_8h_a2a01c5db75a78c5ec2a4804e65a5a28c}{plane\+Type}} type, unsigned int passengers, unsigned int passengers\+Max, \mbox{\hyperlink{_air_manager_8h_a4d4784741db00d82597c0ad8eed0413c}{plane\+Status}} status)
+\begin{DoxyCompactList}\small\item\em Create and allocate memory for a plane. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_a2480da78582e0d96d5e26aaa3a8f91ff}{remove\+Plane}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}}, \mbox{\hyperlink{structplane}{plane}} $\ast$\mbox{\hyperlink{structplane}{plane}})
+\begin{DoxyCompactList}\small\item\em Remove a plane from Airport. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_a3d89df80ab0abd606f442ada74c1f23f}{load\+Plane\+In\+Airport}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}}, \mbox{\hyperlink{structplane}{plane}} $\ast$\mbox{\hyperlink{structplane}{plane}})
+\begin{DoxyCompactList}\small\item\em Add a plane to a specified Airport. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{_air_manager_8c_a77376a6ed801f138b4cca7c2f17d96c6}{can\+It\+Land\+Here}} (\mbox{\hyperlink{structplane}{plane}} $\ast$\mbox{\hyperlink{structplane}{plane}}, \mbox{\hyperlink{structrunway}{runway}} $\ast$\mbox{\hyperlink{structrunway}{runway}})
+\begin{DoxyCompactList}\small\item\em Determine if a plane could land on the specified runway, based on his size and the class of the runway. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{_air_manager_8c_abfb77d946a099eb4eb149176d7c405f1}{can\+A\+Plane\+In\+L\+Q\+Land\+Here}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}}, \mbox{\hyperlink{structrunway}{runway}} $\ast$\mbox{\hyperlink{structrunway}{runway}})
+\begin{DoxyCompactList}\small\item\em Determine if a plane currently in Landing Queue can land on the specified runway.~\newline
+ This function take into account the size of the plane, the class of the runway and if the parking is full or is going to be full. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structrunway}{runway}} $\ast$ \mbox{\hyperlink{_air_manager_8c_a22458e84eb54f144c2bcba34b7e83258}{new\+Runway}} (float length, float width, \mbox{\hyperlink{_air_manager_8h_a9e269e7cf5cb230c5aa5861d57308ce3}{runway\+Type}} type, unsigned int max\+Takeoff\+Queue)
+\begin{DoxyCompactList}\small\item\em Create and allocate memory for a runway. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{_air_manager_8c_a97b3b7969352465d7af7f2914ece8986}{is\+Runway\+Free}} (\mbox{\hyperlink{structrunway}{runway}} $\ast$\mbox{\hyperlink{structrunway}{runway}})
+\begin{DoxyCompactList}\small\item\em Determine if a runway is curently used by a plane or not. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_aba6d6432980d435b20185058e72bd3d2}{add\+Plane\+To\+Runway}} (\mbox{\hyperlink{structrunway}{runway}} $\ast$\mbox{\hyperlink{structrunway}{runway}}, \mbox{\hyperlink{structplane}{plane}} $\ast$\mbox{\hyperlink{structplane}{plane}})
+\begin{DoxyCompactList}\small\item\em Add Plane to the runway, updating it status.~\newline
+ Used to allow an airplane to land or takeoff on a runway. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_ab97b1e816e6bec6c5db30d7996e9fcdc}{plane\+Exit\+Runway}} (\mbox{\hyperlink{structrunway}{runway}} $\ast$\mbox{\hyperlink{structrunway}{runway}}, \mbox{\hyperlink{structplane}{plane}} $\ast$\mbox{\hyperlink{structplane}{plane}})
+\begin{DoxyCompactList}\small\item\em Remove plane from runway, updating it status.~\newline
+ Used to finish the action started on runway, either landing or taking off. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_a4524f69c2c483a6d5facf2ccf6c126a5}{grant\+Takeoff\+For\+Runway}} (\mbox{\hyperlink{structrunway}{runway}} $\ast$\mbox{\hyperlink{structrunway}{runway}})
+\begin{DoxyCompactList}\small\item\em Allow next in runway queue for take off. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_a898f7bc8497509fd3a555510f466e4d1}{add\+Plane\+To\+Runway\+Queue}} (\mbox{\hyperlink{structrunway}{runway}} $\ast$\mbox{\hyperlink{structrunway}{runway}}, \mbox{\hyperlink{structplane}{plane}} $\ast$\mbox{\hyperlink{structplane}{plane}})
+\begin{DoxyCompactList}\small\item\em Add plane in the take off queue for a specified runway. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{_air_manager_8c_aacf18c37a6b3064ddb4466dabe53c90e}{is\+Runway\+Queue\+Full}} (\mbox{\hyperlink{structrunway}{runway}} $\ast$\mbox{\hyperlink{structrunway}{runway}})
+\begin{DoxyCompactList}\small\item\em Determine if the take off queue of a runway is full. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structairport}{airport}} $\ast$ \mbox{\hyperlink{_air_manager_8c_a4cfbfa72ca873466a6f1f849b921b10d}{new\+Airport}} (unsigned int parking\+Size)
+\begin{DoxyCompactList}\small\item\em Create an aiport and allocate adequate memory. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_ad5ea2937d69fb46830affd0a7ea274a5}{build\+Airport}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}}, int number\+Of\+Small\+Runway, int number\+Of\+Medium\+Runway, int number\+Of\+Large\+Runway)
+\begin{DoxyCompactList}\small\item\em Build the runways for an airport. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_a854e4d29686fa320507dd2c92862c5ae}{add\+Plane\+To\+Parking}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}}, \mbox{\hyperlink{structplane}{plane}} $\ast$\mbox{\hyperlink{structplane}{plane}})
+\begin{DoxyCompactList}\small\item\em Add plane to Parking. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{_air_manager_8c_ad70f8d817228924b6282b1f42244f844}{is\+Parking\+Full}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}})
+\begin{DoxyCompactList}\small\item\em Determine if the parking is full. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{_air_manager_8c_a59c8af90ebaa732412c7dff2db207e38}{is\+Parking\+Queue\+Full}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}})
+\begin{DoxyCompactList}\small\item\em Determine if the parking is full or if the planes currently landing will fill the parking. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_ad4e7bcbb4e5380286cce4fd5bee6503f}{add\+Plane\+To\+Landing\+Queue}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}}, \mbox{\hyperlink{structplane}{plane}} $\ast$\mbox{\hyperlink{structplane}{plane}})
+\begin{DoxyCompactList}\small\item\em Add plane to landing queue. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_ab8be84e706f18966d4dfa9d6ccb506cf}{grant\+Plane\+In\+L\+Q\+Access\+To\+Runway}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}}, \mbox{\hyperlink{structrunway}{runway}} $\ast$\mbox{\hyperlink{structrunway}{runway}}, \mbox{\hyperlink{structplane}{plane}} $\ast$\mbox{\hyperlink{structplane}{plane}})
+\begin{DoxyCompactList}\small\item\em Give to a plane in landing queue access to specified runway. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_a584bd596a795b18b7b1243e23ffb5a13}{grant\+Next\+In\+L\+Q\+Access\+To\+Runway}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}}, \mbox{\hyperlink{structrunway}{runway}} $\ast$\mbox{\hyperlink{structrunway}{runway}})
+\begin{DoxyCompactList}\small\item\em Grant next plane in landing queue acess to runway. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_a3f2ca8adeafd8a70b705351cb5a4452c}{add\+Plane\+To\+A\+F\+RQ}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}}, \mbox{\hyperlink{structplane}{plane}} $\ast$\mbox{\hyperlink{structplane}{plane}})
+\begin{DoxyCompactList}\small\item\em Add plane to the queue for acces to runway. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_afead87bdc99a8653048f59b6bd5aee48}{grant\+Plane\+In\+A\+F\+R\+Q\+Access\+To\+Runway}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}}, \mbox{\hyperlink{structrunway}{runway}} $\ast$\mbox{\hyperlink{structrunway}{runway}}, \mbox{\hyperlink{structplane}{plane}} $\ast$\mbox{\hyperlink{structplane}{plane}})
+\begin{DoxyCompactList}\small\item\em Give to a plane in the queue for takeoff runway access to specified runway queue. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_air_manager_8c_a60377f326cd7045228f1fc1299a60b48}{grant\+Next\+In\+A\+F\+R\+Q\+Access\+To\+Runway}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}}, \mbox{\hyperlink{structrunway}{runway}} $\ast$\mbox{\hyperlink{structrunway}{runway}})
+\begin{DoxyCompactList}\small\item\em Grant the next plane waiting for acces to runway access to runway. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions for the Manager. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_air_manager_8c_a3f2ca8adeafd8a70b705351cb5a4452c}\label{_air_manager_8c_a3f2ca8adeafd8a70b705351cb5a4452c}} 
+\index{AirManager.c@{AirManager.c}!addPlaneToAFRQ@{addPlaneToAFRQ}}
+\index{addPlaneToAFRQ@{addPlaneToAFRQ}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{addPlaneToAFRQ()}{addPlaneToAFRQ()}}
+{\footnotesize\ttfamily void add\+Plane\+To\+A\+F\+RQ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport,  }\item[{\mbox{\hyperlink{structplane}{plane}} $\ast$}]{plane }\end{DoxyParamCaption})}
+
+
+
+Add plane to the queue for acces to runway. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em airport} & \\
+\hline
+{\em plane} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_air_manager_8c_ad4e7bcbb4e5380286cce4fd5bee6503f}\label{_air_manager_8c_ad4e7bcbb4e5380286cce4fd5bee6503f}} 
+\index{AirManager.c@{AirManager.c}!addPlaneToLandingQueue@{addPlaneToLandingQueue}}
+\index{addPlaneToLandingQueue@{addPlaneToLandingQueue}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{addPlaneToLandingQueue()}{addPlaneToLandingQueue()}}
+{\footnotesize\ttfamily void add\+Plane\+To\+Landing\+Queue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport,  }\item[{\mbox{\hyperlink{structplane}{plane}} $\ast$}]{plane }\end{DoxyParamCaption})}
+
+
+
+Add plane to landing queue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em airport} & \\
+\hline
+{\em plane} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_air_manager_8c_a854e4d29686fa320507dd2c92862c5ae}\label{_air_manager_8c_a854e4d29686fa320507dd2c92862c5ae}} 
+\index{AirManager.c@{AirManager.c}!addPlaneToParking@{addPlaneToParking}}
+\index{addPlaneToParking@{addPlaneToParking}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{addPlaneToParking()}{addPlaneToParking()}}
+{\footnotesize\ttfamily void add\+Plane\+To\+Parking (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport,  }\item[{\mbox{\hyperlink{structplane}{plane}} $\ast$}]{plane }\end{DoxyParamCaption})}
+
+
+
+Add plane to Parking. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em airport} & \\
+\hline
+\mbox{\texttt{ in}}  & {\em plane} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_air_manager_8c_aba6d6432980d435b20185058e72bd3d2}\label{_air_manager_8c_aba6d6432980d435b20185058e72bd3d2}} 
+\index{AirManager.c@{AirManager.c}!addPlaneToRunway@{addPlaneToRunway}}
+\index{addPlaneToRunway@{addPlaneToRunway}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{addPlaneToRunway()}{addPlaneToRunway()}}
+{\footnotesize\ttfamily void add\+Plane\+To\+Runway (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structrunway}{runway}} $\ast$}]{runway,  }\item[{\mbox{\hyperlink{structplane}{plane}} $\ast$}]{plane }\end{DoxyParamCaption})}
+
+
+
+Add Plane to the runway, updating it status.~\newline
+ Used to allow an airplane to land or takeoff on a runway. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em runway} & Runway where the plane should take place on. \\
+\hline
+\mbox{\texttt{ in}}  & {\em plane} & The plane. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_air_manager_8c_a898f7bc8497509fd3a555510f466e4d1}\label{_air_manager_8c_a898f7bc8497509fd3a555510f466e4d1}} 
+\index{AirManager.c@{AirManager.c}!addPlaneToRunwayQueue@{addPlaneToRunwayQueue}}
+\index{addPlaneToRunwayQueue@{addPlaneToRunwayQueue}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{addPlaneToRunwayQueue()}{addPlaneToRunwayQueue()}}
+{\footnotesize\ttfamily void add\+Plane\+To\+Runway\+Queue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structrunway}{runway}} $\ast$}]{runway,  }\item[{\mbox{\hyperlink{structplane}{plane}} $\ast$}]{plane }\end{DoxyParamCaption})}
+
+
+
+Add plane in the take off queue for a specified runway. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em runway} & \\
+\hline
+\mbox{\texttt{ in}}  & {\em plane} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_air_manager_8c_ad5ea2937d69fb46830affd0a7ea274a5}\label{_air_manager_8c_ad5ea2937d69fb46830affd0a7ea274a5}} 
+\index{AirManager.c@{AirManager.c}!buildAirport@{buildAirport}}
+\index{buildAirport@{buildAirport}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{buildAirport()}{buildAirport()}}
+{\footnotesize\ttfamily void build\+Airport (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport,  }\item[{int}]{number\+Of\+Small\+Runway,  }\item[{int}]{number\+Of\+Medium\+Runway,  }\item[{int}]{number\+Of\+Large\+Runway }\end{DoxyParamCaption})}
+
+
+
+Build the runways for an airport. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em airport} & \\
+\hline
+\mbox{\texttt{ in}}  & {\em number\+Of\+Small\+Runway} & \\
+\hline
+\mbox{\texttt{ in}}  & {\em number\+Of\+Medium\+Runway} & \\
+\hline
+\mbox{\texttt{ in}}  & {\em number\+Of\+Large\+Runway} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_air_manager_8c_abfb77d946a099eb4eb149176d7c405f1}\label{_air_manager_8c_abfb77d946a099eb4eb149176d7c405f1}} 
+\index{AirManager.c@{AirManager.c}!canAPlaneInLQLandHere@{canAPlaneInLQLandHere}}
+\index{canAPlaneInLQLandHere@{canAPlaneInLQLandHere}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{canAPlaneInLQLandHere()}{canAPlaneInLQLandHere()}}
+{\footnotesize\ttfamily bool can\+A\+Plane\+In\+L\+Q\+Land\+Here (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport,  }\item[{\mbox{\hyperlink{structrunway}{runway}} $\ast$}]{runway }\end{DoxyParamCaption})}
+
+
+
+Determine if a plane currently in Landing Queue can land on the specified runway.~\newline
+ This function take into account the size of the plane, the class of the runway and if the parking is full or is going to be full. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em airport} & Airport containing the Landing Queue \\
+\hline
+\mbox{\texttt{ in}}  & {\em runway} & Runway to test \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if one of the planes in the landing queue can land on the runway 
+
+false if no plane in LQ can land on the runway 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_manager_8c_a77376a6ed801f138b4cca7c2f17d96c6}\label{_air_manager_8c_a77376a6ed801f138b4cca7c2f17d96c6}} 
+\index{AirManager.c@{AirManager.c}!canItLandHere@{canItLandHere}}
+\index{canItLandHere@{canItLandHere}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{canItLandHere()}{canItLandHere()}}
+{\footnotesize\ttfamily bool can\+It\+Land\+Here (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structplane}{plane}} $\ast$}]{plane,  }\item[{\mbox{\hyperlink{structrunway}{runway}} $\ast$}]{runway }\end{DoxyParamCaption})}
+
+
+
+Determine if a plane could land on the specified runway, based on his size and the class of the runway. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em plane} & \\
+\hline
+\mbox{\texttt{ in}}  & {\em runway} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the plane could land on the runway 
+
+false if he can\textquotesingle{}t 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_manager_8c_a60377f326cd7045228f1fc1299a60b48}\label{_air_manager_8c_a60377f326cd7045228f1fc1299a60b48}} 
+\index{AirManager.c@{AirManager.c}!grantNextInAFRQAccessToRunway@{grantNextInAFRQAccessToRunway}}
+\index{grantNextInAFRQAccessToRunway@{grantNextInAFRQAccessToRunway}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{grantNextInAFRQAccessToRunway()}{grantNextInAFRQAccessToRunway()}}
+{\footnotesize\ttfamily void grant\+Next\+In\+A\+F\+R\+Q\+Access\+To\+Runway (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport,  }\item[{\mbox{\hyperlink{structrunway}{runway}} $\ast$}]{runway }\end{DoxyParamCaption})}
+
+
+
+Grant the next plane waiting for acces to runway access to runway. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em airport} & \\
+\hline
+{\em runway} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_air_manager_8c_a584bd596a795b18b7b1243e23ffb5a13}\label{_air_manager_8c_a584bd596a795b18b7b1243e23ffb5a13}} 
+\index{AirManager.c@{AirManager.c}!grantNextInLQAccessToRunway@{grantNextInLQAccessToRunway}}
+\index{grantNextInLQAccessToRunway@{grantNextInLQAccessToRunway}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{grantNextInLQAccessToRunway()}{grantNextInLQAccessToRunway()}}
+{\footnotesize\ttfamily void grant\+Next\+In\+L\+Q\+Access\+To\+Runway (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport,  }\item[{\mbox{\hyperlink{structrunway}{runway}} $\ast$}]{runway }\end{DoxyParamCaption})}
+
+
+
+Grant next plane in landing queue acess to runway. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em airport} & \\
+\hline
+{\em runway} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_air_manager_8c_afead87bdc99a8653048f59b6bd5aee48}\label{_air_manager_8c_afead87bdc99a8653048f59b6bd5aee48}} 
+\index{AirManager.c@{AirManager.c}!grantPlaneInAFRQAccessToRunway@{grantPlaneInAFRQAccessToRunway}}
+\index{grantPlaneInAFRQAccessToRunway@{grantPlaneInAFRQAccessToRunway}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{grantPlaneInAFRQAccessToRunway()}{grantPlaneInAFRQAccessToRunway()}}
+{\footnotesize\ttfamily void grant\+Plane\+In\+A\+F\+R\+Q\+Access\+To\+Runway (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport,  }\item[{\mbox{\hyperlink{structrunway}{runway}} $\ast$}]{runway,  }\item[{\mbox{\hyperlink{structplane}{plane}} $\ast$}]{plane }\end{DoxyParamCaption})}
+
+
+
+Give to a plane in the queue for takeoff runway access to specified runway queue. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em airport} & \\
+\hline
+\mbox{\texttt{ in}}  & {\em runway} & \\
+\hline
+\mbox{\texttt{ in}}  & {\em plane} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_air_manager_8c_ab8be84e706f18966d4dfa9d6ccb506cf}\label{_air_manager_8c_ab8be84e706f18966d4dfa9d6ccb506cf}} 
+\index{AirManager.c@{AirManager.c}!grantPlaneInLQAccessToRunway@{grantPlaneInLQAccessToRunway}}
+\index{grantPlaneInLQAccessToRunway@{grantPlaneInLQAccessToRunway}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{grantPlaneInLQAccessToRunway()}{grantPlaneInLQAccessToRunway()}}
+{\footnotesize\ttfamily void grant\+Plane\+In\+L\+Q\+Access\+To\+Runway (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport,  }\item[{\mbox{\hyperlink{structrunway}{runway}} $\ast$}]{runway,  }\item[{\mbox{\hyperlink{structplane}{plane}} $\ast$}]{plane }\end{DoxyParamCaption})}
+
+
+
+Give to a plane in landing queue access to specified runway. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em airport} & \\
+\hline
+\mbox{\texttt{ in}}  & {\em runway} & \\
+\hline
+\mbox{\texttt{ in}}  & {\em plane} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_air_manager_8c_a4524f69c2c483a6d5facf2ccf6c126a5}\label{_air_manager_8c_a4524f69c2c483a6d5facf2ccf6c126a5}} 
+\index{AirManager.c@{AirManager.c}!grantTakeoffForRunway@{grantTakeoffForRunway}}
+\index{grantTakeoffForRunway@{grantTakeoffForRunway}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{grantTakeoffForRunway()}{grantTakeoffForRunway()}}
+{\footnotesize\ttfamily void grant\+Takeoff\+For\+Runway (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structrunway}{runway}} $\ast$}]{runway }\end{DoxyParamCaption})}
+
+
+
+Allow next in runway queue for take off. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em runway} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_air_manager_8c_ad70f8d817228924b6282b1f42244f844}\label{_air_manager_8c_ad70f8d817228924b6282b1f42244f844}} 
+\index{AirManager.c@{AirManager.c}!isParkingFull@{isParkingFull}}
+\index{isParkingFull@{isParkingFull}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{isParkingFull()}{isParkingFull()}}
+{\footnotesize\ttfamily bool is\+Parking\+Full (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport }\end{DoxyParamCaption})}
+
+
+
+Determine if the parking is full. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em airport} & containg the parking \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the parking is full 
+
+false if the parking is not full 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_manager_8c_a59c8af90ebaa732412c7dff2db207e38}\label{_air_manager_8c_a59c8af90ebaa732412c7dff2db207e38}} 
+\index{AirManager.c@{AirManager.c}!isParkingQueueFull@{isParkingQueueFull}}
+\index{isParkingQueueFull@{isParkingQueueFull}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{isParkingQueueFull()}{isParkingQueueFull()}}
+{\footnotesize\ttfamily bool is\+Parking\+Queue\+Full (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport }\end{DoxyParamCaption})}
+
+
+
+Determine if the parking is full or if the planes currently landing will fill the parking. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em airport} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the parking is or will be full 
+
+false if it isn\textquotesingle{}t 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_manager_8c_a97b3b7969352465d7af7f2914ece8986}\label{_air_manager_8c_a97b3b7969352465d7af7f2914ece8986}} 
+\index{AirManager.c@{AirManager.c}!isRunwayFree@{isRunwayFree}}
+\index{isRunwayFree@{isRunwayFree}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{isRunwayFree()}{isRunwayFree()}}
+{\footnotesize\ttfamily bool is\+Runway\+Free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structrunway}{runway}} $\ast$}]{runway }\end{DoxyParamCaption})}
+
+
+
+Determine if a runway is curently used by a plane or not. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em runway} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the runway is empty 
+
+false if the runway is currently used 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_manager_8c_aacf18c37a6b3064ddb4466dabe53c90e}\label{_air_manager_8c_aacf18c37a6b3064ddb4466dabe53c90e}} 
+\index{AirManager.c@{AirManager.c}!isRunwayQueueFull@{isRunwayQueueFull}}
+\index{isRunwayQueueFull@{isRunwayQueueFull}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{isRunwayQueueFull()}{isRunwayQueueFull()}}
+{\footnotesize\ttfamily bool is\+Runway\+Queue\+Full (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structrunway}{runway}} $\ast$}]{runway }\end{DoxyParamCaption})}
+
+
+
+Determine if the take off queue of a runway is full. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em runway} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the take off queue is full 
+
+false if the take off queue is not full 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_manager_8c_a3d89df80ab0abd606f442ada74c1f23f}\label{_air_manager_8c_a3d89df80ab0abd606f442ada74c1f23f}} 
+\index{AirManager.c@{AirManager.c}!loadPlaneInAirport@{loadPlaneInAirport}}
+\index{loadPlaneInAirport@{loadPlaneInAirport}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{loadPlaneInAirport()}{loadPlaneInAirport()}}
+{\footnotesize\ttfamily void load\+Plane\+In\+Airport (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport,  }\item[{\mbox{\hyperlink{structplane}{plane}} $\ast$}]{plane }\end{DoxyParamCaption})}
+
+
+
+Add a plane to a specified Airport. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em airport} & Airport to load plane in \\
+\hline
+\mbox{\texttt{ in}}  & {\em plane} & Plane to import \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_air_manager_8c_a4cfbfa72ca873466a6f1f849b921b10d}\label{_air_manager_8c_a4cfbfa72ca873466a6f1f849b921b10d}} 
+\index{AirManager.c@{AirManager.c}!newAirport@{newAirport}}
+\index{newAirport@{newAirport}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{newAirport()}{newAirport()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structairport}{airport}}$\ast$ new\+Airport (\begin{DoxyParamCaption}\item[{unsigned int}]{parking\+Size }\end{DoxyParamCaption})}
+
+
+
+Create an aiport and allocate adequate memory. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em parking\+Size} & Size of the parking \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+airport pointer to the new airport 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_manager_8c_aa11c020e6aa8bf76b531ac290225419b}\label{_air_manager_8c_aa11c020e6aa8bf76b531ac290225419b}} 
+\index{AirManager.c@{AirManager.c}!newPlane@{newPlane}}
+\index{newPlane@{newPlane}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{newPlane()}{newPlane()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structplane}{plane}}$\ast$ new\+Plane (\begin{DoxyParamCaption}\item[{char}]{matriculation\mbox{[}7\mbox{]},  }\item[{\mbox{\hyperlink{_air_manager_8h_a2a01c5db75a78c5ec2a4804e65a5a28c}{plane\+Type}}}]{type,  }\item[{unsigned int}]{passengers,  }\item[{unsigned int}]{passengers\+Max,  }\item[{\mbox{\hyperlink{_air_manager_8h_a4d4784741db00d82597c0ad8eed0413c}{plane\+Status}}}]{status }\end{DoxyParamCaption})}
+
+
+
+Create and allocate memory for a plane. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em matriculation} & Matriculation of the plane \\
+\hline
+\mbox{\texttt{ in}}  & {\em type} & Class of the plane (A\+I\+R\+L\+I\+N\+ER, L\+I\+G\+HT or B\+U\+S\+I\+N\+E\+SS) \\
+\hline
+\mbox{\texttt{ in}}  & {\em passengers} & Number of passengers currently on board \\
+\hline
+\mbox{\texttt{ in}}  & {\em passengers\+Max} & Maximum number of passengers \\
+\hline
+\mbox{\texttt{ in}}  & {\em status} & Status of the plane (F\+L\+Y\+I\+NG or P\+A\+R\+K\+I\+NG only) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer the created plane 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_manager_8c_a22458e84eb54f144c2bcba34b7e83258}\label{_air_manager_8c_a22458e84eb54f144c2bcba34b7e83258}} 
+\index{AirManager.c@{AirManager.c}!newRunway@{newRunway}}
+\index{newRunway@{newRunway}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{newRunway()}{newRunway()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structrunway}{runway}}$\ast$ new\+Runway (\begin{DoxyParamCaption}\item[{float}]{length,  }\item[{float}]{width,  }\item[{\mbox{\hyperlink{_air_manager_8h_a9e269e7cf5cb230c5aa5861d57308ce3}{runway\+Type}}}]{type,  }\item[{unsigned int}]{max\+Takeoff\+Queue }\end{DoxyParamCaption})}
+
+
+
+Create and allocate memory for a runway. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em length} & Length of runway in meters. \\
+\hline
+\mbox{\texttt{ in}}  & {\em width} & Width of runway in meters. \\
+\hline
+\mbox{\texttt{ in}}  & {\em type} & Class of runway (S\+M\+A\+LL, M\+E\+D\+I\+UM, L\+A\+R\+GE). \\
+\hline
+\mbox{\texttt{ in}}  & {\em max\+Takeoff\+Queue} & Size of take off queue. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the created plane. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_air_manager_8c_ab97b1e816e6bec6c5db30d7996e9fcdc}\label{_air_manager_8c_ab97b1e816e6bec6c5db30d7996e9fcdc}} 
+\index{AirManager.c@{AirManager.c}!planeExitRunway@{planeExitRunway}}
+\index{planeExitRunway@{planeExitRunway}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{planeExitRunway()}{planeExitRunway()}}
+{\footnotesize\ttfamily void plane\+Exit\+Runway (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structrunway}{runway}} $\ast$}]{runway,  }\item[{\mbox{\hyperlink{structplane}{plane}} $\ast$}]{plane }\end{DoxyParamCaption})}
+
+
+
+Remove plane from runway, updating it status.~\newline
+ Used to finish the action started on runway, either landing or taking off. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em runway} & Runway from wich the plane exit. \\
+\hline
+\mbox{\texttt{ in}}  & {\em plane} & The plane. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_air_manager_8c_a2480da78582e0d96d5e26aaa3a8f91ff}\label{_air_manager_8c_a2480da78582e0d96d5e26aaa3a8f91ff}} 
+\index{AirManager.c@{AirManager.c}!removePlane@{removePlane}}
+\index{removePlane@{removePlane}!AirManager.c@{AirManager.c}}
+\doxysubsubsection{\texorpdfstring{removePlane()}{removePlane()}}
+{\footnotesize\ttfamily void remove\+Plane (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport,  }\item[{\mbox{\hyperlink{structplane}{plane}} $\ast$}]{plane }\end{DoxyParamCaption})}
+
+
+
+Remove a plane from Airport. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em airport} & Airport from where the plane should be removed \\
+\hline
+\mbox{\texttt{ in}}  & {\em plane} & Plane to remove \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,27 @@
+var _air_manager_8c =
+[
+    [ "addPlaneToAFRQ", "_air_manager_8c.html#a3f2ca8adeafd8a70b705351cb5a4452c", null ],
+    [ "addPlaneToLandingQueue", "_air_manager_8c.html#ad4e7bcbb4e5380286cce4fd5bee6503f", null ],
+    [ "addPlaneToParking", "_air_manager_8c.html#a854e4d29686fa320507dd2c92862c5ae", null ],
+    [ "addPlaneToRunway", "_air_manager_8c.html#aba6d6432980d435b20185058e72bd3d2", null ],
+    [ "addPlaneToRunwayQueue", "_air_manager_8c.html#a898f7bc8497509fd3a555510f466e4d1", null ],
+    [ "buildAirport", "_air_manager_8c.html#ad5ea2937d69fb46830affd0a7ea274a5", null ],
+    [ "canAPlaneInLQLandHere", "_air_manager_8c.html#abfb77d946a099eb4eb149176d7c405f1", null ],
+    [ "canItLandHere", "_air_manager_8c.html#a77376a6ed801f138b4cca7c2f17d96c6", null ],
+    [ "comparePointer", "_air_manager_8c.html#ada45487a357386f50ef666e293707b28", null ],
+    [ "grantNextInAFRQAccessToRunway", "_air_manager_8c.html#a60377f326cd7045228f1fc1299a60b48", null ],
+    [ "grantNextInLQAccessToRunway", "_air_manager_8c.html#a584bd596a795b18b7b1243e23ffb5a13", null ],
+    [ "grantPlaneInAFRQAccessToRunway", "_air_manager_8c.html#afead87bdc99a8653048f59b6bd5aee48", null ],
+    [ "grantPlaneInLQAccessToRunway", "_air_manager_8c.html#ab8be84e706f18966d4dfa9d6ccb506cf", null ],
+    [ "grantTakeoffForRunway", "_air_manager_8c.html#a4524f69c2c483a6d5facf2ccf6c126a5", null ],
+    [ "isParkingFull", "_air_manager_8c.html#ad70f8d817228924b6282b1f42244f844", null ],
+    [ "isParkingQueueFull", "_air_manager_8c.html#a59c8af90ebaa732412c7dff2db207e38", null ],
+    [ "isRunwayFree", "_air_manager_8c.html#a97b3b7969352465d7af7f2914ece8986", null ],
+    [ "isRunwayQueueFull", "_air_manager_8c.html#aacf18c37a6b3064ddb4466dabe53c90e", null ],
+    [ "loadPlaneInAirport", "_air_manager_8c.html#a3d89df80ab0abd606f442ada74c1f23f", null ],
+    [ "newAirport", "_air_manager_8c.html#a4cfbfa72ca873466a6f1f849b921b10d", null ],
+    [ "newPlane", "_air_manager_8c.html#aa11c020e6aa8bf76b531ac290225419b", null ],
+    [ "newRunway", "_air_manager_8c.html#a22458e84eb54f144c2bcba34b7e83258", null ],
+    [ "planeExitRunway", "_air_manager_8c.html#ab97b1e816e6bec6c5db30d7996e9fcdc", null ],
+    [ "removePlane", "_air_manager_8c.html#a2480da78582e0d96d5e26aaa3a8f91ff", null ]
+];

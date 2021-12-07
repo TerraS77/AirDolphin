@@ -1,0 +1,73 @@
+\hypertarget{structairport}{}\doxysection{airport Struct Reference}
+\label{structairport}\index{airport@{airport}}
+
+
+Airport containing all the planes and runways of the simulation.  
+
+
+
+
+{\ttfamily \#include $<$Air\+Manager.\+h$>$}
+
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \mbox{\hyperlink{structairport_a4e6110598cbff8f231bdd125eccf4835}{parking\+Size}}
+\item 
+\mbox{\hyperlink{structlist}{list}} $\ast$ \mbox{\hyperlink{structairport_ad68c502a4dd9d694ed3f388a42c781c7}{runways}}
+\item 
+\mbox{\hyperlink{structlist}{list}} $\ast$ \mbox{\hyperlink{structairport_a836e885d023d205ab7d2a135d1ccc56a}{planes\+In\+Range}}
+\item 
+\mbox{\hyperlink{structlist}{list}} $\ast$ \mbox{\hyperlink{structairport_a5710bad512f54923dc969c00a5f415bb}{parking\+Planes}}
+\item 
+\mbox{\hyperlink{structlist}{list}} $\ast$ \mbox{\hyperlink{structairport_ac6ea3c10c8a44a2a4279d8a372728935}{landing\+Queue}}
+\item 
+\mbox{\hyperlink{structlist}{list}} $\ast$ \mbox{\hyperlink{structairport_ab4dd1d04047c5d1e157c7888e6d5e62e}{wait\+For\+Runway\+Queue}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Airport containing all the planes and runways of the simulation. 
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structairport_ac6ea3c10c8a44a2a4279d8a372728935}\label{structairport_ac6ea3c10c8a44a2a4279d8a372728935}} 
+\index{airport@{airport}!landingQueue@{landingQueue}}
+\index{landingQueue@{landingQueue}!airport@{airport}}
+\doxysubsubsection{\texorpdfstring{landingQueue}{landingQueue}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structlist}{list}}$\ast$ landing\+Queue}
+
+All planes in the landing queue \mbox{\Hypertarget{structairport_a5710bad512f54923dc969c00a5f415bb}\label{structairport_a5710bad512f54923dc969c00a5f415bb}} 
+\index{airport@{airport}!parkingPlanes@{parkingPlanes}}
+\index{parkingPlanes@{parkingPlanes}!airport@{airport}}
+\doxysubsubsection{\texorpdfstring{parkingPlanes}{parkingPlanes}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structlist}{list}}$\ast$ parking\+Planes}
+
+Planes in the parking \mbox{\Hypertarget{structairport_a4e6110598cbff8f231bdd125eccf4835}\label{structairport_a4e6110598cbff8f231bdd125eccf4835}} 
+\index{airport@{airport}!parkingSize@{parkingSize}}
+\index{parkingSize@{parkingSize}!airport@{airport}}
+\doxysubsubsection{\texorpdfstring{parkingSize}{parkingSize}}
+{\footnotesize\ttfamily unsigned int parking\+Size}
+
+Size of the parking \mbox{\Hypertarget{structairport_a836e885d023d205ab7d2a135d1ccc56a}\label{structairport_a836e885d023d205ab7d2a135d1ccc56a}} 
+\index{airport@{airport}!planesInRange@{planesInRange}}
+\index{planesInRange@{planesInRange}!airport@{airport}}
+\doxysubsubsection{\texorpdfstring{planesInRange}{planesInRange}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structlist}{list}}$\ast$ planes\+In\+Range}
+
+All the planes in range of the control tower registration system \mbox{\Hypertarget{structairport_ad68c502a4dd9d694ed3f388a42c781c7}\label{structairport_ad68c502a4dd9d694ed3f388a42c781c7}} 
+\index{airport@{airport}!runways@{runways}}
+\index{runways@{runways}!airport@{airport}}
+\doxysubsubsection{\texorpdfstring{runways}{runways}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structlist}{list}}$\ast$ runways}
+
+Runways of Airport \mbox{\Hypertarget{structairport_ab4dd1d04047c5d1e157c7888e6d5e62e}\label{structairport_ab4dd1d04047c5d1e157c7888e6d5e62e}} 
+\index{airport@{airport}!waitForRunwayQueue@{waitForRunwayQueue}}
+\index{waitForRunwayQueue@{waitForRunwayQueue}!airport@{airport}}
+\doxysubsubsection{\texorpdfstring{waitForRunwayQueue}{waitForRunwayQueue}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structlist}{list}}$\ast$ wait\+For\+Runway\+Queue}
+
+Planes in parking waiting for a landing 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_air_manager_8h}{Air\+Manager.\+h}}\end{DoxyCompactItemize}

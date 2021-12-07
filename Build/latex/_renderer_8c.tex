@@ -1,0 +1,531 @@
+\hypertarget{_renderer_8c}{}\doxysection{Renderer.\+c File Reference}
+\label{_renderer_8c}\index{Renderer.c@{Renderer.c}}
+
+
+Window manager, simulation renderer, temporisation and menus.  
+
+
+{\ttfamily \#include $<$S\+D\+L2/\+S\+D\+L.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}renderer.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}bdd\+Manager.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$S\+D\+L2/\+S\+D\+L\+\_\+ttf.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_anchor}{Anchor}}
+\begin{DoxyCompactList}\small\item\em 2D Coordinates set \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structbutton}{button}}
+\begin{DoxyCompactList}\small\item\em Button item for rendering. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06d}{text\+Align}} \{ \mbox{\hyperlink{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06dadb45120aafd37a973140edee24708065}{L\+E\+FT}}, 
+\mbox{\hyperlink{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06da2159ffbd3a68037511ab5ab4dd35ace7}{C\+E\+N\+T\+ER}}, 
+\mbox{\hyperlink{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06daec8379af7490bb9eaaf579cf17876f38}{R\+I\+G\+HT}}
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration of text rendering alignements. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795}{menu\+Action}} \{ \newline
+\mbox{\hyperlink{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795addd8c30ac512a3f22d89a3fbd69bb24d}{M\+E\+N\+U\+\_\+\+C\+O\+N\+T\+I\+N\+UE}}, 
+\mbox{\hyperlink{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795aa89fd919376f9b3e169ecb7e39d8ff49}{M\+E\+N\+U\+\_\+\+S\+A\+VE}}, 
+\mbox{\hyperlink{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795a6d6f7db1dfb933d3f32b63e727ae1651}{M\+E\+N\+U\+\_\+\+O\+P\+EN}}, 
+\mbox{\hyperlink{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795a0cc060e77a977b9f5d6a86867ef247da}{M\+E\+N\+U\+\_\+\+Q\+U\+IT}}, 
+\newline
+\mbox{\hyperlink{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795a1703492b37d9e5d472aade8c913232bd}{M\+E\+N\+U\+\_\+\+N\+U\+LL}}
+ \}
+\begin{DoxyCompactList}\small\item\em Actions of pause menu. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_renderer_8c_a6fcb05de762da60f52d18d665c3b67d8}\label{_renderer_8c_a6fcb05de762da60f52d18d665c3b67d8}} 
+void \mbox{\hyperlink{_renderer_8c_a6fcb05de762da60f52d18d665c3b67d8}{close\+Window}} ()
+\begin{DoxyCompactList}\small\item\em function that close the window \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_abcf7919e2f7088f1b2f5a6564fb5a508}{Set\+Draw\+Color}} (S\+D\+L\+\_\+\+Color Color)
+\begin{DoxyCompactList}\small\item\em Set the Draw Color object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_ac36c575a598d4fec063239aaf1988d69}{print\+Rectangle\+With\+Border}} (\mbox{\hyperlink{struct_anchor}{Anchor}} C\+SG, \mbox{\hyperlink{struct_anchor}{Anchor}} C\+ID, S\+D\+L\+\_\+\+Color couleur, int border)
+\begin{DoxyCompactList}\small\item\em print a rectangle with a customized border into the renderer \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_a56dbd2b949251b64988a2dc46b6a9ccb}{print\+Progress}} (\mbox{\hyperlink{struct_anchor}{Anchor}} C\+SG, \mbox{\hyperlink{struct_anchor}{Anchor}} C\+ID, S\+D\+L\+\_\+\+Color couleur, int border, float pourcentage)
+\begin{DoxyCompactList}\small\item\em print the progress bar into the renderer \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_a2e71f292bd0dd4990ec881d6ef39bdb8}{print\+Text}} (char $\ast$text, int font\+Size, S\+D\+L\+\_\+\+Color color, \mbox{\hyperlink{struct_anchor}{Anchor}} origin, \mbox{\hyperlink{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06d}{text\+Align}} align)
+\begin{DoxyCompactList}\small\item\em print the text you want into the renderer \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_ab436eeda3e3a6c35f889577b4e44d128}{interf\+\_\+\+Airport\+To\+Render}} (\mbox{\hyperlink{structsimulation}{simulation}} \mbox{\hyperlink{structsimulation}{simulation}})
+\begin{DoxyCompactList}\small\item\em print the airport\textquotesingle{}s interface into the renderer \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_a2635a90361be6d61a2c6d707ae09a9da}{interf\+\_\+\+Runway}} (\mbox{\hyperlink{structsimulation}{simulation}} \mbox{\hyperlink{structsimulation}{simulation}}, \mbox{\hyperlink{structrunway}{runway}} $\ast$\mbox{\hyperlink{structrunway}{runway}}, \mbox{\hyperlink{struct_anchor}{Anchor}} C\+SG, int w, int h)
+\begin{DoxyCompactList}\small\item\em print a generic runway that is used 6times \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_a227e3bef18c2a507eb53ac3735560a01}{interf\+\_\+\+Radar}} (\mbox{\hyperlink{structairport}{airport}} $\ast$\mbox{\hyperlink{structairport}{airport}}, \mbox{\hyperlink{struct_anchor}{Anchor}} left)
+\begin{DoxyCompactList}\small\item\em print the radar square into the renderer \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_a179eba36d8f1f5f9e4c5f27ed61554e7}{interf\+\_\+\+Radar\+\_\+\+Print\+Line}} (\mbox{\hyperlink{structplane}{plane}} $\ast$\mbox{\hyperlink{structplane}{plane}}, \mbox{\hyperlink{struct_anchor}{Anchor}} left)
+\begin{DoxyCompactList}\small\item\em printf the radar intels into the radar square \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_a8b775a003a6e0d16e6a68e40ec9b1a1f}{interf\+\_\+\+Parking}} (\mbox{\hyperlink{structsimulation}{simulation}} \mbox{\hyperlink{structsimulation}{simulation}}, \mbox{\hyperlink{struct_anchor}{Anchor}} left)
+\begin{DoxyCompactList}\small\item\em print the parking square into the renderer \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_a12d8963a344ee7af713cfc1c19a8a601}{interf\+\_\+\+Parking\+\_\+\+Print\+Line}} (\mbox{\hyperlink{structsim__plane_actor}{sim\+\_\+plane\+Actor}} $\ast$plane\+Actor, \mbox{\hyperlink{struct_anchor}{Anchor}} left, bool is\+In\+W\+F\+TR)
+\begin{DoxyCompactList}\small\item\em printf the parking intels into the radar square \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_afe0267c990fba62bbb0ecff7888baa22}{interf\+\_\+launch\+Menu}} (\mbox{\hyperlink{structsimulation}{simulation}} $\ast$\mbox{\hyperlink{structsimulation}{simulation}})
+\begin{DoxyCompactList}\small\item\em print the menu into the renderer and do the action when you click on a button \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structbutton}{button}} \mbox{\hyperlink{_renderer_8c_a17e573bc6a972ee4c98963e3f0fac47b}{new\+Button}} (\mbox{\hyperlink{struct_anchor}{Anchor}} center, int h, int w, char $\ast$text, \mbox{\hyperlink{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795}{menu\+Action}} action)
+\begin{DoxyCompactList}\small\item\em creat a button with a text, a location and a size (width and heigth) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_ad7b13a9f787499b247e32a15f45916c9}{print\+Buttons}} (\mbox{\hyperlink{structbutton}{button}} $\ast$buttons, int n\+Buttons)
+\begin{DoxyCompactList}\small\item\em printf that good looking button in the renderer \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_a0d1782ceaf5d5a78126f2f9b85c6b119}{update\+Hover\+Buttons}} (\mbox{\hyperlink{structbutton}{button}} $\ast$buttons, int n\+Buttons, int mx, int my)
+\begin{DoxyCompactList}\small\item\em add a cool effect (fill the background) when hovering the button \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795}{menu\+Action}} \mbox{\hyperlink{_renderer_8c_af94bb5f17d5477b935d677966e51e131}{get\+Action\+Button}} (\mbox{\hyperlink{structbutton}{button}} $\ast$buttons, int n\+Buttons)
+\begin{DoxyCompactList}\small\item\em Get the right Action Button to perform when you click. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{_renderer_8c_aab7b2cfe96ecdbd26647a30b21b29928}{is\+Button\+Hover}} (int mx, int my, \mbox{\hyperlink{structbutton}{button}} \mbox{\hyperlink{structbutton}{button}})
+\begin{DoxyCompactList}\small\item\em tells you if your cursor is hovering a button or not \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_aff907f94052c24b2b07c2ca0a221a922}{init\+Window}} (int width, int height)
+\begin{DoxyCompactList}\small\item\em initialize the window \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_renderer_8c_a9c98ab2a8dd948caf035293bcbfb1ca2}{update\+Airport\+Renderer}} (\mbox{\hyperlink{structsimulation}{simulation}} $\ast$\mbox{\hyperlink{structsimulation}{simulation}})
+\begin{DoxyCompactList}\small\item\em function that refreshes the airport display \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_renderer_8c_ac059b3e539a5a7b5344148cc9c77402f}\label{_renderer_8c_ac059b3e539a5a7b5344148cc9c77402f}} 
+S\+D\+L\+\_\+\+Color {\bfseries Y\+E\+L\+L\+OW} = \{255, 255, 0, 255\}
+\item 
+\mbox{\Hypertarget{_renderer_8c_a59df5d619f23173af608c25d3b4a1914}\label{_renderer_8c_a59df5d619f23173af608c25d3b4a1914}} 
+S\+D\+L\+\_\+\+Color {\bfseries C\+Y\+AN} = \{0, 255, 255, 255\}
+\item 
+\mbox{\Hypertarget{_renderer_8c_a9eb8c8fa86d54544ffd79802430bd4d0}\label{_renderer_8c_a9eb8c8fa86d54544ffd79802430bd4d0}} 
+S\+D\+L\+\_\+\+Color {\bfseries W\+H\+I\+TE} = \{255, 255, 255, 255\}
+\item 
+\mbox{\Hypertarget{_renderer_8c_a8c1cc32ef749a9417e4cb0b0f0726463}\label{_renderer_8c_a8c1cc32ef749a9417e4cb0b0f0726463}} 
+S\+D\+L\+\_\+\+Color {\bfseries B\+L\+A\+CK} = \{0, 0, 0, 255\}
+\item 
+\mbox{\Hypertarget{_renderer_8c_a8c9b1dcb5255932944435edccc74a2d0}\label{_renderer_8c_a8c9b1dcb5255932944435edccc74a2d0}} 
+S\+D\+L\+\_\+\+Color {\bfseries G\+R\+EY} = \{155, 155, 155, 255\}
+\item 
+\mbox{\Hypertarget{_renderer_8c_a6fd3af9743213bfd0dda450a73ff63ce}\label{_renderer_8c_a6fd3af9743213bfd0dda450a73ff63ce}} 
+int {\bfseries w\+Width}
+\item 
+\mbox{\Hypertarget{_renderer_8c_a201cf3ec0594fb0c533eb244bf104af9}\label{_renderer_8c_a201cf3ec0594fb0c533eb244bf104af9}} 
+int {\bfseries w\+Height}
+\item 
+\mbox{\Hypertarget{_renderer_8c_aaa8e409e04dcf575ef63fd5fb3db06f9}\label{_renderer_8c_aaa8e409e04dcf575ef63fd5fb3db06f9}} 
+S\+D\+L\+\_\+\+Window $\ast$ {\bfseries window} = N\+U\+LL
+\item 
+\mbox{\Hypertarget{_renderer_8c_a966da7a60c4ea3ba301e26ccc5efe452}\label{_renderer_8c_a966da7a60c4ea3ba301e26ccc5efe452}} 
+S\+D\+L\+\_\+\+Renderer $\ast$ {\bfseries renderer} = N\+U\+LL
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Window manager, simulation renderer, temporisation and menus. 
+
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2021 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795}\label{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795}} 
+\index{Renderer.c@{Renderer.c}!menuAction@{menuAction}}
+\index{menuAction@{menuAction}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{menuAction}{menuAction}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795}{menu\+Action}}}
+
+
+
+Actions of pause menu. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MENU\_CONTINUE@{MENU\_CONTINUE}!Renderer.c@{Renderer.c}}\index{Renderer.c@{Renderer.c}!MENU\_CONTINUE@{MENU\_CONTINUE}}}\mbox{\Hypertarget{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795addd8c30ac512a3f22d89a3fbd69bb24d}\label{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795addd8c30ac512a3f22d89a3fbd69bb24d}} 
+M\+E\+N\+U\+\_\+\+C\+O\+N\+T\+I\+N\+UE&Resume simulation \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MENU\_SAVE@{MENU\_SAVE}!Renderer.c@{Renderer.c}}\index{Renderer.c@{Renderer.c}!MENU\_SAVE@{MENU\_SAVE}}}\mbox{\Hypertarget{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795aa89fd919376f9b3e169ecb7e39d8ff49}\label{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795aa89fd919376f9b3e169ecb7e39d8ff49}} 
+M\+E\+N\+U\+\_\+\+S\+A\+VE&Save planes status in a file \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MENU\_OPEN@{MENU\_OPEN}!Renderer.c@{Renderer.c}}\index{Renderer.c@{Renderer.c}!MENU\_OPEN@{MENU\_OPEN}}}\mbox{\Hypertarget{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795a6d6f7db1dfb933d3f32b63e727ae1651}\label{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795a6d6f7db1dfb933d3f32b63e727ae1651}} 
+M\+E\+N\+U\+\_\+\+O\+P\+EN&Open planes status in a file \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MENU\_QUIT@{MENU\_QUIT}!Renderer.c@{Renderer.c}}\index{Renderer.c@{Renderer.c}!MENU\_QUIT@{MENU\_QUIT}}}\mbox{\Hypertarget{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795a0cc060e77a977b9f5d6a86867ef247da}\label{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795a0cc060e77a977b9f5d6a86867ef247da}} 
+M\+E\+N\+U\+\_\+\+Q\+U\+IT&Quit application \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MENU\_NULL@{MENU\_NULL}!Renderer.c@{Renderer.c}}\index{Renderer.c@{Renderer.c}!MENU\_NULL@{MENU\_NULL}}}\mbox{\Hypertarget{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795a1703492b37d9e5d472aade8c913232bd}\label{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795a1703492b37d9e5d472aade8c913232bd}} 
+M\+E\+N\+U\+\_\+\+N\+U\+LL&No action \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06d}\label{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06d}} 
+\index{Renderer.c@{Renderer.c}!textAlign@{textAlign}}
+\index{textAlign@{textAlign}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{textAlign}{textAlign}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06d}{text\+Align}}}
+
+
+
+Enumeration of text rendering alignements. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LEFT@{LEFT}!Renderer.c@{Renderer.c}}\index{Renderer.c@{Renderer.c}!LEFT@{LEFT}}}\mbox{\Hypertarget{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06dadb45120aafd37a973140edee24708065}\label{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06dadb45120aafd37a973140edee24708065}} 
+L\+E\+FT&Align text to left \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CENTER@{CENTER}!Renderer.c@{Renderer.c}}\index{Renderer.c@{Renderer.c}!CENTER@{CENTER}}}\mbox{\Hypertarget{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06da2159ffbd3a68037511ab5ab4dd35ace7}\label{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06da2159ffbd3a68037511ab5ab4dd35ace7}} 
+C\+E\+N\+T\+ER&Align text to center \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RIGHT@{RIGHT}!Renderer.c@{Renderer.c}}\index{Renderer.c@{Renderer.c}!RIGHT@{RIGHT}}}\mbox{\Hypertarget{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06daec8379af7490bb9eaaf579cf17876f38}\label{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06daec8379af7490bb9eaaf579cf17876f38}} 
+R\+I\+G\+HT&Align text to right \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_renderer_8c_af94bb5f17d5477b935d677966e51e131}\label{_renderer_8c_af94bb5f17d5477b935d677966e51e131}} 
+\index{Renderer.c@{Renderer.c}!getActionButton@{getActionButton}}
+\index{getActionButton@{getActionButton}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{getActionButton()}{getActionButton()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795}{menu\+Action}} get\+Action\+Button (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbutton}{button}} $\ast$}]{buttons,  }\item[{int}]{n\+Buttons }\end{DoxyParamCaption})}
+
+
+
+Get the right Action Button to perform when you click. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buttons} & \\
+\hline
+{\em n\+Buttons} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+menu\+Action 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_renderer_8c_aff907f94052c24b2b07c2ca0a221a922}\label{_renderer_8c_aff907f94052c24b2b07c2ca0a221a922}} 
+\index{Renderer.c@{Renderer.c}!initWindow@{initWindow}}
+\index{initWindow@{initWindow}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{initWindow()}{initWindow()}}
+{\footnotesize\ttfamily void init\+Window (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})}
+
+
+
+initialize the window 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & \\
+\hline
+{\em height} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_ab436eeda3e3a6c35f889577b4e44d128}\label{_renderer_8c_ab436eeda3e3a6c35f889577b4e44d128}} 
+\index{Renderer.c@{Renderer.c}!interf\_AirportToRender@{interf\_AirportToRender}}
+\index{interf\_AirportToRender@{interf\_AirportToRender}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{interf\_AirportToRender()}{interf\_AirportToRender()}}
+{\footnotesize\ttfamily void interf\+\_\+\+Airport\+To\+Render (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsimulation}{simulation}}}]{simulation }\end{DoxyParamCaption})}
+
+
+
+print the airport\textquotesingle{}s interface into the renderer 
+
+it use 4 subfunction that print each element
+
+
+\begin{DoxyParams}{Parameters}
+{\em simulation} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_afe0267c990fba62bbb0ecff7888baa22}\label{_renderer_8c_afe0267c990fba62bbb0ecff7888baa22}} 
+\index{Renderer.c@{Renderer.c}!interf\_launchMenu@{interf\_launchMenu}}
+\index{interf\_launchMenu@{interf\_launchMenu}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{interf\_launchMenu()}{interf\_launchMenu()}}
+{\footnotesize\ttfamily void interf\+\_\+launch\+Menu (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsimulation}{simulation}} $\ast$}]{simulation }\end{DoxyParamCaption})}
+
+
+
+print the menu into the renderer and do the action when you click on a button 
+
+
+\begin{DoxyParams}{Parameters}
+{\em simulation} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_a8b775a003a6e0d16e6a68e40ec9b1a1f}\label{_renderer_8c_a8b775a003a6e0d16e6a68e40ec9b1a1f}} 
+\index{Renderer.c@{Renderer.c}!interf\_Parking@{interf\_Parking}}
+\index{interf\_Parking@{interf\_Parking}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{interf\_Parking()}{interf\_Parking()}}
+{\footnotesize\ttfamily void interf\+\_\+\+Parking (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsimulation}{simulation}}}]{simulation,  }\item[{\mbox{\hyperlink{struct_anchor}{Anchor}}}]{left }\end{DoxyParamCaption})}
+
+
+
+print the parking square into the renderer 
+
+
+\begin{DoxyParams}{Parameters}
+{\em simulation} & \\
+\hline
+{\em left} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_a12d8963a344ee7af713cfc1c19a8a601}\label{_renderer_8c_a12d8963a344ee7af713cfc1c19a8a601}} 
+\index{Renderer.c@{Renderer.c}!interf\_Parking\_PrintLine@{interf\_Parking\_PrintLine}}
+\index{interf\_Parking\_PrintLine@{interf\_Parking\_PrintLine}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{interf\_Parking\_PrintLine()}{interf\_Parking\_PrintLine()}}
+{\footnotesize\ttfamily void interf\+\_\+\+Parking\+\_\+\+Print\+Line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsim__plane_actor}{sim\+\_\+plane\+Actor}} $\ast$}]{plane\+Actor,  }\item[{\mbox{\hyperlink{struct_anchor}{Anchor}}}]{left,  }\item[{bool}]{is\+In\+W\+F\+TR }\end{DoxyParamCaption})}
+
+
+
+printf the parking intels into the radar square 
+
+
+\begin{DoxyParams}{Parameters}
+{\em plane\+Actor} & \\
+\hline
+{\em left} & \\
+\hline
+{\em is\+In\+W\+F\+TR} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_a227e3bef18c2a507eb53ac3735560a01}\label{_renderer_8c_a227e3bef18c2a507eb53ac3735560a01}} 
+\index{Renderer.c@{Renderer.c}!interf\_Radar@{interf\_Radar}}
+\index{interf\_Radar@{interf\_Radar}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{interf\_Radar()}{interf\_Radar()}}
+{\footnotesize\ttfamily void interf\+\_\+\+Radar (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structairport}{airport}} $\ast$}]{airport,  }\item[{\mbox{\hyperlink{struct_anchor}{Anchor}}}]{left }\end{DoxyParamCaption})}
+
+
+
+print the radar square into the renderer 
+
+
+\begin{DoxyParams}{Parameters}
+{\em airport} & \\
+\hline
+{\em left} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_a179eba36d8f1f5f9e4c5f27ed61554e7}\label{_renderer_8c_a179eba36d8f1f5f9e4c5f27ed61554e7}} 
+\index{Renderer.c@{Renderer.c}!interf\_Radar\_PrintLine@{interf\_Radar\_PrintLine}}
+\index{interf\_Radar\_PrintLine@{interf\_Radar\_PrintLine}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{interf\_Radar\_PrintLine()}{interf\_Radar\_PrintLine()}}
+{\footnotesize\ttfamily void interf\+\_\+\+Radar\+\_\+\+Print\+Line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structplane}{plane}} $\ast$}]{plane,  }\item[{\mbox{\hyperlink{struct_anchor}{Anchor}}}]{left }\end{DoxyParamCaption})}
+
+
+
+printf the radar intels into the radar square 
+
+
+\begin{DoxyParams}{Parameters}
+{\em plane} & \\
+\hline
+{\em left} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_a2635a90361be6d61a2c6d707ae09a9da}\label{_renderer_8c_a2635a90361be6d61a2c6d707ae09a9da}} 
+\index{Renderer.c@{Renderer.c}!interf\_Runway@{interf\_Runway}}
+\index{interf\_Runway@{interf\_Runway}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{interf\_Runway()}{interf\_Runway()}}
+{\footnotesize\ttfamily void interf\+\_\+\+Runway (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsimulation}{simulation}}}]{simulation,  }\item[{\mbox{\hyperlink{structrunway}{runway}} $\ast$}]{runway,  }\item[{\mbox{\hyperlink{struct_anchor}{Anchor}}}]{C\+SG,  }\item[{int}]{w,  }\item[{int}]{h }\end{DoxyParamCaption})}
+
+
+
+print a generic runway that is used 6times 
+
+
+\begin{DoxyParams}{Parameters}
+{\em simulation} & \\
+\hline
+{\em runway} & \\
+\hline
+{\em C\+SG} & \\
+\hline
+{\em w} & \\
+\hline
+{\em h} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_aab7b2cfe96ecdbd26647a30b21b29928}\label{_renderer_8c_aab7b2cfe96ecdbd26647a30b21b29928}} 
+\index{Renderer.c@{Renderer.c}!isButtonHover@{isButtonHover}}
+\index{isButtonHover@{isButtonHover}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{isButtonHover()}{isButtonHover()}}
+{\footnotesize\ttfamily bool is\+Button\+Hover (\begin{DoxyParamCaption}\item[{int}]{mx,  }\item[{int}]{my,  }\item[{\mbox{\hyperlink{structbutton}{button}}}]{button }\end{DoxyParamCaption})}
+
+
+
+tells you if your cursor is hovering a button or not 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mx} & \\
+\hline
+{\em my} & \\
+\hline
+{\em button} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_renderer_8c_a17e573bc6a972ee4c98963e3f0fac47b}\label{_renderer_8c_a17e573bc6a972ee4c98963e3f0fac47b}} 
+\index{Renderer.c@{Renderer.c}!newButton@{newButton}}
+\index{newButton@{newButton}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{newButton()}{newButton()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structbutton}{button}} new\+Button (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_anchor}{Anchor}}}]{center,  }\item[{int}]{h,  }\item[{int}]{w,  }\item[{char $\ast$}]{text,  }\item[{\mbox{\hyperlink{_renderer_8c_abeb95d56a79d5eb3a4c8b97659ce0795}{menu\+Action}}}]{action }\end{DoxyParamCaption})}
+
+
+
+creat a button with a text, a location and a size (width and heigth) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em center} & \\
+\hline
+{\em h} & \\
+\hline
+{\em w} & \\
+\hline
+{\em text} & \\
+\hline
+{\em action} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+button 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_renderer_8c_ad7b13a9f787499b247e32a15f45916c9}\label{_renderer_8c_ad7b13a9f787499b247e32a15f45916c9}} 
+\index{Renderer.c@{Renderer.c}!printButtons@{printButtons}}
+\index{printButtons@{printButtons}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{printButtons()}{printButtons()}}
+{\footnotesize\ttfamily void print\+Buttons (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbutton}{button}} $\ast$}]{buttons,  }\item[{int}]{n\+Buttons }\end{DoxyParamCaption})}
+
+
+
+printf that good looking button in the renderer 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buttons} & \\
+\hline
+{\em n\+Buttons} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_a56dbd2b949251b64988a2dc46b6a9ccb}\label{_renderer_8c_a56dbd2b949251b64988a2dc46b6a9ccb}} 
+\index{Renderer.c@{Renderer.c}!printProgress@{printProgress}}
+\index{printProgress@{printProgress}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{printProgress()}{printProgress()}}
+{\footnotesize\ttfamily void print\+Progress (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_anchor}{Anchor}}}]{C\+SG,  }\item[{\mbox{\hyperlink{struct_anchor}{Anchor}}}]{C\+ID,  }\item[{S\+D\+L\+\_\+\+Color}]{couleur,  }\item[{int}]{border,  }\item[{float}]{pourcentage }\end{DoxyParamCaption})}
+
+
+
+print the progress bar into the renderer 
+
+
+\begin{DoxyParams}{Parameters}
+{\em C\+SG} & \\
+\hline
+{\em C\+ID} & \\
+\hline
+{\em couleur} & \\
+\hline
+{\em border} & \\
+\hline
+{\em pourcentage} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_ac36c575a598d4fec063239aaf1988d69}\label{_renderer_8c_ac36c575a598d4fec063239aaf1988d69}} 
+\index{Renderer.c@{Renderer.c}!printRectangleWithBorder@{printRectangleWithBorder}}
+\index{printRectangleWithBorder@{printRectangleWithBorder}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{printRectangleWithBorder()}{printRectangleWithBorder()}}
+{\footnotesize\ttfamily void print\+Rectangle\+With\+Border (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_anchor}{Anchor}}}]{C\+SG,  }\item[{\mbox{\hyperlink{struct_anchor}{Anchor}}}]{C\+ID,  }\item[{S\+D\+L\+\_\+\+Color}]{couleur,  }\item[{int}]{border }\end{DoxyParamCaption})}
+
+
+
+print a rectangle with a customized border into the renderer 
+
+it actualy draw a rectangle with 4 little rectangles. this way we can customize the width of the rectangle
+
+
+\begin{DoxyParams}{Parameters}
+{\em C\+SG} & \\
+\hline
+{\em C\+ID} & \\
+\hline
+{\em couleur} & \\
+\hline
+{\em border} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_a2e71f292bd0dd4990ec881d6ef39bdb8}\label{_renderer_8c_a2e71f292bd0dd4990ec881d6ef39bdb8}} 
+\index{Renderer.c@{Renderer.c}!printText@{printText}}
+\index{printText@{printText}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{printText()}{printText()}}
+{\footnotesize\ttfamily void print\+Text (\begin{DoxyParamCaption}\item[{char $\ast$}]{text,  }\item[{int}]{font\+Size,  }\item[{S\+D\+L\+\_\+\+Color}]{color,  }\item[{\mbox{\hyperlink{struct_anchor}{Anchor}}}]{origin,  }\item[{\mbox{\hyperlink{_renderer_8c_a29fe3ea9b028c9d355dc2852c709f06d}{text\+Align}}}]{align }\end{DoxyParamCaption})}
+
+
+
+print the text you want into the renderer 
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & \\
+\hline
+{\em font\+Size} & \\
+\hline
+{\em color} & \\
+\hline
+{\em origin} & \\
+\hline
+{\em align} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_abcf7919e2f7088f1b2f5a6564fb5a508}\label{_renderer_8c_abcf7919e2f7088f1b2f5a6564fb5a508}} 
+\index{Renderer.c@{Renderer.c}!SetDrawColor@{SetDrawColor}}
+\index{SetDrawColor@{SetDrawColor}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{SetDrawColor()}{SetDrawColor()}}
+{\footnotesize\ttfamily void Set\+Draw\+Color (\begin{DoxyParamCaption}\item[{S\+D\+L\+\_\+\+Color}]{Color }\end{DoxyParamCaption})}
+
+
+
+Set the Draw Color object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Color} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_a9c98ab2a8dd948caf035293bcbfb1ca2}\label{_renderer_8c_a9c98ab2a8dd948caf035293bcbfb1ca2}} 
+\index{Renderer.c@{Renderer.c}!updateAirportRenderer@{updateAirportRenderer}}
+\index{updateAirportRenderer@{updateAirportRenderer}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{updateAirportRenderer()}{updateAirportRenderer()}}
+{\footnotesize\ttfamily void update\+Airport\+Renderer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsimulation}{simulation}} $\ast$}]{simulation }\end{DoxyParamCaption})}
+
+
+
+function that refreshes the airport display 
+
+
+\begin{DoxyParams}{Parameters}
+{\em simulation} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_renderer_8c_a0d1782ceaf5d5a78126f2f9b85c6b119}\label{_renderer_8c_a0d1782ceaf5d5a78126f2f9b85c6b119}} 
+\index{Renderer.c@{Renderer.c}!updateHoverButtons@{updateHoverButtons}}
+\index{updateHoverButtons@{updateHoverButtons}!Renderer.c@{Renderer.c}}
+\doxysubsubsection{\texorpdfstring{updateHoverButtons()}{updateHoverButtons()}}
+{\footnotesize\ttfamily void update\+Hover\+Buttons (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbutton}{button}} $\ast$}]{buttons,  }\item[{int}]{n\+Buttons,  }\item[{int}]{mx,  }\item[{int}]{my }\end{DoxyParamCaption})}
+
+
+
+add a cool effect (fill the background) when hovering the button 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buttons} & \\
+\hline
+{\em n\+Buttons} & \\
+\hline
+{\em mx} & \\
+\hline
+{\em my} & \\
+\hline
+\end{DoxyParams}
