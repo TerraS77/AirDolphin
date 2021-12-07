@@ -11,6 +11,12 @@
 #include <stdlib.h>
 #include "SmartList.h"
 
+/**
+ * @brief init chain item
+ * 
+ * @param[in] data pointer to data to stock in item
+ * @return chainItem pointer to allocated memory for intialized chain item 
+ */
 chainItem *newChainItem(void *data){
     chainItem *newItem = malloc(sizeof(chainItem));
     newItem->data = data;
@@ -40,6 +46,11 @@ chainItem *getItemAtIndex(list list, int index){
     return target;
 }
 
+/**
+ * @brief Update indexes of a list
+ * 
+ * @param[in] list list to update
+ */
 void updateIndexs(list *list){
     chainItem *item = list->first;
     int index = 0;
@@ -59,6 +70,13 @@ void *getDataAtIndex(list list, int index){
     return getItemAtIndex(list, index)->data;
 }
 
+/**
+ * @brief Put an item at specified index and update the list architecture to support it
+ * 
+ * @param[in] list 
+ * @param[in] item 
+ * @param[in] index 
+ */
 void putItemAtIndex(list *list, chainItem *item, int index){
     if(index < 0){
         printf("\033[1;31mSmartList_ERROR : Put Item at negative index\n\033[0m");
