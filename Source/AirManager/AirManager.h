@@ -298,4 +298,22 @@ void addPlaneToAFRQ(airport* airport, plane *plane);
  */
 void grantNextInAFRQAccessToRunway(airport* airport, runway *runway);
 
+/**
+ * @brief Give to a plane in landing queue access to specified runway
+ * 
+ * @param[in] airport 
+ * @param[in] runway 
+ * @param[in] plane
+ */
+void grantPlaneInLQAccessToRunway(airport* airport, runway *runway, plane *plane);
+
+/**
+ * @brief Give to a plane in the queue for takeoff runway access to specified runway queue
+ * 
+ * @param[in] airport
+ * @param[in] runway
+ * @param[in] plane
+ */
+void grantPlaneInAFRQAccessToRunway(airport* airport, runway *runway, plane *plane)
+
 #endif
