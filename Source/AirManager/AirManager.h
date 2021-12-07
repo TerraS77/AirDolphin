@@ -314,6 +314,6 @@ void grantPlaneInLQAccessToRunway(airport* airport, runway *runway, plane *plane
  * @param[in] runway
  * @param[in] plane
  */
-void grantPlaneInAFRQAccessToRunway(airport* airport, runway *runway, plane *plane)
+void grantPlaneInAFRQAccessToRunway(airport* airport, runway *runway, plane *plane);
 
 #endif
